@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid) apply false
 
     alias(libs.plugins.benmanes.versions)
+    alias(libs.plugins.android.lint) apply false
 }
 
 fun isNonStable(version: String): Boolean {
