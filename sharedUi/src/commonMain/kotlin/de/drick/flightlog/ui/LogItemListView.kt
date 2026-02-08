@@ -1,10 +1,15 @@
 package de.drick.flightlog.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +24,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +44,7 @@ import de.drick.flightlog.file.OSDFile
 import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.ui.icons.BootstrapFile
 import de.drick.flightlog.ui.icons.BootstrapFileFont
+import de.drick.flightlog.ui.icons.MaterialIconsMovie
 import de.drick.flightlog.ui.icons.MaterialSymbolsVideo_file
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -43,22 +52,17 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
-import kotlinx.datetime.format.DateTimeComponents
 import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
+import kotlin.compareTo
 
 
 val dateTimeFormat = LocalDateTime.Format {
-    date(LocalDate.Formats.ISO)
-    char(' ')
     hour()
     char(':')
     minute()
-}
-
-
-val groupFormat = DateTimeComponents.Format {
-    date(LocalDate.Formats.ISO)
+    char(':')
+    second()
 }
 
 @Preview(heightDp = 300, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_YES)
@@ -87,9 +91,16 @@ fun LogItemListView(
 ) {
     val groups = remember(logList) {
         logList.sortedByDescending { it.lastModified }
-            .groupBy { it.files.firstOrNull()?.lastModified?.format(groupFormat) }
+            .groupBy {
+                it.files.firstOrNull()?.lastModified
+                    ?.toLocalDateTime(TimeZone.currentSystemDefault())?.date
+                    ?.formatLocalized()
+            }
     }
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp)
+    ) {
         item {
             Text(
                 modifier = Modifier.semantics { heading() },
@@ -106,20 +117,46 @@ fun LogItemListView(
                     topStart = cornerRadius,
                     topEnd = cornerRadius
                 )
-                Surface(shape = cornerShape) {
-                    Text(
-                        modifier = Modifier.padding(8.dp).fillMaxWidth(),
-                        text = group ?: "-",
-                        //color = MaterialTheme.colors.onBackground
-                    )
+                Surface(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background),
+                    shape = cornerShape,
+                    color = MaterialTheme.colorScheme.surfaceContainer
+                ) {
+                    Box {
+                        Text(
+                            modifier = Modifier.padding(8.dp).fillMaxWidth(),
+                            text = group ?: "-",
+                            //color = MaterialTheme.colors.onBackground
+                        )
+                        HorizontalDivider(Modifier.align(Alignment.BottomStart))
+                    }
                 }
             }
             itemsIndexed(list) { index, logEntry ->
-                if (index > 0) HorizontalDivider()
-                LogItemRow(
-                    logEntry = logEntry,
-                    onClick = { onLogItemClick(logEntry) }
-                )
+                val cornerShape = when (index) {
+                    list.size - 1 -> RoundedCornerShape(
+                        bottomStart = cornerRadius,
+                        bottomEnd = cornerRadius
+                    )
+
+                    else -> RectangleShape
+                }
+                Surface(
+                    shape = cornerShape,
+                    color = MaterialTheme.colorScheme.surfaceContainer
+                ) {
+                    if (index > 0)
+                        HorizontalDivider(Modifier.padding(start = 42.dp))
+
+                    LogItemRow(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        logEntry = logEntry,
+                        onClick = { onLogItemClick(logEntry) }
+                    )
+                }
+            }
+            item {
+                Spacer(Modifier.height(8.dp))
             }
         }
     }
@@ -141,23 +178,27 @@ private fun PreviewLogItemRow() {
 }
 
 fun FileItem.icon() = when (this) {
-    is VideoFile -> MaterialSymbolsVideo_file
+    is VideoFile -> MaterialIconsMovie
     is OSDFile -> BootstrapFileFont
     is BaseFile -> BootstrapFile
     //is ErrorFile -> TODO()
     is FontFile -> BootstrapFileFont
-    else -> MaterialSymbolsVideo_file
+    else -> BootstrapFile
 }
 
 @Composable
 private fun LogItemRow(
+    modifier: Modifier = Modifier,
     logEntry: LogItem,
     onClick: () -> Unit
 ) {
     val icons = remember(logEntry) {
         logEntry.files.map { it.icon() }
     }
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         icons.fastForEach {
             Icon(
                 modifier = Modifier.size(32.dp),
@@ -176,13 +217,15 @@ private fun LogItemRow(
                 style = MaterialTheme.typography.titleMedium
             )
             val lastModified = remember(logEntry) {
-                val instant = logEntry.files.firstOrNull()?.lastModified?.let {
-                    it.toLocalDateTime(TimeZone.currentSystemDefault()).format(dateTimeFormat)
-                }
+                val instant = logEntry.files
+                    .firstOrNull()
+                    ?.lastModified
+                    ?.toLocalDateTime(TimeZone.currentSystemDefault())
+                    ?.format(dateTimeFormat)
                 instant?.toString() ?: "-"
             }
             Text(
-                text = "Last modified: $lastModified",
+                text = lastModified,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
