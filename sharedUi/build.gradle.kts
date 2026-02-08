@@ -35,13 +35,14 @@ kotlin {
         commonMain.dependencies {
 
             implementation(project(":core"))
-            //implementation(project(":video_player"))
-            implementation("io.github.kdroidfilter:composemediaplayer:0.8.7")
             implementation(project(":wtf_osd"))
 
-            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kdroidfilter.compose.mediaplayer)
+            implementation(libs.kdroidfilter.platformtools.darkmodedetector)
 
+            implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.kotlinx.datetime)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
@@ -62,7 +63,7 @@ kotlin {
             implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
+            implementation(libs.compose.uiTooling)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)

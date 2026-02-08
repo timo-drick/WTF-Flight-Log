@@ -6,6 +6,7 @@ import io.github.vinceglb.filekit.extension
 import io.github.vinceglb.filekit.nameWithoutExtension
 import io.github.vinceglb.filekit.readBytes
 import io.github.vinceglb.filekit.size
+import kotlin.time.Instant
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.io.Buffer
 import kotlinx.io.Source
@@ -13,12 +14,15 @@ import kotlinx.io.Source
 data class LogItem(
     val name: String,
     val files: ImmutableSet<FileItem>
-)
+) {
+    val lastModified: Instant = files.mapNotNull { it.lastModified }.max()
+}
 
 interface FileItem {
     val name: String
     val extension: String
-    val size: Long
+    val size: ByteSize
+    val lastModified: Instant?
     suspend fun source(): Source
 }
 
@@ -36,8 +40,10 @@ data class BaseFile(
         get() = file.nameWithoutExtension
     override val extension: String
         get() = file.extension
-    override val size: Long
-        get() = file.size()
+    override val size: ByteSize
+        get() = file.size().bytes
+    override val lastModified: Instant?
+        get() = file.lastModifiedTime()
 
     override suspend fun source() = file.toSource()
 }

@@ -21,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.AndroidUiModes
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.drick.core.log
 import de.drick.flightlog.file.BaseFile
@@ -28,6 +30,8 @@ import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
 import de.drick.flightlog.file.VideoFile
+import de.drick.flightlog.ui.BasePreview
+import de.drick.flightlog.ui.mockLogItem
 import de.drick.wtf_osd.OsdFont
 import de.drick.wtf_osd.OsdRecord
 import de.drick.wtf_osd.ParseResult
@@ -41,6 +45,22 @@ data class OsdData(
     val font: OsdFont,
     val record: OsdRecord,
 )
+
+@Preview(
+    widthDp = 1200, heightDp = 600,
+    uiMode = AndroidUiModes.UI_MODE_NIGHT_YES
+)
+@Composable
+private fun PreviewLogItemDetail() {
+    val testLogItem = mockLogItem("Test entry 2")
+    BasePreview {
+        LogItemDetailView(
+            logItem = testLogItem,
+            onBackClick = {},
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
 
 @Composable
 fun LogItemDetailView(
@@ -148,21 +168,10 @@ private fun FileItemRow(fileItem: FileItem) {
             style = MaterialTheme.typography.bodyLarge
         )
         Text(
-            text = "Size: ${formatFileSize(fileItem.size)}",
+            text = "Size: ${fileItem.size}",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
 
-private fun formatFileSize(size: Long): String {
-    if (size <= 0) return "0 B"
-    val units = arrayOf("B", "KB", "MB", "GB", "TB")
-    var value = size.toDouble()
-    var i = 0
-    while (value >= 1024 && i < units.size - 1) {
-        value /= 1024
-        i++
-    }
-    return "${((value * 10).toInt() / 10.0)} ${units[i]}"
-}
