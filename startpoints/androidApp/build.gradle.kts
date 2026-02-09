@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":sharedUi"))
+    implementation(project(":mainUi"))
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)
     debugImplementation(libs.compose.uiTooling)

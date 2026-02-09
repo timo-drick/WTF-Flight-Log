@@ -28,18 +28,6 @@ class GpsPoint(val latitude: Double, val longitude: Double) {
     override fun toString() = "GeoPoint($latitude, $longitude)"
 }
 
-class GeoPointRad(val latitude: Double, val longitude: Double)
-
-fun GpsPoint.toRad(): GeoPointRad = GeoPointRad(
-    latitude = latitude.toRadians(),
-    longitude = longitude.toRadians()
-)
-
-fun GeoPointRad.toGeoPoint(): GpsPoint = GpsPoint(
-    latitude = latitude.toDegrees(),
-    longitude = longitude.toDegrees()
-)
-
 data class TileImage(
     val pos: TilePos,
     var image: ImageBitmap?

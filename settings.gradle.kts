@@ -36,7 +36,7 @@ include(":startpoints:androidApp")
 include(":startpoints:desktopApp")
 include(":startpoints:webApp")
 
-include(":sharedUi")
+include(":mainUi")
 
 include(":wtf_osd")
 include(":core")
