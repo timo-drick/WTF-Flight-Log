@@ -1,14 +1,12 @@
-package de.drick.flightlog
+package de.drick.flightlog.ui
 
-import OsdCanvasView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,29 +19,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import de.drick.core.log
-import de.drick.flightlog.file.BaseFile
 import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
 import de.drick.flightlog.file.VideoFile
-import de.drick.flightlog.ui.BasePreview
-import de.drick.flightlog.ui.mockLogItem
+import de.drick.flightlog.ui.components.GpsView
+import de.drick.flightlog.ui.components.OsdCanvasView
+import de.drick.flightlog.ui.components.VideoPlayer
+import de.drick.wtf_osd.GpsData
 import de.drick.wtf_osd.OsdFont
 import de.drick.wtf_osd.OsdRecord
 import de.drick.wtf_osd.ParseResult
+import de.drick.wtf_osd.extractGps
 import de.drick.wtf_osd.loadOsdFont
 import de.drick.wtf_osd.parseOsdFile
-import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 import kotlin.math.roundToLong
 
 data class OsdData(
     val font: OsdFont,
     val record: OsdRecord,
+    val gpsData: GpsData?
 )
 
 @Preview(
@@ -84,7 +84,8 @@ fun LogItemDetailView(
                     is ParseResult.Error -> TODO()
                     is ParseResult.Success -> {
                         val font = loadOsdFont(osdFile.fontVariant)
-                        OsdData(font, result.record)
+                        val gps = extractGps(result.record)
+                        OsdData(font, result.record, gps)
                     }
                 }
             }
@@ -110,47 +111,39 @@ fun LogItemDetailView(
 
         HorizontalDivider()
 
-        if (videoFile != null) {
-            val baseFile = videoFile.file as? BaseFile
-            if (baseFile != null) {
-                LaunchedEffect(baseFile.file) {
-                    playerState.openFile(baseFile.file)
-                }
-                VideoPlayerSurface(
-                    playerState = playerState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f)
-                ) {
-                    osdData?.let { data ->
-                        OsdCanvasView(
-                            modifier = Modifier.fillMaxSize(),
-                            osdRecord = data.record,
-                            osdFont = data.font,
-                            positionProvider = {
-                                (playerState.currentTime * 1000.0).roundToLong()
-                            }
-                        )
-                    }
-                }
-            }
+        val gps = osdData?.gpsData
+        if (gps != null) {
+            GpsView(
+                modifier = Modifier
+                    .clipToBounds()
+                    .size(300.dp),
+                gpsData = gps,
+                zoomLevel = 17.0,
+                positionProvider = { (playerState.currentTime * 1000.0).roundToLong() }
+            )
+            HorizontalDivider()
         }
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        ) {
-            item {
-                Text(
-                    text = "Associated Files",
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(16.dp)
-                )
+        if (videoFile != null) {
+            LaunchedEffect(videoFile) {
+                playerState.openFile(videoFile.file.platformFile())
             }
-            items(logItem.files.toList()) { fileItem ->
-                FileItemRow(fileItem)
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+            VideoPlayer(
+                playerState = playerState,
+                modifier = Modifier
+                    .size(600.dp)
+                    .aspectRatio(playerState.aspectRatio)
+            ) {
+                osdData?.let { data ->
+                    OsdCanvasView(
+                        modifier = Modifier.fillMaxSize(),
+                        osdRecord = data.record,
+                        osdFont = data.font,
+                        positionProvider = {
+                            (playerState.currentTime * 1000.0).roundToLong()
+                        }
+                    )
+                }
             }
         }
     }

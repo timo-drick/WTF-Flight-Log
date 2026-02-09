@@ -19,6 +19,7 @@ import de.drick.flightlog.file.BaseFile
 import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.analyzeFileList
+import de.drick.flightlog.ui.LogItemDetailView
 import de.drick.flightlog.ui.LogItemListView
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.PlatformFile

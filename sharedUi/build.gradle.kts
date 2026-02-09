@@ -36,6 +36,8 @@ kotlin {
 
             implementation(project(":core"))
             implementation(project(":wtf_osd"))
+            implementation(project(":tile_map"))
+
 
             implementation(libs.kdroidfilter.compose.mediaplayer)
             implementation(libs.kdroidfilter.platformtools.darkmodedetector)

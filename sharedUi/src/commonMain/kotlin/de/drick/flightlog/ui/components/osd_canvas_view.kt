@@ -1,3 +1,5 @@
+package de.drick.flightlog.ui.components
+
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

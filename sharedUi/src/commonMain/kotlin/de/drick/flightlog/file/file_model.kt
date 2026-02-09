@@ -24,6 +24,7 @@ interface FileItem {
     val size: ByteSize
     val lastModified: Instant?
     suspend fun source(): Source
+    fun platformFile(): PlatformFile
 }
 
 fun FileItem.fromPlatformFile(file: PlatformFile) = BaseFile(file)
@@ -46,6 +47,7 @@ data class BaseFile(
         get() = file.lastModifiedTime()
 
     override suspend fun source() = file.toSource()
+    override fun platformFile() = file
 }
 
 data class ErrorFile(

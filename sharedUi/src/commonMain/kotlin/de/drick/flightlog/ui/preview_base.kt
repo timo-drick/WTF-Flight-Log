@@ -8,6 +8,7 @@ import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.file.megabytes
+import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.io.Source
 import kotlin.time.Instant
@@ -41,9 +42,8 @@ fun mockBaseFile(
         get() = size
     override val lastModified: Instant?
         get() = Instant.fromEpochMilliseconds(1770542159025)
-    override suspend fun source(): Source {
-        TODO("Not yet implemented for mock files")
-    }
+    override suspend fun source(): Source = TODO("Not yet implemented for mock files")
+    override fun platformFile(): PlatformFile = TODO("Not yet implemented")
 }
 
 fun mockVideoFile(previewFileName: String) = VideoFile(

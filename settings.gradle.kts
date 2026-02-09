@@ -40,3 +40,4 @@ include(":sharedUi")
 
 include(":wtf_osd")
 include(":core")
+include(":tile_map")
