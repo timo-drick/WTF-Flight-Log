@@ -84,7 +84,9 @@ fun LogItemDetailView(
                     is ParseResult.Error -> TODO()
                     is ParseResult.Success -> {
                         val font = loadOsdFont(osdFile.fontVariant)
-                        val gps = extractGps(result.record)
+                        val gps = extractGps(result.record).let {
+                            if (it.wayPoints.isEmpty()) null else it
+                        }
                         OsdData(font, result.record, gps)
                     }
                 }

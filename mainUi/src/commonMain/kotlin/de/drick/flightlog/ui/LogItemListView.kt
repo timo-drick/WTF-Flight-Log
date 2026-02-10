@@ -1,5 +1,6 @@
 package de.drick.flightlog.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -21,11 +22,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -45,17 +49,15 @@ import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.ui.icons.BootstrapFile
 import de.drick.flightlog.ui.icons.BootstrapFileFont
 import de.drick.flightlog.ui.icons.MaterialIconsMovie
-import de.drick.flightlog.ui.icons.MaterialSymbolsVideo_file
+import de.drick.wtf_osd.extractLogo
+import de.drick.wtf_osd.loadOsdFont
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
 import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
-import kotlin.compareTo
-
 
 val dateTimeFormat = LocalDateTime.Format {
     hour()
@@ -195,6 +197,14 @@ private fun LogItemRow(
     val icons = remember(logEntry) {
         logEntry.files.map { it.icon() }
     }
+    var flightControllerLogo: ImageBitmap? by remember { mutableStateOf(null) }
+
+    LaunchedEffect(logEntry) {
+        logEntry.files.filterIsInstance<OSDFile>().firstOrNull()?.let { osdFile ->
+            val font = loadOsdFont(osdFile.fontVariant)
+            flightControllerLogo = font.extractLogo()
+        }
+    }
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -208,7 +218,7 @@ private fun LogItemRow(
         }
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .weight(1f)
                 .clickable(onClick = onClick)
                 .padding(16.dp)
         ) {
@@ -216,13 +226,10 @@ private fun LogItemRow(
                 text = logEntry.name,
                 style = MaterialTheme.typography.titleMedium
             )
-            val lastModified = remember(logEntry) {
-                val instant = logEntry.files
-                    .firstOrNull()
-                    ?.lastModified
-                    ?.toLocalDateTime(TimeZone.currentSystemDefault())
-                    ?.format(dateTimeFormat)
-                instant?.toString() ?: "-"
+            val lastModified: String = remember(logEntry) {
+                logEntry.lastModified
+                    .toLocalDateTime(TimeZone.currentSystemDefault())
+                    .format(dateTimeFormat)
             }
             Text(
                 text = lastModified,
@@ -235,6 +242,9 @@ private fun LogItemRow(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+        }
+        flightControllerLogo?.let { logo ->
+            Image(logo, contentDescription = "Flight controller logo")
         }
     }
 }

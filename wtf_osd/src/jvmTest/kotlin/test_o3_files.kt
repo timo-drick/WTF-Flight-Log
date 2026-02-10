@@ -14,19 +14,40 @@ class ParserTest {
     @Test
     fun fileWithoutGPS() = runTest {
         //val osdRecord = parseOsdTestFile("DJIG0068.osd")
-        val osdRecord = parseOsdTestFile("CEBU003.osd")
+        val osdRecord = parseOsdTestFile("btfl/CEBU003.osd")
         println("Parsed frames: ${osdRecord.frames.size}")
     }
 
     @Test
     fun mspOsdV2Test() = runTest {
-        val osdRecord = parseOsdTestFile("DJIG0001.osd")
+        val osdRecord = parseOsdTestFile("btfl/DJIG0001.osd")
         println("Parsed frames: ${osdRecord.frames.size}")
         val duration = osdRecord.frames.last().millis.milliseconds
         println("Duration: $duration")
         val gpsData = extractGps(osdRecord)
         println("Gps points: ${gpsData.wayPoints.size}")
     }
+
+    @Test
+    fun mspOsdINavTest() = runTest {
+        val osdRecord = parseOsdTestFile("inav/DJIG0113.osd")
+        println("Parsed frames: ${osdRecord.frames.size}")
+        val duration = osdRecord.frames.last().millis.milliseconds
+        println("Duration: $duration")
+        val gpsData = extractGps(osdRecord)
+        println("Gps points: ${gpsData.wayPoints.size}")
+    }
+    @Test
+    fun mspOsdINavGpsTest() = runTest {
+        val osdRecord = parseOsdTestFile("inav/DJIG0136.osd")
+        println("Parsed frames: ${osdRecord.frames.size}")
+        val duration = osdRecord.frames.last().millis.milliseconds
+        println("Duration: $duration")
+        val gpsData = extractGps(osdRecord)
+        println("Gps points: ${gpsData.wayPoints.size}")
+        gpsData.wayPoints.forEach { println(it) }
+    }
+
 
     private fun parseOsdTestFile(fileName: String): OsdRecord {
         val inputStream = ParserTest::class.java.getResourceAsStream(fileName)
