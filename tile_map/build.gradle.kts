@@ -14,17 +14,21 @@ val generateBuildConfig by tasks.registering {
     val outputDir = layout.buildDirectory.dir("generated/buildconfig")
     outputs.dir(outputDir)
 
-    // Read local.properties for secrets like mapboxToken
-    val localProperties = Properties().apply {
-        val localPropertiesFile = rootProject.file("local.properties")
-        if (localPropertiesFile.exists()) {
-            localPropertiesFile.inputStream().use { load(it) }
-        }
-    }
-
-    val mapboxToken: String = localProperties.getProperty("mapbox.token", "")
+    // Use input property for configuration cache compatibility
+    val localPropertiesFile = rootProject.layout.projectDirectory.file("local.properties")
+    inputs.files(localPropertiesFile).optional()
 
     doLast {
+        // Read local.properties for secrets like mapboxToken
+        val localProperties = Properties().apply {
+            val propsFile = localPropertiesFile.asFile
+            if (propsFile.exists()) {
+                propsFile.inputStream().use { load(it) }
+            }
+        }
+
+        val mapboxToken: String = localProperties.getProperty("mapbox.token", "")
+
         val dir = outputDir.get().asFile.resolve("de/drick/compose/tilemap")
         dir.mkdirs()
         dir.resolve("BuildConfig.kt").writeText(
