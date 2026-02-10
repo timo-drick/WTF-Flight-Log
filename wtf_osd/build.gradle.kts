@@ -39,9 +39,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-
                 implementation(project(":core"))
+
+                implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.io.core)
                 implementation(libs.compose.ui)
@@ -54,7 +54,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.test)
         }
         jvmTest.dependencies {
-            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.io.core.jvm)
             implementation(libs.kotlinx.coroutines.test)
         }
 
