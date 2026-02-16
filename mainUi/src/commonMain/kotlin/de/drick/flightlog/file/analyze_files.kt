@@ -3,6 +3,28 @@ package de.drick.flightlog.file
 import de.drick.wtf_osd.ParseResult
 import de.drick.wtf_osd.parseOsdFile
 import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.coroutines.flow.flow
+
+fun List<FileItem>.analyzeFlow() = flow {
+    groupBy { it.name }
+        .forEach { (name, fileList) ->
+            val items = fileList.mapNotNull { fileItem ->
+                when (fileItem.extension.lowercase()) {
+                    "osd" -> {
+                        when(val osd = parseOsdFile(fileItem.source())) {
+                            is ParseResult.Success -> OSDFile(fileItem, osd.record.fontVariant)
+                            is ParseResult.Error -> ErrorFile(fileItem, osd.type.name)
+                        }
+                    }
+                    "mov", "mp4" -> {
+                        VideoFile(fileItem)
+                    }
+                    else -> null
+                }
+            }
+            emit(LogItem(name, items.toImmutableSet()))
+        }
+}
 
 suspend fun analyzeFileList(fileList: List<FileItem>): List<LogItem> = fileList
     .groupBy { it.name }

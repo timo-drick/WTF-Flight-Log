@@ -1,6 +1,7 @@
 package de.drick.flightlog.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,7 +24,10 @@ private fun VideoPlayerPreview() {
             durationText = "1:00"
         )
     }
-    VideoPlayer(state)
+    Column {
+        VideoPlayer(state)
+        VolumeAndPlaybackControls(state)
+    }
 }
 
 @Composable

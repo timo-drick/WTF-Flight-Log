@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -18,16 +19,13 @@ import de.drick.core.log
 import de.drick.flightlog.file.BaseFile
 import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
-import de.drick.flightlog.file.analyzeFileList
+import de.drick.flightlog.file.analyzeFlow
 import de.drick.flightlog.ui.LogItemDetailView
 import de.drick.flightlog.ui.LogItemListView
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.dialogs.FileKitMode
 import io.github.vinceglb.filekit.dialogs.openFilePicker
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
 
@@ -37,10 +35,11 @@ fun PlatformFile.toFileItem() = BaseFile(this)
 @Composable
 fun App() {
     val scope = rememberCoroutineScope()
+    val listState = rememberLazyListState()
 
     FlightLogTheme {
-        var logList: ImmutableList<LogItem> by remember {
-            mutableStateOf(persistentListOf())
+        val logList = remember {
+            mutableStateListOf<LogItem>()
         }
         var selectedLogItem by remember { mutableStateOf<LogItem?>(null) }
         Scaffold {
@@ -63,8 +62,9 @@ fun App() {
                                     val fileItemList = selectedFiles
                                         .map { it.toFileItem() }
                                     log("Analyzing files: $fileItemList")
-                                    val result = analyzeFileList(fileItemList)
-                                    logList = result.toImmutableList()
+                                    fileItemList.analyzeFlow().collect { item ->
+                                        logList.add(item)
+                                    }
                                 }
                         }
                     }) {
@@ -84,7 +84,8 @@ fun App() {
                             LogItemListView(
                                 logList = logList,
                                 onLogItemClick = { selectedLogItem = it },
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
+                                listState = listState
                             )
                         }
                     }

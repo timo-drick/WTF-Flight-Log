@@ -15,7 +15,7 @@ data class LogItem(
     val name: String,
     val files: ImmutableSet<FileItem>
 ) {
-    val lastModified: Instant = files.mapNotNull { it.lastModified }.max()
+    val lastModified: Instant? = files.mapNotNull { it.lastModified }.maxOrNull()
 }
 
 interface FileItem {
