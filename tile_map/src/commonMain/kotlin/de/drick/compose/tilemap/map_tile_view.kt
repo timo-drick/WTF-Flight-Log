@@ -1,6 +1,7 @@
 package de.drick.compose.tilemap
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -14,14 +15,18 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import de.drick.core.log
+import flightlog.tile_map.generated.resources.Res
+import flightlog.tile_map.generated.resources.preview_map
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
 import kotlin.math.roundToInt
 
 class GpsPoint(val latitude: Double, val longitude: Double) {
@@ -232,24 +237,32 @@ fun TileMapView(
     modifier: Modifier = Modifier,
     onDraw: MapDrawScope.() -> Unit = {}
 ) {
-    Canvas(modifier) {
-        state.updateSize(size)
-        val mapDrawScope = MapDrawScopeImpl(this, state)
-        val frame = state.invalidateCounter
-        //log("Frame: $frame")
-        translate(size.width / 2, size.height / 2) {
-            for (tileState in state.tileStateList) {
-                for (tile in tileState.tileList) {
-                    tile.image?.let { image ->
-                        drawImage(
-                            image = image,
-                            dstOffset = state.calculateOffset(tile.pos),
-                            dstSize = state.size
-                        )
+    if (LocalInspectionMode.current) {
+        Image(
+            modifier = modifier,
+            painter = painterResource(Res.drawable.preview_map),
+            contentDescription = "Map preview"
+        )
+    } else {
+        Canvas(modifier) {
+            state.updateSize(size)
+            val mapDrawScope = MapDrawScopeImpl(this, state)
+            val frame = state.invalidateCounter
+            //log("Frame: $frame")
+            translate(size.width / 2, size.height / 2) {
+                for (tileState in state.tileStateList) {
+                    for (tile in tileState.tileList) {
+                        tile.image?.let { image ->
+                            drawImage(
+                                image = image,
+                                dstOffset = state.calculateOffset(tile.pos),
+                                dstSize = state.size
+                            )
+                        }
                     }
                 }
+                onDraw(mapDrawScope)
             }
-            onDraw(mapDrawScope)
         }
     }
 }

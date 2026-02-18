@@ -29,8 +29,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import de.drick.core.log
-import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
 import de.drick.flightlog.file.VideoFile
@@ -46,8 +44,7 @@ import de.drick.wtf_osd.extractGps
 import de.drick.wtf_osd.loadOsdFont
 import de.drick.wtf_osd.parseOsdFile
 import io.github.kdroidfilter.composemediaplayer.PreviewableVideoPlayerState
-import io.github.kdroidfilter.composemediaplayer.VideoPlayerState
-import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
+import io.github.kdroidfilter.composemediaplayer.createVideoPlayerState
 import kotlin.math.roundToLong
 
 data class OsdData(
@@ -62,52 +59,75 @@ data class OsdData(
 )
 @Composable
 private fun PreviewLogItemDetail() {
-    val state = remember {
-        PreviewableVideoPlayerState(
-            hasMedia = true,
-            durationText = "1:00"
-        )
+    val testState = remember {
+        val item = mockLogItem("Test entry 2")
+        LogItemState(item)
     }
-    val testLogItem = mockLogItem("Test entry 2")
     BasePreview {
         LogItemDetailView(
-            logItem = testLogItem,
+            state = testState,
             onBackClick = {},
-            modifier = Modifier.fillMaxSize(),
-            playerState = state
+            onFullScreenClick = {},
+            modifier = Modifier.fillMaxSize()
         )
     }
 }
 
-@Composable
-fun LogItemDetailView(
-    logItem: LogItem,
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    playerState: VideoPlayerState = rememberVideoPlayerState()
+class LogItemState(
+    val logItem: LogItem
 ) {
-    val videoFile = logItem.files.filterIsInstance<VideoFile>().firstOrNull()
-    var osdData : OsdData? by remember(logItem) {
-        mutableStateOf(null)
-    }
+    val playerState = createVideoPlayerState()
 
-    LaunchedEffect(logItem) {
-        osdData = logItem.files
-            .filterIsInstance<OSDFile>()
-            .firstOrNull()
-            ?.let { osdFile ->
-                when (val result = parseOsdFile(osdFile.source())) {
-                    is ParseResult.Error -> TODO()
-                    is ParseResult.Success -> {
-                        val font = loadOsdFont(osdFile.fontVariant)
-                        val gps = extractGps(result.record).let {
-                            if (it.wayPoints.isEmpty()) null else it
+    val videoFile = logItem.files.filterIsInstance<VideoFile>().firstOrNull()
+
+    var osdData : OsdData? by mutableStateOf(null)
+
+    private var initialized = false
+
+    suspend fun init() {
+        if (initialized.not()) {
+            osdData = logItem.files
+                .filterIsInstance<OSDFile>()
+                .firstOrNull()
+                ?.let { osdFile ->
+                    when (val result = parseOsdFile(osdFile.source())) {
+                        is ParseResult.Error -> TODO()
+                        is ParseResult.Success -> {
+                            val font = loadOsdFont(osdFile.fontVariant)
+                            val gps = extractGps(result.record).let {
+                                if (it.wayPoints.isEmpty()) null else it
+                            }
+                            OsdData(font, result.record, gps)
                         }
-                        OsdData(font, result.record, gps)
                     }
                 }
+            if (videoFile != null) {
+                playerState.openFile(videoFile.file.platformFile())
             }
+            initialized = true
+        }
+    }
 
+    //TODO call dispose
+    fun dispose() {
+        playerState.dispose()
+    }
+
+}
+
+@Composable
+fun LogItemDetailView(
+    state: LogItemState,
+    onBackClick: () -> Unit,
+    onFullScreenClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val videoFile = state.videoFile
+    val osdData = state.osdData
+    val playerState = state.playerState
+
+    LaunchedEffect(state) {
+        state.init()
     }
 
     Column(modifier = modifier.fillMaxSize()) {
@@ -118,10 +138,10 @@ fun LogItemDetailView(
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextButton(onClick = onBackClick) {
-                Text("< Back")
+                Text("x")
             }
             Text(
-                text = logItem.name,
+                text = state.logItem.name,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(start = 8.dp)
             )
@@ -131,9 +151,6 @@ fun LogItemDetailView(
 
         Row {
             if (videoFile != null) {
-                LaunchedEffect(videoFile) {
-                    playerState.openFile(videoFile.file.platformFile())
-                }
                 Column(
                     modifier = Modifier.width(IntrinsicSize.Min)
                 ) {
@@ -162,7 +179,7 @@ fun LogItemDetailView(
                             }
                         }
                     }
-                    VideoPlayerControls(playerState)
+                    VideoPlayerControls(playerState, onFullScreenClick)
                 }
             }
             val gps = osdData?.gpsData
@@ -181,22 +198,4 @@ fun LogItemDetailView(
     }
 }
 
-@Composable
-private fun FileItemRow(fileItem: FileItem) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "${fileItem.name}.${fileItem.extension}",
-            style = MaterialTheme.typography.bodyLarge
-        )
-        Text(
-            text = "Size: ${fileItem.size}",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-    }
-}
 

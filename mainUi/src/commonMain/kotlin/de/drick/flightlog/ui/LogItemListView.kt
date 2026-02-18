@@ -32,11 +32,10 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.drick.flightlog.FlightLogState
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.ui.components.ScrollBar
 import de.drick.wtf_osd.FontVariant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 @Preview(heightDp = 300, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_YES)
 @Preview(heightDp = 300, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_NO)
@@ -53,7 +52,7 @@ private fun PreviewLogItemList() {
         //Text("Hello world: ${item}")
         LogItemListView(
             modifier = Modifier.fillMaxSize(),
-            logList = list,
+            state = FlightLogState(),
             onLogItemClick = {}
         )
     }
@@ -63,23 +62,14 @@ private val cornerRadius = 8.dp
 
 @Composable
 fun LogItemListView(
-    logList: SnapshotStateList<LogItem>,
+    state: FlightLogState,
     onLogItemClick: (LogItem) -> Unit,
-    modifier: Modifier = Modifier,
-    listState: LazyListState = rememberLazyListState()
+    modifier: Modifier = Modifier
 ) {
-    val groups by derivedStateOf {
-        logList.sortedByDescending { it.lastModified }
-            .groupBy {
-                it.files.firstOrNull()?.lastModified
-                    ?.toLocalDateTime(TimeZone.currentSystemDefault())?.date
-                    ?.formatLocalized()
-            }
-    }
     Box(modifier) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            state = listState,
+            state = state.listState,
             contentPadding = PaddingValues(16.dp)
         ) {
             item {
@@ -92,7 +82,7 @@ fun LogItemListView(
                     style = MaterialTheme.typography.headlineMedium
                 )
             }
-            groups.forEach { (group, list) ->
+            state.groups.forEach { (group, list) ->
                 stickyHeader(group, "Header") {
                     val cornerShape = RoundedCornerShape(
                         topStart = cornerRadius,
@@ -142,7 +132,7 @@ fun LogItemListView(
             }
         }
         ScrollBar(
-            lazyListState = listState,
+            lazyListState = state.listState,
         )
     }
 }

@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 kotlin {
@@ -42,6 +43,7 @@ kotlin {
             implementation(libs.kdroidfilter.compose.mediaplayer)
             implementation(libs.kdroidfilter.platformtools.darkmodedetector)
 
+            //implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.datetime)
@@ -49,6 +51,7 @@ kotlin {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
+            implementation(libs.compose.nav3)
             implementation(libs.compose.material3.adaptive)
             implementation(libs.compose.material3.adaptiveNavigation3)
             implementation(libs.compose.ui)

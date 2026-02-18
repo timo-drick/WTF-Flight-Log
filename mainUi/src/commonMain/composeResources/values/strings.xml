@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">WTF Flight Log</string>
+
+    <!-- about screen -->
+    <string name="about_version">Version:</string>
+    <string name="about_git_hash">Git hash:</string>
+    <string name="about_msp_version">Based on MSP-OSD version:</string>
+    <string name="about_this_project">
+        This project is open source:
+    </string>
+    <string name="about_based_on">
+        and is based on the open source project:
+    </string>
+    <string name="about_start">Start</string>
+
+    <!-- folder tree screen -->
+    <string name="screen_folder_tree_add">Add new folder</string>
+    <string name="screen_folder_tree_up">Up</string>
+
+    <!-- font screen -->
+    <string name="screen_font_use">Use</string>
+    <string name="screen_font_activated">"activated"</string>
+    <string name="screen_font_title_template">%s Font</string>
+
+    <!-- osd player screen -->
+    <string name="screen_osd_player_osd">OSD</string>
+    <string name="screen_osd_player_play_pause">Play/Pause</string>
+    <string name="screen_osd_player_gps">Map</string>
+    <string name="screen_osd_player_gps_info">Map info</string>
+    <string name="screen_osd_player_gps_zoom_in">Map zoom in</string>
+    <string name="screen_osd_player_gps_zoom_out">Map zoom out</string>
+
+</resources>

@@ -6,7 +6,6 @@ import MaterialIconsPause
 import MaterialIconsPlay_arrow
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,8 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.drick.flightlog.ui.icons.IconSpeed
 import de.drick.flightlog.ui.icons.MaterialIconsFullscreen
-import de.drick.flightlog.ui.icons.MaterialIconsPause_circle
-import de.drick.flightlog.ui.icons.MaterialIconsPlay_circle_outline
 import io.github.kdroidfilter.composemediaplayer.PreviewableVideoPlayerState
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerState
 
@@ -43,13 +40,14 @@ private fun VideoPlayerControlsPreview() {
     }
     Column {
         VideoPlayer(state)
-        VideoPlayerControls(state)
+        VideoPlayerControls(state, {})
     }
 }
 
 @Composable
 fun VideoPlayerControls(
     playerState: VideoPlayerState,
+    onFullScreen: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     Row(
@@ -75,7 +73,7 @@ fun VideoPlayerControls(
             playerState = playerState
         )
         FilledIconButton(
-            onClick = { playerState.toggleFullscreen() },
+            onClick = { onFullScreen() },
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer
             )
