@@ -26,6 +26,8 @@ jobs:
           java-version: "17"
 
       - name: Build webApp
+        env:
+          MAPBOX_TOKEN: ${{ secrets.MAPBOX_TOKEN }}
         run: ./gradlew :startpoints:webApp:wasmJsBrowserDistribution
 
       - name: Upload artifact
