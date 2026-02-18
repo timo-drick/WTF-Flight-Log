@@ -31,7 +31,7 @@ val tileProviderOsm = TileProvider(
     }
 )
 
-private val mapboxToken = BuildConfig.MAPBOX_TOKEN
+private const val mapboxToken = BuildConfig.MAPBOX_TOKEN
 
 val tileProviderMapBox = TileProvider(
     name = "MapBox",

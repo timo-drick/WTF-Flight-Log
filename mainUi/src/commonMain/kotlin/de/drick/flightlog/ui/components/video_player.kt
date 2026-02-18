@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
-import flightlog.mainui.generated.resources.Res
-import flightlog.mainui.generated.resources.video_thumb1
+import wtfflightlog.mainui.generated.resources.Res
+import wtfflightlog.mainui.generated.resources.video_thumb1
 import io.github.kdroidfilter.composemediaplayer.PreviewableVideoPlayerState
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerState
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface

@@ -41,8 +41,8 @@ import de.drick.flightlog.ui.components.OsdCanvasView
 import de.drick.flightlog.ui.components.VideoPlayer
 import de.drick.flightlog.ui.mockLogItem
 import de.drick.wtf_osd.FontVariant
-import flightlog.mainui.generated.resources.Res
-import flightlog.mainui.generated.resources.preview_map
+import wtfflightlog.mainui.generated.resources.Res
+import wtfflightlog.mainui.generated.resources.preview_map
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import kotlin.math.roundToLong

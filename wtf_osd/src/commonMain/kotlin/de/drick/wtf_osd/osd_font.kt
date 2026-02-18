@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
-import flightlog.wtf_osd.generated.resources.Res
+import wtfflightlog.wtf_osd.generated.resources.Res
 
 
 /**

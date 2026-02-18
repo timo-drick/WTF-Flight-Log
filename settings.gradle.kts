@@ -1,4 +1,4 @@
-rootProject.name = "FlightLog"
+rootProject.name = "WTFFlightLog"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

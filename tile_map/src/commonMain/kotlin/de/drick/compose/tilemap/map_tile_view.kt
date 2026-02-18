@@ -19,8 +19,8 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import de.drick.core.log
-import flightlog.tile_map.generated.resources.Res
-import flightlog.tile_map.generated.resources.preview_map
+import wtfflightlog.tile_map.generated.resources.Res
+import wtfflightlog.tile_map.generated.resources.preview_map
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

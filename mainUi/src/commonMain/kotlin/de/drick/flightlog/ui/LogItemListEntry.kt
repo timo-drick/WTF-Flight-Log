@@ -26,10 +26,10 @@ import de.drick.flightlog.ui.icons.BootstrapFile
 import de.drick.flightlog.ui.icons.BootstrapFileFont
 import de.drick.flightlog.ui.icons.MaterialIconsMovie
 import de.drick.wtf_osd.FontVariant
-import flightlog.mainui.generated.resources.Res
-import flightlog.mainui.generated.resources.ardupilot_icon
-import flightlog.mainui.generated.resources.betaflight_icon
-import flightlog.mainui.generated.resources.inav_icon
+import wtfflightlog.mainui.generated.resources.Res
+import wtfflightlog.mainui.generated.resources.ardupilot_icon
+import wtfflightlog.mainui.generated.resources.betaflight_icon
+import wtfflightlog.mainui.generated.resources.inav_icon
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format

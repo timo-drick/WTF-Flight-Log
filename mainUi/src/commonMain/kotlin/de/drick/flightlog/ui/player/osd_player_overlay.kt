@@ -37,13 +37,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.drick.flightlog.ui.BasePreview
-import flightlog.mainui.generated.resources.Res
-import flightlog.mainui.generated.resources.screen_osd_player_gps
-import flightlog.mainui.generated.resources.screen_osd_player_gps_info
-import flightlog.mainui.generated.resources.screen_osd_player_gps_zoom_in
-import flightlog.mainui.generated.resources.screen_osd_player_gps_zoom_out
-import flightlog.mainui.generated.resources.screen_osd_player_osd
-import flightlog.mainui.generated.resources.screen_osd_player_play_pause
+import wtfflightlog.mainui.generated.resources.Res
+import wtfflightlog.mainui.generated.resources.screen_osd_player_gps
+import wtfflightlog.mainui.generated.resources.screen_osd_player_gps_info
+import wtfflightlog.mainui.generated.resources.screen_osd_player_gps_zoom_in
+import wtfflightlog.mainui.generated.resources.screen_osd_player_gps_zoom_out
+import wtfflightlog.mainui.generated.resources.screen_osd_player_osd
+import wtfflightlog.mainui.generated.resources.screen_osd_player_play_pause
 import org.jetbrains.compose.resources.stringResource
 
 @Preview(widthDp = 1280, heightDp = 720)
