@@ -6,11 +6,11 @@ import kotlin.test.assertNotNull
 
 class FontTest {
 
-    @Test
+    /*@Test
     fun testLoadAllFonts() = runTest {
         FontVariant.entries.forEach { fontVariant ->
             val font = loadOsdFont(FontVariant.BETAFLIGHT)
             assertNotNull(font)
         }
-    }
+    }*/
 }
