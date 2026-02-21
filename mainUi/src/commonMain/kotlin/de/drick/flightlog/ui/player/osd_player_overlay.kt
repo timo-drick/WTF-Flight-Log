@@ -1,12 +1,12 @@
 package de.drick.flightlog.ui.player
 
-import MaterialIconsInfo
-import MaterialIconsMap
-import MaterialIconsPause
-import MaterialIconsPlay_arrow
-import MaterialIconsReplay
-import MaterialIconsZoom_in
-import MaterialIconsZoom_out
+import de.drick.flightlog.ui.icons.MaterialIconsInfo
+import de.drick.flightlog.ui.icons.MaterialIconsMap
+import de.drick.flightlog.ui.icons.MaterialIconsPause
+import de.drick.flightlog.ui.icons.MaterialIconsPlay_arrow
+import de.drick.flightlog.ui.icons.MaterialIconsReplay
+import de.drick.flightlog.ui.icons.MaterialIconsZoom_in
+import de.drick.flightlog.ui.icons.MaterialIconsZoom_out
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,7 +22,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -37,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.drick.flightlog.ui.BasePreview
+import de.drick.flightlog.ui.icons.MaterialIconsClose
 import wtfflightlog.mainui.generated.resources.Res
 import wtfflightlog.mainui.generated.resources.screen_osd_player_gps
 import wtfflightlog.mainui.generated.resources.screen_osd_player_gps_info
@@ -45,6 +45,7 @@ import wtfflightlog.mainui.generated.resources.screen_osd_player_gps_zoom_out
 import wtfflightlog.mainui.generated.resources.screen_osd_player_osd
 import wtfflightlog.mainui.generated.resources.screen_osd_player_play_pause
 import org.jetbrains.compose.resources.stringResource
+import wtfflightlog.mainui.generated.resources.screen_osd_player_close
 
 @Preview(widthDp = 1280, heightDp = 720)
 @Composable
@@ -87,6 +88,7 @@ enum class OverlayAction {
     GPS_INFO,
     GPS_ZOOM_IN,
     GPS_ZOOM_OUT,
+    CLOSE
 }
 
 @Composable
@@ -112,6 +114,13 @@ fun OsdPlayerOverlay(
                 .padding(horizontal = 36.dp, vertical = 24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
+            OverlayActionButton(
+                icon = MaterialIconsClose,
+                contentDescription = stringResource(Res.string.screen_osd_player_close),
+                onClick = {
+                    onAction(OverlayAction.CLOSE)
+                }
+            )
             OverlayStateButton(
                 modifier = Modifier
                     .clickable(onClick = { onAction(OverlayAction.OSD_TOGGLE) })

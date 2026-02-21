@@ -4,7 +4,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.drick.core.log
 import io.github.kdroidfilter.platformtools.darkmodedetector.isSystemInDarkMode
 
@@ -63,6 +69,20 @@ private val LightColorScheme = lightColorScheme(
     onError = Color(0xFFFFFFFF)
 )
 
+fun MaterialTheme.cornerRadius() = 12.dp
+fun MaterialTheme.panePadding() = 12.dp
+
+val SrtTextStyle = TextStyle(
+    color = Color.White,
+    fontSize = 18.sp,
+    fontWeight = FontWeight.Bold,
+    shadow = Shadow(
+        color = Color.Black,
+        offset = Offset(1f, 1f),
+        blurRadius = 0.5f
+    )
+)
+
 @Composable
 fun FlightLogTheme(
     darkTheme: Boolean = isSystemInDarkMode(),
@@ -70,14 +90,15 @@ fun FlightLogTheme(
 ) {
     val colorScheme = if (darkTheme) {
         log("Dark theme detected")
-        darkColorScheme()
+        DarculaColorScheme
     } else {
         log("Light theme detected")
-        lightColorScheme()
+        LightColorScheme
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
-        content = content
+        content = content,
+
     )
 }

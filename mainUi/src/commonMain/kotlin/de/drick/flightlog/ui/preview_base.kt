@@ -7,12 +7,15 @@ import de.drick.flightlog.file.ByteSize
 import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
+import de.drick.flightlog.file.SRTFile
 import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.file.megabytes
 import de.drick.wtf_osd.FontVariant
 import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.io.Source
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Instant
 
 @Composable
@@ -26,14 +29,21 @@ fun BasePreview(content: @Composable () -> Unit) {
 
 fun mockLogItem(
     name: String,
-    variant: FontVariant? = null
+    variant: FontVariant?
+) = mockLogItem(
+    name = name,
+    osdFile = variant?.let { mockOsdFile(variant) }
+)
+
+fun mockLogItem(
+    name: String,
+    osdFile: OSDFile? = null,
+    srtFile: SRTFile? = null
 ): LogItem {
     val files = mutableSetOf<FileItem>()
     files.add(mockVideoFile("Video"))
-    variant?.let { files.add(mockOsdFile(it)) }
-    /*val files = persistentSetOf<FileItem>(
-        mockVideoFile(name)
-    )*/
+    osdFile?.let { files.add(osdFile) }
+    srtFile?.let { files.add(srtFile) }
     return LogItem(name, files.toPersistentSet())
 }
 
@@ -53,7 +63,17 @@ fun mockBaseFile(
 fun mockVideoFile(previewFileName: String) = VideoFile(
     file = mockBaseFile(previewFileName, "mov")
 )
-fun mockOsdFile(font: FontVariant) = OSDFile(
+fun mockOsdFile(
+    font: FontVariant,
+    duration: Duration = 400140.milliseconds,
+    hasGpsData: Boolean = false
+) = OSDFile(
     file = mockBaseFile(font.fileName(), "osd"),
-    fontVariant = font
+    fontVariant = font,
+    duration = duration,
+    hasGpsData = hasGpsData
+)
+fun mockSrtFile(name: String = "srtfile", duration: Duration) = SRTFile(
+    file = mockBaseFile(name, "srt"),
+    duration = duration
 )

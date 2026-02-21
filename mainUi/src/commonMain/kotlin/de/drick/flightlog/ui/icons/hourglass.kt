@@ -49,12 +49,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val IconVolumeOff: ImageVector
+val LucideHourglass: ImageVector
     get() {
-        if (_LucideVolumeOff != null) return _LucideVolumeOff!!
+        if (_LucideHourglass != null) return _LucideHourglass!!
         
-        _LucideVolumeOff = ImageVector.Builder(
-            name = "volume-off",
+        _LucideHourglass = ImageVector.Builder(
+            name = "hourglass",
             defaultWidth = 24.dp,
             defaultHeight = 24.dp,
             viewportWidth = 24f,
@@ -67,8 +67,8 @@ val IconVolumeOff: ImageVector
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round
             ) {
-                moveTo(16f, 9f)
-                arcToRelative(5f, 5f, 0f, false, true, 0.95f, 2.293f)
+                moveTo(5f, 22f)
+                horizontalLineToRelative(14f)
             }
             path(
                 fill = SolidColor(Color.Transparent),
@@ -77,8 +77,8 @@ val IconVolumeOff: ImageVector
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round
             ) {
-                moveTo(19.364f, 5.636f)
-                arcToRelative(9f, 9f, 0f, false, true, 1.889f, 9.96f)
+                moveTo(5f, 2f)
+                horizontalLineToRelative(14f)
             }
             path(
                 fill = SolidColor(Color.Transparent),
@@ -87,8 +87,13 @@ val IconVolumeOff: ImageVector
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round
             ) {
-                moveTo(2f, 2f)
-                lineToRelative(20f, 20f)
+                moveTo(17f, 22f)
+                verticalLineToRelative(-4.172f)
+                arcToRelative(2f, 2f, 0f, false, false, -0.586f, -1.414f)
+                lineTo(12f, 12f)
+                lineToRelative(-4.414f, 4.414f)
+                arcTo(2f, 2f, 0f, false, false, 7f, 17.828f)
+                verticalLineTo(22f)
             }
             path(
                 fill = SolidColor(Color.Transparent),
@@ -97,34 +102,18 @@ val IconVolumeOff: ImageVector
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round
             ) {
-                moveTo(7f, 7f)
-                lineToRelative(-0.587f, 0.587f)
-                arcTo(1.4f, 1.4f, 0f, false, true, 5.416f, 8f)
-                horizontalLineTo(3f)
-                arcToRelative(1f, 1f, 0f, false, false, -1f, 1f)
-                verticalLineToRelative(6f)
-                arcToRelative(1f, 1f, 0f, false, false, 1f, 1f)
-                horizontalLineToRelative(2.416f)
-                arcToRelative(1.4f, 1.4f, 0f, false, true, 0.997f, 0.413f)
-                lineToRelative(3.383f, 3.384f)
-                arcTo(0.705f, 0.705f, 0f, false, false, 11f, 19.298f)
-                verticalLineTo(11f)
-            }
-            path(
-                fill = SolidColor(Color.Transparent),
-                stroke = SolidColor(Color.Black),
-                strokeLineWidth = 2f,
-                strokeLineCap = StrokeCap.Round,
-                strokeLineJoin = StrokeJoin.Round
-            ) {
-                moveTo(9.828f, 4.172f)
-                arcTo(0.686f, 0.686f, 0f, false, true, 11f, 4.657f)
-                verticalLineToRelative(0.686f)
+                moveTo(7f, 2f)
+                verticalLineToRelative(4.172f)
+                arcToRelative(2f, 2f, 0f, false, false, 0.586f, 1.414f)
+                lineTo(12f, 12f)
+                lineToRelative(4.414f, -4.414f)
+                arcTo(2f, 2f, 0f, false, false, 17f, 6.172f)
+                verticalLineTo(2f)
             }
         }.build()
         
-        return _LucideVolumeOff!!
+        return _LucideHourglass!!
     }
 
-private var _LucideVolumeOff: ImageVector? = null
+private var _LucideHourglass: ImageVector? = null
 

@@ -1,9 +1,9 @@
 package de.drick.flightlog.ui.components
 
-import IconVolumeOff
-import IconVolumeUp
-import MaterialIconsPause
-import MaterialIconsPlay_arrow
+import de.drick.flightlog.ui.icons.IconVolumeOff
+import de.drick.flightlog.ui.icons.IconVolumeUp
+import de.drick.flightlog.ui.icons.MaterialIconsPause
+import de.drick.flightlog.ui.icons.MaterialIconsPlay_arrow
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

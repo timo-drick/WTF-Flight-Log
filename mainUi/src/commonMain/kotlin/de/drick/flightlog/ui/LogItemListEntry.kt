@@ -21,10 +21,12 @@ import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.FontFile
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
+import de.drick.flightlog.file.SRTFile
 import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.ui.icons.BootstrapFile
 import de.drick.flightlog.ui.icons.BootstrapFileFont
 import de.drick.flightlog.ui.icons.MaterialIconsMovie
+import de.drick.flightlog.ui.icons.MaterialIconsSatellite_alt
 import de.drick.wtf_osd.FontVariant
 import wtfflightlog.mainui.generated.resources.Res
 import wtfflightlog.mainui.generated.resources.ardupilot_icon
@@ -36,12 +38,21 @@ import kotlinx.datetime.format
 import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import wtfflightlog.mainui.generated.resources.screen_osd_player_gps
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 @Preview(widthDp = 200, heightDp = 100, uiMode = AndroidUiModes.UI_MODE_NIGHT_YES)
 @Preview(widthDp = 200, heightDp = 100, uiMode = AndroidUiModes.UI_MODE_NIGHT_NO)
 @Composable
 private fun PreviewLogItemView() {
-    val testLogItem = mockLogItem("Test entry 2", FontVariant.KISS_ULTRA)
+    val testLogItem = mockLogItem(
+        name = "Test entry 2",
+        osdFile = mockOsdFile(FontVariant.BETAFLIGHT, hasGpsData = true),
+        srtFile = mockSrtFile(duration = 345100.milliseconds)
+    )
     BasePreview {
         LogItemView(
             logEntry = testLogItem,
@@ -67,6 +78,19 @@ fun FileItem.icon() = when (this) {
     is FontFile -> BootstrapFileFont
     else -> BootstrapFile
 }
+
+fun LogItem.duration(): Duration? {
+    val osdFile = files.filterIsInstance<OSDFile>().firstOrNull()
+    val srtFile = files.filterIsInstance<SRTFile>().firstOrNull()
+    return when {
+        srtFile != null -> srtFile.duration
+        osdFile != null -> osdFile.duration
+        else -> null
+    }
+}
+
+fun LogItem.hasGpsData() =
+    files.filterIsInstance<OSDFile>().firstOrNull()?.hasGpsData ?: false
 
 @Composable
 fun LogItemView(
@@ -117,22 +141,37 @@ fun LogItemView(
                 style = MaterialTheme.typography.titleMedium
             )
             val lastModified: String = remember(logEntry) {
-                logEntry.lastModified
+                val modified = logEntry.lastModified
                     ?.toLocalDateTime(TimeZone.currentSystemDefault())
                     ?.format(dateTimeFormat)
                     ?: "NA"
+                val duration = logEntry.duration()
+                    ?.inWholeSeconds?.seconds?.toString()
+                "$modified - $duration"
             }
-            Text(
-                text = lastModified,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            val types = logEntry.files.joinToString { it.extension }
-            Text(
-                text = "Files: $types",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Column {
+                    Text(
+                        text = lastModified,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    val types = logEntry.files.joinToString { it.extension }
+                    Text(
+                        text = "Files: $types",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                if (logEntry.hasGpsData()) {
+                    Icon(
+                        imageVector = MaterialIconsSatellite_alt,
+                        contentDescription = stringResource(Res.string.screen_osd_player_gps)
+                    )
+                }
+            }
         }
     }
 }

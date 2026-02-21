@@ -10,6 +10,7 @@ import kotlin.time.Instant
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.io.Buffer
 import kotlinx.io.Source
+import kotlin.time.Duration
 
 data class LogItem(
     val name: String,
@@ -62,7 +63,14 @@ data class VideoFile(
 
 data class OSDFile(
     val file: FileItem,
-    val fontVariant: FontVariant
+    val fontVariant: FontVariant,
+    val duration: Duration,
+    val hasGpsData: Boolean
+) : FileItem by file
+
+data class SRTFile(
+    val file: FileItem,
+    val duration: Duration
 ) : FileItem by file
 
 data class FontFile(

@@ -29,5 +29,6 @@
     <string name="screen_osd_player_gps_info">Map info</string>
     <string name="screen_osd_player_gps_zoom_in">Map zoom in</string>
     <string name="screen_osd_player_gps_zoom_out">Map zoom out</string>
+    <string name="screen_osd_player_close">Close fullscreen mode</string>
 
 </resources>

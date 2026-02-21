@@ -1,4 +1,5 @@
-package de.drick.flightlog.ui.icons/*
+package de.drick.flightlog.ui.icons
+/*
 
                                  Apache License
                            Version 2.0, January 2004

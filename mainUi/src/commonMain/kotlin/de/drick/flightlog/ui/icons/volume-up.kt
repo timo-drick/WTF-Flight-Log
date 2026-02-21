@@ -1,3 +1,4 @@
+package de.drick.flightlog.ui.icons
 /*
 The MIT License (MIT)
 

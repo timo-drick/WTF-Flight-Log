@@ -1,5 +1,4 @@
-package de.drick.flightlog.ui.icons
-/*
+package de.drick.flightlog.ui.icons/*
 
                                  Apache License
                            Version 2.0, January 2004
@@ -209,12 +208,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val MaterialIconsFullscreen_exit: ImageVector
+val MaterialIconsClose: ImageVector
     get() {
-        if (_MaterialIconsFullscreen_exit != null) return _MaterialIconsFullscreen_exit!!
+        if (_MaterialIconsClose != null) return _MaterialIconsClose!!
         
-        _MaterialIconsFullscreen_exit = ImageVector.Builder(
-            name = "fullscreen_exit",
+        _MaterialIconsClose = ImageVector.Builder(
+            name = "close",
             defaultWidth = 24.dp,
             defaultHeight = 24.dp,
             viewportWidth = 24f,
@@ -227,49 +226,29 @@ val MaterialIconsFullscreen_exit: ImageVector
                 horizontalLineToRelative(24f)
                 verticalLineToRelative(24f)
                 horizontalLineTo(0f)
-                verticalLineTo(0f)
                 close()
             }
             path(
                 fill = SolidColor(Color.Black)
             ) {
-                moveTo(5f, 16f)
-                horizontalLineToRelative(3f)
-                verticalLineToRelative(3f)
-                horizontalLineToRelative(2f)
-                verticalLineToRelative(-5f)
-                horizontalLineTo(5f)
-                verticalLineToRelative(2f)
-                close()
-                moveToRelative(3f, -8f)
-                horizontalLineTo(5f)
-                verticalLineToRelative(2f)
-                horizontalLineToRelative(5f)
-                verticalLineTo(5f)
-                horizontalLineTo(8f)
-                verticalLineToRelative(3f)
-                close()
-                moveToRelative(6f, 11f)
-                horizontalLineToRelative(2f)
-                verticalLineToRelative(-3f)
-                horizontalLineToRelative(3f)
-                verticalLineToRelative(-2f)
-                horizontalLineToRelative(-5f)
-                verticalLineToRelative(5f)
-                close()
-                moveToRelative(2f, -11f)
-                verticalLineTo(5f)
-                horizontalLineToRelative(-2f)
-                verticalLineToRelative(5f)
-                horizontalLineToRelative(5f)
-                verticalLineTo(8f)
-                horizontalLineToRelative(-3f)
+                moveTo(19f, 6.41f)
+                lineTo(17.59f, 5f)
+                lineTo(12f, 10.59f)
+                lineTo(6.41f, 5f)
+                lineTo(5f, 6.41f)
+                lineTo(10.59f, 12f)
+                lineTo(5f, 17.59f)
+                lineTo(6.41f, 19f)
+                lineTo(12f, 13.41f)
+                lineTo(17.59f, 19f)
+                lineTo(19f, 17.59f)
+                lineTo(13.41f, 12f)
                 close()
             }
         }.build()
         
-        return _MaterialIconsFullscreen_exit!!
+        return _MaterialIconsClose!!
     }
 
-private var _MaterialIconsFullscreen_exit: ImageVector? = null
+private var _MaterialIconsClose: ImageVector? = null
 

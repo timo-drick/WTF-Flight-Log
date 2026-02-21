@@ -1,4 +1,5 @@
-package de.drick.flightlog.ui.icons/*
+package de.drick.flightlog.ui.icons
+/*
 The MIT License (MIT)
 
 Copyright (c) 2019-2024 The Bootstrap Authors

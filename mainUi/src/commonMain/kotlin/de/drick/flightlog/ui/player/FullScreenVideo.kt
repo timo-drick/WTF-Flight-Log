@@ -38,6 +38,7 @@ import de.drick.flightlog.ui.BasePreview
 import de.drick.flightlog.ui.LogItemState
 import de.drick.flightlog.ui.components.GpsView
 import de.drick.flightlog.ui.components.OsdCanvasView
+import de.drick.flightlog.ui.components.SrtOverlayView
 import de.drick.flightlog.ui.components.VideoPlayer
 import de.drick.flightlog.ui.mockLogItem
 import de.drick.wtf_osd.FontVariant
@@ -49,28 +50,31 @@ import kotlin.math.roundToLong
 
 @Preview(widthDp = 1280, heightDp = 720)
 @Composable
-private fun PreviewFullScreenPlayer() {
+private fun PreviewFullScreenPlayerPanel() {
     val testState = remember {
         val font = FontVariant.BETAFLIGHT
         val item = mockLogItem("Test entry 2", font)
         LogItemState(item)
     }
     BasePreview {
-        FullScreenPlayer(
+        FullScreenPlayerPanel(
             modifier = Modifier.fillMaxSize(),
-            state = testState
+            state = testState,
+            onClose = {}
         )
     }
 }
 
 @Composable
-fun FullScreenPlayer(
+fun FullScreenPlayerPanel(
     state: LogItemState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClose: () -> Unit
 ) {
     val previewMode = LocalInspectionMode.current
     val osdData = state.osdData
     val gpsData = osdData?.gpsData
+    val srtData = state.srtData
 
     val playerState = state.playerState
 
@@ -171,6 +175,17 @@ fun FullScreenPlayer(
                             }
                         )
                     }
+                    srtData?.let { data ->
+                        Box(Modifier.fillMaxSize()) {
+                            SrtOverlayView(
+                                modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+                                srtData = data,
+                                positionProvider = {
+                                    (playerState.currentTime * 1000.0).roundToLong()
+                                }
+                            )
+                        }
+                    }
                 }
             }
         },
@@ -232,6 +247,10 @@ fun FullScreenPlayer(
                         OverlayAction.GPS_INFO -> {
                             //TODO
                         }
+
+                        OverlayAction.CLOSE -> {
+                            onClose()
+                        }
                     }
                 },
                 onSeek = { position ->
@@ -266,6 +285,7 @@ fun OsdPlayerScaffold(
             Box(
                 Modifier.fillMaxWidth(0.25f).align(Alignment.BottomEnd)
                     .padding(16.dp)
+                    .padding(bottom = 32.dp)
                     .aspectRatio(1f)
                     .clip(RoundedCornerShape(16.dp))
             ) {
