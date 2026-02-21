@@ -20,11 +20,6 @@ kotlin {
 
     jvm()
 
-    js {
-        browser()
-        binaries.executable()
-    }
-
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
@@ -37,16 +32,14 @@ kotlin {
     // common to share sources between related targets.
     // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":core"))
+        commonMain.dependencies {
+            implementation(project(":libs:log"))
 
-                implementation(libs.kotlin.stdlib)
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.kotlinx.io.core)
-                implementation(libs.compose.ui)
-                implementation(libs.compose.components.resources)
-            }
+            implementation(libs.kotlin.stdlib)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.io.core)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.components.resources)
         }
 
         commonTest.dependencies {
@@ -54,13 +47,10 @@ kotlin {
             implementation(libs.kotlinx.coroutines.test)
         }
         jvmTest.dependencies {
-            implementation(libs.kotlinx.io.core.jvm)
+            //implementation(libs.kotlinx.io.core)
+            //implementation(libs.kotlinx.io.bytestring)
+            //implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
-        }
-
-        jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 

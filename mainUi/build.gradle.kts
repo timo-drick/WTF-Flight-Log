@@ -35,9 +35,9 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
 
-            implementation(project(":core"))
-            implementation(project(":wtf_osd"))
-            implementation(project(":tile_map"))
+            implementation(project(":libs:log"))
+            implementation(project(":libs:wtf_osd"))
+            implementation(project(":libs:tile_map"))
 
 
             implementation(libs.kdroidfilter.compose.mediaplayer)
@@ -71,10 +71,6 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.compose.uiTooling)
-        }
-        jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 }

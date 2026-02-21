@@ -10,6 +10,6 @@ fun log(error: Throwable) {
     log(error = error, msg = { error.message ?: "Unknown error" })
 }
 
-fun log(msg: String?, error: Throwable? = null) = logPlatform(error, { msg ?: "Unknown error" })
+fun log(msg: String?, error: Throwable? = null) = logPlatform(error, msg = { msg ?: "Unknown error" })
 
 expect fun logPlatform(error: Throwable? = null, msg: () -> String)

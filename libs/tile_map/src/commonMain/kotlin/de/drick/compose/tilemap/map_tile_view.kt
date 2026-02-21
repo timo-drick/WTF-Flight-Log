@@ -19,14 +19,14 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import de.drick.core.log
-import wtfflightlog.tile_map.generated.resources.Res
-import wtfflightlog.tile_map.generated.resources.preview_map
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import wtfflightlog.libs.tile_map.generated.resources.Res
+import wtfflightlog.libs.tile_map.generated.resources.preview_map
 import kotlin.math.roundToInt
 
 class GpsPoint(val latitude: Double, val longitude: Double) {

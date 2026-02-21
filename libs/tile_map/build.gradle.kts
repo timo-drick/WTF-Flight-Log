@@ -69,7 +69,7 @@ kotlin {
         commonMain {
             kotlin.srcDir(generateBuildConfig)
             dependencies {
-                implementation(project(":core"))
+                implementation(project(":libs:log"))
 
                 implementation(libs.kotlin.stdlib)
 
@@ -100,5 +100,4 @@ kotlin {
             implementation(libs.ktor.client.js)
         }
     }
-
 }

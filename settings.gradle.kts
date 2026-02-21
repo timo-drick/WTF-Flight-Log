@@ -32,12 +32,11 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
+include(":libs:log")
+include(":libs:wtf_osd")
+include(":libs:tile_map")
+
+include(":mainUi")
 include(":startpoints:androidApp")
 include(":startpoints:desktopApp")
 include(":startpoints:webApp")
-
-include(":mainUi")
-
-include(":wtf_osd")
-include(":core")
-include(":tile_map")
