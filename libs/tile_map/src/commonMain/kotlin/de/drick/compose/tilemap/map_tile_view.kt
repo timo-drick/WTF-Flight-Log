@@ -153,8 +153,7 @@ class ViewPortState(
         centerPos = centerPos.copy(
             x = newX,
             y = newY
-        )
-        log("Move to: ${centerPos.toGeoPoint()}")
+        ).wrap() // make sure we do stay in the positive valid numbers
         update()
         invalidateCounter++
     }
