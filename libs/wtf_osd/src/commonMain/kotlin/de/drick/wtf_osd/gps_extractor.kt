@@ -24,7 +24,9 @@ fun extractGps(osdRecord: OsdRecord): GpsData {
             if (latChars != null && lonChars != null) {
                 val lat = latChars.toDouble()
                 val lon = lonChars.toDouble()
-                positionList.add(GpsRecord(GeoPoint(lat, lon), frame.millis))
+                if (lat != 0.0 || lon != 0.0) {
+                    positionList.add(GpsRecord(GeoPoint(lat, lon), frame.millis))
+                }
             }
         } catch (err: Throwable) {
             log("Error while parsing GPS data: ${err.message}")
