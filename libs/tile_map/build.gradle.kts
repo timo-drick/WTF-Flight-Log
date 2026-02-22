@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
@@ -50,6 +51,14 @@ kotlin {
         namespace = "de.moaps.composemultiplatformtilemap"
         compileSdk = 36
         minSdk = 26
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+
+        androidResources {
+            enable = true
+        }
     }
 
     jvm()

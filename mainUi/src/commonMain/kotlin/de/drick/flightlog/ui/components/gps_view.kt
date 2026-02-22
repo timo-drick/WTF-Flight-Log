@@ -1,5 +1,8 @@
 package de.drick.flightlog.ui.components
 
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.draggable2D
+import androidx.compose.foundation.gestures.rememberDraggable2DState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -9,13 +12,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.pointerInput
 import de.drick.compose.tilemap.GpsPoint
 import de.drick.compose.tilemap.TileMapView
 import de.drick.compose.tilemap.ViewPortState
@@ -114,7 +118,32 @@ fun GpsView(
     }
 
     TileMapView(
-        modifier = modifier,
+        modifier = modifier
+            .focusable()
+            .draggable2D(
+                state = rememberDraggable2DState {
+                        offset ->
+                    // Log.d("Draggable2D", "Dragged to $offset")
+                    viewPortState.movePx(offset.x, offset.y)
+                }
+            )
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        if (event.type == PointerEventType.Scroll) {
+                            val inputChange = event.changes.first()
+                            val scrollDelta = inputChange.scrollDelta.y.coerceIn(-1f, 1f)
+                            val zoom = (viewPortState.zoom - scrollDelta).coerceIn(1f, 19f)
+                            viewPortState.zoom(
+                                newZoom = zoom,
+                                x = inputChange.position.x,
+                                y =inputChange.position.y
+                            )
+                        }
+                    }
+                }
+            },
         state = viewPortState,
     ) {
         val start = startPoint.toOffset()
@@ -127,11 +156,11 @@ fun GpsView(
             }
         }
         drawPath(path, Ble2, style = Stroke(width = 4.0f))
-        // Current point
-        drawCircle(Green, radius = 10f, center = Offset.Zero)
         // Start
         drawCircle(Black, radius = 10f, center = start)
         // End
         drawCircle(White, radius = 10f, center = endPoint.toOffset())
+        // Current point
+        drawCircle(Green, radius = 10f, center = currentPoint.toOffset())
     }
 }

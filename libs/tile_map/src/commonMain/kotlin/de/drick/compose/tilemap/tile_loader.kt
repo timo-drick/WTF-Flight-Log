@@ -67,7 +67,7 @@ class TileProvider(
     override fun toString() = name
     val inMemoryCache = mutableMapOf<TilePos, ByteArray>()
     suspend fun loadTile(pos: TilePos) = withContext(Dispatchers.Default) {
-        val url = tileLoaderUrl(pos)
+        val url = tileLoaderUrl(pos.wrap())
         val response = client.request(url)
         if (response.status.isSuccess()) {
             val bodyBytes = response.bodyAsBytes()
