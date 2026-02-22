@@ -41,7 +41,8 @@ fun VideoPlayer(
         Image(
             modifier = modifier,
             painter = painterResource(Res.drawable.video_thumb1),
-            contentDescription = null
+            contentDescription = null,
+            contentScale = contentScale
         )
     } else {
         VideoPlayerSurface(playerState, modifier, contentScale, overlay)

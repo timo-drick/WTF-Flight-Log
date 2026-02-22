@@ -33,7 +33,7 @@ val tileProviderOsm = TileProvider(
 
 private const val mapboxToken = BuildConfig.MAPBOX_TOKEN
 
-val tileProviderMapBox = TileProvider(
+val tileProviderMapBoxSat = TileProvider(
     name = "MapBox",
     tileLoaderUrl = { pos ->
         URLBuilder("https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/512").apply {
@@ -43,7 +43,24 @@ val tileProviderMapBox = TileProvider(
     }
 )
 
-
+val tileProviderMapBoxLight = TileProvider(
+    name = "MapBox Dark",
+    tileLoaderUrl = { pos ->
+        URLBuilder("https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/512").apply {
+            appendPathSegments(pos.zoom.toString(), pos.tileX.toString(), pos.tileY.toString())
+            parameters.append("access_token", mapboxToken)
+        }.build()
+    }
+)
+val tileProviderMapBoxDark = TileProvider(
+    name = "MapBox Dark",
+    tileLoaderUrl = { pos ->
+        URLBuilder("https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/512").apply {
+            appendPathSegments(pos.zoom.toString(), pos.tileX.toString(), pos.tileY.toString())
+            parameters.append("access_token", mapboxToken)
+        }.build()
+    }
+)
 
 private val client by lazy {
     HttpClient {

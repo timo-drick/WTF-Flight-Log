@@ -1,6 +1,6 @@
 package de.drick.flightlog.file
 
-import de.drick.core.log
+import de.drick.flightlog.ui.components.toGeoPoint
 import de.drick.wtf_osd.ParseResult
 import de.drick.wtf_osd.extractGps
 import de.drick.wtf_osd.parseOsdFile
@@ -28,7 +28,8 @@ fun List<FileItem>.analyzeFlow() = flow {
                                     file = fileItem,
                                     fontVariant = osd.record.fontVariant,
                                     duration = duration,
-                                    hasGpsData = gps.wayPoints.isNotEmpty()
+                                    hasGpsData = gps.wayPoints.isNotEmpty(),
+                                    startPosition = gps.wayPoints.firstOrNull()?.position?.toGeoPoint()
                                 )
                             }
                             is ParseResult.Error -> ErrorFile(fileItem, osd.type.name)

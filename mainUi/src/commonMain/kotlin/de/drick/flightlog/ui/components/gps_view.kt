@@ -20,21 +20,21 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
-import de.drick.compose.tilemap.GpsPoint
 import de.drick.compose.tilemap.TileMapView
 import de.drick.compose.tilemap.ViewPortState
 import de.drick.compose.tilemap.tileProviderDipulZones
-import de.drick.compose.tilemap.tileProviderMapBox
+import de.drick.compose.tilemap.tileProviderMapBoxSat
 import de.drick.core.log
-import de.drick.wtf_osd.GeoPoint
+import de.drick.compose.tilemap.GeoPoint
 import de.drick.wtf_osd.GpsData
+import de.drick.wtf_osd.GpsPoint
 import de.drick.wtf_osd.GpsRecord
 import kotlinx.coroutines.isActive
 
 val Ble2 = Color(0xff90caf9)
 val Ble7 = Color(0xff1976d2)
 
-fun GeoPoint.toGpsPoint() = GpsPoint(latitude, longitude)
+fun GpsPoint.toGeoPoint() = GeoPoint(latitude, longitude)
 
 @Composable
 fun GpsView(
@@ -49,20 +49,20 @@ fun GpsView(
         ViewPortState(
             scope = scope,
             initialZoom = zoomLevel.toFloat(),
-            initialPos = gpsData.wayPoints.first().position.toGpsPoint(),
+            initialPos = gpsData.wayPoints.first().position.toGeoPoint(),
             tileSize = 256,
-            tileProviderMapBox,
+            tileProviderMapBoxSat,
             tileProviderDipulZones
         )
     }
     val overviewPoints = remember(gpsData) {
-        gpsData.wayPoints.map { it.position.toGpsPoint() }
+        gpsData.wayPoints.map { it.position.toGeoPoint() }
     }
     val startPoint = remember(gpsData) {
-        gpsData.wayPoints.first().position.toGpsPoint()
+        gpsData.wayPoints.first().position.toGeoPoint()
     }
     val endPoint = remember(gpsData) {
-        gpsData.wayPoints.last().position.toGpsPoint()
+        gpsData.wayPoints.last().position.toGeoPoint()
     }
     var currentPoint by remember { mutableStateOf(startPoint) }
 
@@ -106,7 +106,7 @@ fun GpsView(
                 }
                 if (currentFrame != frame) {
                     frame = currentFrame
-                    currentPoint = currentFrame.position.toGpsPoint()
+                    currentPoint = currentFrame.position.toGeoPoint()
                     /*viewPortState.easeTo(
                     cameraOptions { center(currentPoint) }
                 )*/

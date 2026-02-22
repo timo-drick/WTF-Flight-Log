@@ -27,11 +27,8 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.drick.flightlog.FlightLogState
 import de.drick.flightlog.cornerRadius
 import de.drick.flightlog.file.LogItem
-import de.drick.flightlog.panePadding
-import de.drick.flightlog.ui.components.ScrollBar
 import de.drick.flightlog.ui.components.SuspendButton
 import de.drick.wtf_osd.FontVariant
 
@@ -67,7 +64,7 @@ fun LogItemListPane(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = state.lazyListState,
-            contentPadding = PaddingValues(MaterialTheme.panePadding())
+            contentPadding = PaddingValues(0.dp)
         ) {
             item {
                 SuspendButton(onClick = {
@@ -135,8 +132,8 @@ fun LogItemListPane(
                 }
             }
         }
-        ScrollBar(
+        /*ScrollBar(
             lazyListState = state.lazyListState,
-        )
+        )*/
     }
 }

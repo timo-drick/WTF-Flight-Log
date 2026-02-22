@@ -8,7 +8,7 @@ import kotlin.math.ln
 import kotlin.math.sinh
 import kotlin.math.tan
 
-fun GpsPoint.toTilePos(zoom: Int): TilePos {
+fun GeoPoint.toTilePos(zoom: Int): TilePos {
     val n = 1 shl zoom
     val latRad = latitude.toRadians()
     return TilePos(
@@ -18,7 +18,7 @@ fun GpsPoint.toTilePos(zoom: Int): TilePos {
     )
 }
 
-fun TilePos.toGeoPoint() = GpsPoint(
+fun TilePos.toGeoPoint() = GeoPoint(
     latitude = tileYToLat(y, zoom),
     longitude = tileXToLon(x, zoom)
 )
@@ -53,15 +53,15 @@ val earthRadius = 6378137.0 // in meters WGS84
 
 data class MeterPos(val x: Double, val y: Double)
 
-fun GpsPoint.toMeter() = convert4326To3857(this)
+fun GeoPoint.toMeter() = convert4326To3857(this)
 fun MeterPos.toGeoPoint() = convert3857To4326(this)
 
-private fun convert4326To3857(gpsPoint: GpsPoint) = MeterPos(
-    x = earthRadius * gpsPoint.longitude.toRadians(),
-    y = earthRadius * ln(tan(PI / 4 + gpsPoint.latitude.toRadians() / 2))
+private fun convert4326To3857(geoPoint: GeoPoint) = MeterPos(
+    x = earthRadius * geoPoint.longitude.toRadians(),
+    y = earthRadius * ln(tan(PI / 4 + geoPoint.latitude.toRadians() / 2))
 )
 
-private fun convert3857To4326(meterPos: MeterPos) =  GpsPoint(
+private fun convert3857To4326(meterPos: MeterPos) =  GeoPoint(
     latitude = (2 * atan(exp(meterPos.y / earthRadius)) - PI / 2).toDegrees(),
     longitude = (meterPos.x / earthRadius).toDegrees()
 )

@@ -46,12 +46,6 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
         }
-        jvmTest.dependencies {
-            //implementation(libs.kotlinx.io.core)
-            //implementation(libs.kotlinx.io.bytestring)
-            //implementation(libs.kotlin.test)
-            implementation(libs.kotlinx.coroutines.test)
-        }
     }
 
 }

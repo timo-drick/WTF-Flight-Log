@@ -2,12 +2,16 @@ package de.drick.wtf_osd
 
 import de.drick.core.log
 
+
+
+class GpsPoint(val latitude: Double, val longitude: Double)
+
 data class GpsData(
     val wayPoints: List<GpsRecord>
 )
 
 data class GpsRecord(
-    val position: GeoPoint,
+    val position: GpsPoint,
     val osdMillis: Long
 )
 
@@ -25,7 +29,7 @@ fun extractGps(osdRecord: OsdRecord): GpsData {
                 val lat = latChars.toDouble()
                 val lon = lonChars.toDouble()
                 if (lat != 0.0 || lon != 0.0) {
-                    positionList.add(GpsRecord(GeoPoint(lat, lon), frame.millis))
+                    positionList.add(GpsRecord(GpsPoint(lat, lon), frame.millis))
                 }
             }
         } catch (err: Throwable) {

@@ -3,6 +3,7 @@ package de.drick.compose.tilemap
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -31,9 +32,6 @@ import wtfflightlog.libs.tile_map.generated.resources.Res
 import wtfflightlog.libs.tile_map.generated.resources.preview_map
 import kotlin.math.roundToInt
 
-class GpsPoint(val latitude: Double, val longitude: Double) {
-    override fun toString() = "GeoPoint($latitude, $longitude)"
-}
 
 data class TileImage(
     val pos: TilePos,
@@ -102,7 +100,7 @@ class TileLayerState(
 class ViewPortState(
     val scope: CoroutineScope,
     initialZoom: Float = 10f,
-    initialPos: GpsPoint = GpsPoint(0.0, 0.0),
+    initialPos: GeoPoint = GeoPoint(0.0, 0.0),
     val tileSize: Int = 512,
     vararg tileProviderList: TileProvider
 ) {
@@ -113,16 +111,26 @@ class ViewPortState(
         private set
     val tileZoom get() = zoom.toInt()
     var centerPos by mutableStateOf(initialPos.toTilePos(tileZoom))
-    val tileStateList = tileProviderList.map { provider ->
+    var tileStateList = tileProviderList.toList().toStateList()
+    val size = IntSize(tileSize, tileSize)
+
+    private var sizePx = Size(0f, 0f)
+    var invalidateCounter by mutableIntStateOf(0)
+
+    fun List<TileProvider>.toStateList() = map { provider ->
         TileLayerState(provider) {
             invalidateCounter++
             log("Invalid counter: $invalidateCounter")
         }
     }
-    val size = IntSize(tileSize, tileSize)
 
-    private var sizePx = Size(0f, 0f)
-    var invalidateCounter by mutableIntStateOf(0)
+    fun updateTileProvider(vararg providerList: TileProvider){
+        val newStateList = providerList.toList().toStateList()
+        tileStateList = newStateList
+        visibleRange = VisibleTileRange(0, 0, 0, 0)
+        update()
+        log("Update tile provider")
+    }
 
     fun updateSize(size: Size) {
         if (size != sizePx) {
@@ -132,7 +140,7 @@ class ViewPortState(
         }
     }
 
-    fun center(point: GpsPoint) {
+    fun center(point: GeoPoint) {
         centerPos = point.toTilePos(tileZoom)
         update()
     }
@@ -198,7 +206,7 @@ class ViewPortState(
         }
     }
 
-    fun geoPointToOffset(p: GpsPoint): Offset {
+    fun geoPointToOffset(p: GeoPoint): Offset {
         val tilePos = p.toTilePos(tileZoom)
         return tilePosToOffset(tilePos)
     }
@@ -211,7 +219,7 @@ class ViewPortState(
 }
 
 interface MapDrawScope : DrawScope {
-    fun GpsPoint.toOffset(): Offset
+    fun GeoPoint.toOffset(): Offset
     fun TilePos.toOffset(): Offset
 }
 
@@ -219,14 +227,14 @@ private class MapDrawScopeImpl(
     private val delegate: DrawScope,
     private val viewPortState: ViewPortState,
 ) : MapDrawScope, DrawScope by delegate {
-    override fun GpsPoint.toOffset() = viewPortState.geoPointToOffset(this)
+    override fun GeoPoint.toOffset() = viewPortState.geoPointToOffset(this)
     override fun TilePos.toOffset() = viewPortState.tilePosToOffset(this)
 }
 
 @Composable
 fun rememberViewPortState(
     initialZoom: Float = 10f,
-    initPos: GpsPoint = GpsPoint(0.0, 0.0),
+    initPos: GeoPoint = GeoPoint(0.0, 0.0),
     tileSize: Int = 512,
     vararg tileProvider: TileProvider = arrayOf(tileProviderOsm)
 ): ViewPortState {
@@ -235,6 +243,27 @@ fun rememberViewPortState(
         ViewPortState(scope, initialZoom, initPos, tileSize, *tileProvider)
     }
 }
+
+@Composable
+fun rememberViewPortState(
+    isDarkMode: Boolean,
+    initialZoom: Float = 10f,
+    initPos: GeoPoint = GeoPoint(0.0, 0.0),
+    tileSize: Int = 512,
+    darkTileProvider: TileProvider,
+    lightTileProvider: TileProvider
+): ViewPortState {
+    val provider = if (isDarkMode) darkTileProvider else lightTileProvider
+    val scope = rememberCoroutineScope()
+    val state = remember(scope) {
+        ViewPortState(scope, initialZoom, initPos, tileSize, provider)
+    }
+    LaunchedEffect(isDarkMode) {
+        state.updateTileProvider(provider)
+    }
+    return state
+}
+
 
 @Composable
 fun TileMapView(

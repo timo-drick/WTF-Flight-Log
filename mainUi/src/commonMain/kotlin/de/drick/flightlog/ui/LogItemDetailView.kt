@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -56,7 +55,11 @@ data class OsdData(
 )
 
 @Preview(
-    widthDp = 1200, heightDp = 700,
+    widthDp = 1200, heightDp = 800,
+    uiMode = AndroidUiModes.UI_MODE_NIGHT_YES
+)
+@Preview(
+    widthDp = 800, heightDp = 800,
     uiMode = AndroidUiModes.UI_MODE_NIGHT_YES
 )
 @Composable
@@ -144,16 +147,15 @@ fun LogItemDetailPane(
     }
 
     Surface(
+        modifier = modifier,
         shape = RoundedCornerShape(MaterialTheme.cornerRadius()),
         color = MaterialTheme.colorScheme.surfaceContainer
     ) {
-
-        Column(modifier = modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 TextButton(onClick = onBackClick) {
                     Text("x")
@@ -161,13 +163,12 @@ fun LogItemDetailPane(
                 Text(
                     text = state.logItem.name,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(start = 8.dp)
+                    modifier = Modifier
                 )
             }
 
-            HorizontalDivider()
-
             Row(
+                modifier = Modifier.weight(1f, fill = false),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 if (videoFile != null) {
@@ -176,11 +177,13 @@ fun LogItemDetailPane(
                     ) {
                         Box(
                             modifier = modifier
-                                .aspectRatio(playerState.aspectRatio),
+                                .aspectRatio(playerState.aspectRatio)
+                                .weight(1f, fill = false)
+                            ,
                             contentAlignment = Alignment.BottomCenter
                         ) {
                             VideoPlayer(
-                                modifier = Modifier.fillMaxSize(),
+                                modifier = Modifier.aspectRatio(playerState.aspectRatio),
                                 playerState = playerState,
                                 contentScale = ContentScale.Fit
                             ) {

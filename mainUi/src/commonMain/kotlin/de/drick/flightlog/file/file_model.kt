@@ -1,6 +1,7 @@
 package de.drick.flightlog.file
 
 import de.drick.wtf_osd.FontVariant
+import de.drick.compose.tilemap.GeoPoint
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.extension
 import io.github.vinceglb.filekit.nameWithoutExtension
@@ -65,7 +66,8 @@ data class OSDFile(
     val file: FileItem,
     val fontVariant: FontVariant,
     val duration: Duration,
-    val hasGpsData: Boolean
+    val hasGpsData: Boolean,
+    val startPosition: GeoPoint?
 ) : FileItem by file
 
 data class SRTFile(

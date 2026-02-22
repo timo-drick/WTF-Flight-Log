@@ -1,4 +1,4 @@
-package de.drick.wtf_osd
+package de.drick.compose.tilemap
 
 import kotlin.math.*
 
