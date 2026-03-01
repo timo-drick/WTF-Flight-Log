@@ -12,6 +12,8 @@ import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.file.megabytes
 import de.drick.wtf_osd.FontVariant
 import de.drick.compose.tilemap.GeoPoint
+import de.drick.wtf_osd.Height
+import de.drick.wtf_osd.Speed
 import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.io.Source
@@ -68,13 +70,17 @@ fun mockOsdFile(
     font: FontVariant,
     duration: Duration = 400140.milliseconds,
     hasGpsData: Boolean = false,
-    startPosition: GeoPoint? = null
+    startPosition: GeoPoint? = null,
+    maxSpeed: Speed? = null,
+    maxHeight: Height? = null
 ) = OSDFile(
     file = mockBaseFile(font.fileName(), "osd"),
     fontVariant = font,
     duration = duration,
     hasGpsData = hasGpsData,
-    startPosition = startPosition
+    startPosition = startPosition,
+    maxSpeed = maxSpeed,
+    maxHeight = maxHeight
 )
 fun mockSrtFile(name: String = "srtfile", duration: Duration) = SRTFile(
     file = mockBaseFile(name, "srt"),

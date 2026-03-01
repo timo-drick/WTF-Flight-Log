@@ -23,6 +23,12 @@ class BetaflightParserTest {
         assertEquals(54, osdRecord.fontHeight)
         assertEquals(180, osdRecord.xOffset)
         assertEquals(0, osdRecord.yOffset)
+        val symbols = Symbols(osdRecord)
+        val data = extractFlightData(symbols)
+        assertEquals(
+            expected = FlightData(millis=202200, speed=Speed(value=2, unit= SpeedUnit.Kmh), height=Height(3f, HeightUnit.Meter), amp=81.22f),
+            actual = data[2434]
+        )
     }
 
     @Test
@@ -32,7 +38,25 @@ class BetaflightParserTest {
         val duration = osdRecord.frames.last().millis.milliseconds
         println("Duration: $duration")
         val gpsData = extractGps(osdRecord)
-        println("Gps points: ${gpsData.wayPoints.size}")
+        assertEquals(700, gpsData.wayPoints.size)
+        assertEquals(
+            expected = GpsRecord(GpsPoint(38.4997578, -9.1823096), 6),
+            actual = gpsData.wayPoints.first()
+        )
+        assertEquals(
+            expected = GpsRecord(GpsPoint(38.4997303, -9.1823309), 384014),
+            actual = gpsData.wayPoints.last()
+        )
+        val symbols = Symbols(osdRecord)
+        val data = extractFlightData(symbols)
+        assertEquals(
+            expected = FlightData(millis=309957, speed=Speed(value=61, unit= SpeedUnit.Kmh), height=Height(value=15.5f, unit= HeightUnit.Meter), amp=11.12f),
+            actual = data[578]
+        )
+        /*data.forEachIndexed { index, data ->
+            val string = symbols.toString(osdRecord.frames[index].data).replace("SYM_NONE", " ")
+            println("[$index] = $data")
+        }*/
     }
 
     private fun parseOsdTestFile(fileName: String): OsdRecord {

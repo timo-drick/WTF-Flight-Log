@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 
@@ -88,25 +89,23 @@ kotlin {
 
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.logging)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                implementation(libs.ktor.client.okhttp)
-            }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
         }
         jvmMain.dependencies {
             implementation(libs.ktor.client.okhttp)
         }
         wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)
+        }
+        
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }
