@@ -1,68 +1,39 @@
-This is a Kotlin Multiplatform project targeting Android, Web, Desktop (JVM).
+# WTF Flight Log
 
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+With this app you can open recorded video/osd files and play the video back with OSD.
+It is based on the msp-osd code (https://github.com/fpv-wtf/msp-osd) and the osd-dump-tools (https://github.com/Knifa/osd-dump-tools).
+Currently it is only tested with betaflight and iNav osd data.
 
-### Build and Run Android Application
+This app is a webapp which can be used with this link:
+https://timo-drick.github.io/WTF-Flight-Log/
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+![Screenshot 1](docu/screenshot_world.png)
+![Screenshot 2](docu/screenshot_detail_view.png)
+![Screenshot 3](docu/screenshot_fullscreen.png)
 
-### Build and Run Desktop (JVM) Application
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+Please note that this project is under heavy development.
+Since the FPV.WTF team rooted the DJI googles the project: https://github.com/fpv-wtf/msp-osd brings the full betaflight OSD to digital video.
+It is also possible to record the osd data onto the googles.
+You than have 3 different files: DJIG0003.mp4, DJIG0003.srt and DJIG0003.osd
+The ...osd file contains the OSD character data.
+Supported devices: 
+- DJI Googles V1 and V2
+- Older air units Vista and original one
+- O3 Air Unit
+- ~~O4 Air Unit~~ not supported
 
-### Build and Run Web Application
+## Enable osd recording
+Follow the instructions on (https://github.com/fpv-wtf/msp-osd) to install msp-osd.
+Than connect your google and input following in the wtfos configurator cli:
+```
+$ package-config set msp-osd rec_enabled true
+$ package-config apply msp-osd
+```
+And than do some flight.
 
-To build and run the development version of the web app, use the run configuration from the run widget
-in your IDE's toolbar or run it directly from the terminal:
-- for the Wasm target (faster, modern browsers):
-  - on macOS/Linux
-    ```shell
-    ./gradlew :composeApp:wasmJsBrowserDevelopmentRun
-    ```
-  - on Windows
-    ```shell
-    .\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
-    ```
-- for the JS target (slower, supports older browsers):
-  - on macOS/Linux
-    ```shell
-    ./gradlew :composeApp:jsBrowserDevelopmentRun
-    ```
-  - on Windows
-    ```shell
-    .\gradlew.bat :composeApp:jsBrowserDevelopmentRun
-    ```
+## Development
 
----
+If you want to build this project yourself please follow instructions here:
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
-
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+[DEVELOPMENT.md](DEVELOPMENT.md)
