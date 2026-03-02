@@ -21,4 +21,9 @@ versionCatalogUpdate {
         versions.add("android-compileSdk")
         versions.add("android-minSdk")
     }
+    pin {
+        versions.add("compose-adaptive") // Unfortunately version "1.3.0-alpha05" does not work with wasm
+        versions.add("compose-nav3") // Not working with next higher version
+        versions.add("material3") // Not working with next higher version
+    }
 }
