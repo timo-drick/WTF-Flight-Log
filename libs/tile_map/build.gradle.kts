@@ -48,18 +48,10 @@ val generateBuildConfig by tasks.registering {
 
 kotlin {
 
-    androidLibrary {
+    android {
         namespace = "de.moaps.composemultiplatformtilemap"
-        compileSdk = 36
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
-
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-
-        androidResources {
-            enable = true
-        }
     }
 
     jvm()

@@ -11,9 +11,9 @@ kotlin {
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
+    android {
         namespace = "de.drick.core"
-        compileSdk = 36
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
     }
 

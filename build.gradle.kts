@@ -1,5 +1,9 @@
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import nl.littlerobots.vcu.plugin.resolver.VersionSelectors
 import nl.littlerobots.vcu.plugin.versionCatalogUpdate
+import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 plugins {
     // this is necessary to avoid the plugins to be loaded multiple times

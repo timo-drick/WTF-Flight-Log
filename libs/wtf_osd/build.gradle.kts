@@ -23,12 +23,8 @@ kotlin {
 
     android {
         namespace = "de.drick.wtf_osd"
-        compileSdk = 36
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
-
-        androidResources {
-            enable = true
-        }
     }
 
 

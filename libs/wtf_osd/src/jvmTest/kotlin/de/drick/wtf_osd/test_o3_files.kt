@@ -9,6 +9,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.time.Duration.Companion.milliseconds
 
+private val aircraftIdentifier = setOf("SPC5", "LR4")
+
 class BetaflightParserTest {
 
     @Test
@@ -24,9 +26,15 @@ class BetaflightParserTest {
         assertEquals(180, osdRecord.xOffset)
         assertEquals(0, osdRecord.yOffset)
         val symbols = Symbols(osdRecord)
-        val data = extractFlightData(symbols)
+        val data = extractFlightData(symbols, aircraftIdentifier)
         assertEquals(
-            expected = FlightData(millis=202200, speed=Speed(value=2, unit= SpeedUnit.Kmh), height=Height(3f, HeightUnit.Meter), amp=81.22f),
+            expected = FlightData(
+                millis = 202200,
+                speed = Speed(value=2, unit= SpeedUnit.Kmh),
+                height = Height(3f, HeightUnit.Meter),
+                amp = 81.22f,
+                aircraftIdentifier = null
+            ),
             actual = data[2434]
         )
     }
@@ -48,18 +56,20 @@ class BetaflightParserTest {
             actual = gpsData.wayPoints.last()
         )
         val symbols = Symbols(osdRecord)
-        val data = extractFlightData(symbols)
+        val data = extractFlightData(symbols, aircraftIdentifier)
         assertEquals(
-            expected = FlightData(millis=309957, speed=Speed(value=61, unit= SpeedUnit.Kmh), height=Height(value=15.5f, unit= HeightUnit.Meter), amp=11.12f),
+            expected = FlightData(
+                millis = 309957,
+                speed = Speed(value=61, unit= SpeedUnit.Kmh),
+                height = Height(value=15.5f, unit= HeightUnit.Meter),
+                amp = 11.12f,
+                aircraftIdentifier = "SPC5"
+            ),
             actual = data[578]
         )
-        /*data.forEachIndexed { index, data ->
-            val string = symbols.toString(osdRecord.frames[index].data).replace("SYM_NONE", " ")
-            println("[$index] = $data")
-        }*/
     }
 
-    private fun parseOsdTestFile(fileName: String): OsdRecord {
+    private suspend fun parseOsdTestFile(fileName: String): OsdRecord {
         val inputStream = javaClass.classLoader.getResourceAsStream(fileName)
         assertNotNull(inputStream)
         val result = parseOsdFile(inputStream.asSource().buffered()) as ParseResult.Success
