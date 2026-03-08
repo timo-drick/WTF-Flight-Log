@@ -14,9 +14,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.text.TextMeasurer
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.IntOffset
@@ -30,6 +36,8 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import wtfflightlog.libs.tile_map.generated.resources.Res
 import wtfflightlog.libs.tile_map.generated.resources.preview_map
+import kotlin.math.PI
+import kotlin.math.cos
 import kotlin.math.roundToInt
 
 
@@ -206,6 +214,15 @@ class ViewPortState(
         }
     }
 
+    /**
+     * Returns the number of meters represented by one pixel at the current zoom level and center latitude.
+     */
+    fun metersPerPixel(): Double {
+        val latRad = centerPos.toGeoPoint().latitude.toRadians()
+        val n = 1 shl tileZoom
+        return 2.0 * PI * earthRadius * cos(latRad) / (n * tileSize)
+    }
+
     fun geoPointToOffset(p: GeoPoint): Offset {
         val tilePos = p.toTilePos(tileZoom)
         return tilePosToOffset(tilePos)
@@ -265,6 +282,57 @@ fun rememberViewPortState(
 }
 
 
+private val scaleSteps = listOf(1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000)
+
+private fun DrawScope.drawScaleBar(metersPerPixel: Double, canvasSize: Size, textMeasurer: TextMeasurer) {
+    val maxBarWidthPx = canvasSize.width / 2f
+    val maxBarMeters = maxBarWidthPx * metersPerPixel
+    val scaleMeters = scaleSteps.lastOrNull { it <= maxBarMeters } ?: scaleSteps.first()
+    val barWidthPx = (scaleMeters / metersPerPixel).toFloat()
+
+    val label = if (scaleMeters >= 1000) "${scaleMeters / 1000} km" else "$scaleMeters m"
+
+    val margin = 16f
+    val tickHeight = 8f
+    val barY = canvasSize.height - margin - tickHeight
+    val barStartX = margin
+    val barEndX = margin + barWidthPx
+
+    // White outline for contrast
+    val outlineColor = Color.White
+    val barColor = Color.Black
+    val strokeOutline = 4f
+    val strokeBar = 2f
+
+    // Draw outline
+    drawLine(outlineColor, Offset(barStartX, barY), Offset(barEndX, barY), strokeWidth = strokeOutline + strokeBar)
+    drawLine(outlineColor, Offset(barStartX, barY - tickHeight / 2), Offset(barStartX, barY + tickHeight / 2), strokeWidth = strokeOutline + strokeBar)
+    drawLine(outlineColor, Offset(barEndX, barY - tickHeight / 2), Offset(barEndX, barY + tickHeight / 2), strokeWidth = strokeOutline + strokeBar)
+
+    // Draw bar
+    drawLine(barColor, Offset(barStartX, barY), Offset(barEndX, barY), strokeWidth = strokeBar)
+    drawLine(barColor, Offset(barStartX, barY - tickHeight / 2), Offset(barStartX, barY + tickHeight / 2), strokeWidth = strokeBar)
+    drawLine(barColor, Offset(barEndX, barY - tickHeight / 2), Offset(barEndX, barY + tickHeight / 2), strokeWidth = strokeBar)
+
+    // Draw label
+    val textLayoutResult = textMeasurer.measure(label, TextStyle(color = barColor, fontSize = 12.sp))
+    val textX = barStartX + (barWidthPx - textLayoutResult.size.width) / 2
+    val textY = barY - tickHeight / 2 - textLayoutResult.size.height - 2f
+    // White background for text
+    drawText(
+        textMeasurer = textMeasurer,
+        text = label,
+        topLeft = Offset(textX, textY),
+        style = TextStyle(color = outlineColor, fontSize = 12.sp, shadow = androidx.compose.ui.graphics.Shadow(color = outlineColor, blurRadius = 4f))
+    )
+    drawText(
+        textMeasurer = textMeasurer,
+        text = label,
+        topLeft = Offset(textX, textY),
+        style = TextStyle(color = barColor, fontSize = 12.sp)
+    )
+}
+
 @Composable
 fun TileMapView(
     state: ViewPortState,
@@ -279,6 +347,7 @@ fun TileMapView(
             contentScale = ContentScale.Crop
         )
     } else {
+        val textMeasurer = rememberTextMeasurer()
         Canvas(modifier.clipToBounds()) {
             state.updateSize(size)
             val mapDrawScope = MapDrawScopeImpl(this, state)
@@ -298,6 +367,7 @@ fun TileMapView(
                 }
                 onDraw(mapDrawScope)
             }
+            drawScaleBar(state.metersPerPixel(), size, textMeasurer)
         }
     }
 }

@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -11,14 +10,10 @@ plugins {
 
 kotlin {
 
-    androidLibrary {
+    android {
         namespace = "de.drick.flightloglib"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         androidResources {
             enable = true
         }
@@ -43,7 +38,7 @@ kotlin {
             implementation(libs.kdroidfilter.compose.mediaplayer)
             implementation(libs.kdroidfilter.platformtools.darkmodedetector)
 
-            //implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.datetime)
@@ -65,6 +60,8 @@ kotlin {
             implementation(libs.filekit.dialogs)
             implementation(libs.filekit.dialogs.compose)
             implementation(libs.filekit.coil)
+
+            implementation(libs.multiplatform.settings)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -12,12 +13,6 @@ kotlin {
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
-        namespace = "de.drick.wtf_osd"
-        compileSdk = 36
-        minSdk = 26
-    }
-
     jvm()
 
     @OptIn(ExperimentalWasmDsl::class)
@@ -25,6 +20,13 @@ kotlin {
         browser()
         binaries.executable()
     }
+
+    android {
+        namespace = "de.drick.wtf_osd"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = 26
+    }
+
 
     // Source set declarations.
     // Declaring a target automatically creates a source set with the same name. By default, the

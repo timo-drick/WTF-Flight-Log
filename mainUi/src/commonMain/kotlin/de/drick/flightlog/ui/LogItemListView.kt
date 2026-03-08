@@ -1,7 +1,10 @@
 package de.drick.flightlog.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,10 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,18 +42,20 @@ import de.drick.wtf_osd.FontVariant
 @Composable
 private fun PreviewLogItemList() {
     val state = remember {
-        FlightLogState().apply {
-            addItem(mockLogItem("Test entry 1", FontVariant.BETAFLIGHT))
-            addItem(mockLogItem("Test entry 2", FontVariant.ARDUPILOT))
-            addItem(mockLogItem("Test entry 3", FontVariant.INAV))
-            addItem(mockLogItem("Test entry 4", FontVariant.GENERIC))
-        }
+        mockFlightLogState(
+            isWorking = true,
+            mockLogItem("Test entry 1", FontVariant.BETAFLIGHT),
+            mockLogItem("Test entry 2", FontVariant.ARDUPILOT),
+            mockLogItem("Test entry 3", FontVariant.INAV),
+            mockLogItem("Test entry 4", FontVariant.GENERIC)
+        )
     }
     BasePreview {
         LogItemListPane(
             modifier = Modifier.fillMaxSize(),
             state = state,
-            onLogItemClick = {}
+            onLogItemClick = {},
+            onEditAircraftListClick = {}
         )
     }
 }
@@ -56,23 +63,35 @@ private fun PreviewLogItemList() {
 @Composable
 fun LogItemListPane(
     state: FlightLogState,
+    modifier: Modifier = Modifier,
     onLogItemClick: (LogItem) -> Unit,
-    modifier: Modifier = Modifier
+    onEditAircraftListClick: () -> Unit
 ) {
     val cornerRadius = MaterialTheme.cornerRadius()
-    Box(modifier) {
+    Column(modifier) {
+        FlowRow(
+            modifier = Modifier,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            SuspendButton(onClick = {
+                state.importFiles()
+            }) {
+                Text("Import files")
+            }
+            TextButton(
+                onClick = onEditAircraftListClick
+            ) {
+                Text("Edit aircraft list")
+            }
+            if (state.isWorking) {
+                CircularProgressIndicator()
+            }
+        }
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth().weight(1f),
             state = state.lazyListState,
             contentPadding = PaddingValues(0.dp)
         ) {
-            item {
-                SuspendButton(onClick = {
-                    state.import()
-                }) {
-                    Text("Import files")
-                }
-            }
             item {
                 Text(
                     modifier = Modifier.semantics { heading() },
@@ -95,9 +114,10 @@ fun LogItemListPane(
                         color = MaterialTheme.colorScheme.surfaceContainer
                     ) {
                         Box {
+                            val groupName = group ?: "-"
                             Text(
                                 modifier = Modifier.padding(8.dp).fillMaxWidth(),
-                                text = group ?: "-",
+                                text = "$groupName flights: ${list.size}",
                                 //color = MaterialTheme.colors.onBackground
                             )
                             HorizontalDivider(Modifier.align(Alignment.BottomStart))

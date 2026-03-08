@@ -15,22 +15,24 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import de.drick.flightlog.ui.FlightLogState
+import de.drick.flightlog.ui.*
 import de.drick.flightlog.ui.player.FullScreenPlayerPanel
-import de.drick.flightlog.ui.LogItemDetailPane
-import de.drick.flightlog.ui.LogItemListOverview
-import de.drick.flightlog.ui.LogItemListPane
-import de.drick.flightlog.ui.LogItemState
 
 
 data class ListPaneData(val state: FlightLogState)
+data class OverviewPaneData(val state: FlightLogState)
 data class DetailPaneData(val itemState: LogItemState)
 data class FullScreenPane(val itemState: LogItemState)
+data class AircraftIdentifierPaneData(val state: FlightLogState)
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun App() {
-    val listPaneData = remember { ListPaneData(FlightLogState()) }
+    val scope = rememberCoroutineScope()
+    val flightLogState = remember {
+        FlightLogStateImpl(scope)
+    }
+    val listPaneData = remember { ListPaneData(flightLogState) }
     val backStack = remember { mutableStateListOf<Any>(listPaneData) }
     val windowAdaptiveInfo = currentWindowAdaptiveInfo()
     val directive = remember(windowAdaptiveInfo) {
@@ -38,6 +40,7 @@ fun App() {
             horizontalPartitionSpacerSize = MaterialTheme.panePadding()
         )
     }
+
     val listDetailStrategy = rememberListDetailSceneStrategy<Any>(directive = directive)
     val padding = if (backStack.last() is FullScreenPane) 0.dp else MaterialTheme.panePadding()
     FlightLogTheme {
@@ -66,7 +69,18 @@ fun App() {
                                 val state = LogItemState(logItem)
                                 if (backStack.last() is DetailPaneData) backStack.removeLast()
                                 backStack.add(DetailPaneData(state))
+                            },
+                            onEditAircraftListClick = {
+                                backStack.add(AircraftIdentifierPaneData(key.state))
                             }
+                        )
+                    }
+                    entry<OverviewPaneData>(
+                        metadata = ListDetailSceneStrategy.detailPane()
+                    ) { key ->
+                        LogItemListOverview(
+                            modifier = Modifier.padding(0.dp),
+                            state = key.state
                         )
                     }
                     entry<DetailPaneData>(
@@ -86,6 +100,17 @@ fun App() {
                         FullScreenPlayerPanel(
                             state = key.itemState,
                             onClose = {
+                                backStack.removeLast()
+                            }
+                        )
+                    }
+                    entry<AircraftIdentifierPaneData>(
+                        metadata = ListDetailSceneStrategy.detailPane()
+                    ) { key ->
+                        AircraftIdentifierPane(
+                            state = key.state,
+                            onBack = {
+                                flightLogState.rescanLogItems()
                                 backStack.removeLast()
                             }
                         )

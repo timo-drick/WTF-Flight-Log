@@ -34,6 +34,12 @@ private fun tileYToLat(y: Double, zoom: Int): Double {
     return latRad.toDegrees()
 }
 
+fun metersToTileLength(geoPoint: GeoPoint, zoom: Int, meters: Double): Double {
+    val n = 1 shl zoom
+    val latRad = geoPoint.latitude.toRadians()
+    return meters * n / (2.0 * PI * earthRadius * cos(latRad))
+}
+
 fun TilePos.wrap(): TilePos {
     val n = (1 shl zoom).toDouble()
     val wrappedX = ((x % n) + n) % n

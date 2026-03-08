@@ -28,6 +28,10 @@ import de.drick.flightlog.ui.icons.BootstrapFileFont
 import de.drick.flightlog.ui.icons.MaterialIconsMovie
 import de.drick.flightlog.ui.icons.MaterialIconsSatellite_alt
 import de.drick.wtf_osd.FontVariant
+import de.drick.wtf_osd.Height
+import de.drick.wtf_osd.HeightUnit
+import de.drick.wtf_osd.Speed
+import de.drick.wtf_osd.SpeedUnit
 import wtfflightlog.mainui.generated.resources.Res
 import wtfflightlog.mainui.generated.resources.ardupilot_icon
 import wtfflightlog.mainui.generated.resources.betaflight_icon
@@ -50,7 +54,13 @@ import kotlin.time.Duration.Companion.seconds
 private fun PreviewLogItemView() {
     val testLogItem = mockLogItem(
         name = "Test entry 2",
-        osdFile = mockOsdFile(FontVariant.BETAFLIGHT, hasGpsData = true),
+        osdFile = mockOsdFile(
+            font = FontVariant.BETAFLIGHT,
+            hasGpsData = true,
+            maxSpeed = Speed(89, SpeedUnit.Kmh),
+            maxHeight = Height(101f, HeightUnit.Meter),
+            aircraftIdentifier = "DOLPHIN"
+        ),
         srtFile = mockSrtFile(duration = 345100.milliseconds)
     )
     BasePreview {
@@ -89,8 +99,11 @@ fun LogItem.duration(): Duration? {
     }
 }
 
-fun LogItem.hasGpsData() =
-    files.filterIsInstance<OSDFile>().firstOrNull()?.hasGpsData ?: false
+fun LogItem.getOSDFile() =
+    files.filterIsInstance<OSDFile>().firstOrNull()
+
+fun Speed?.label() = this?.let { "$value ${unit.short}" } ?: "-"
+fun Height?.label() = this?.let { "$value ${unit.short}" } ?: "-"
 
 @Composable
 fun LogItemView(
@@ -136,8 +149,19 @@ fun LogItemView(
                 .weight(1f)
                 .clickable(onClick = onClick)
         ) {
+            val osdFile = remember(logEntry) {
+                logEntry.getOSDFile()
+            }
+            val name = remember(logEntry) {
+                val identifier = osdFile?.aircraftIdentifier
+                if (identifier != null) {
+                    "${logEntry.name} - $identifier"
+                } else {
+                    logEntry.name
+                }
+            }
             Text(
-                text = logEntry.name,
+                text = name,
                 style = MaterialTheme.typography.titleMedium
             )
             val lastModified: String = remember(logEntry) {
@@ -149,6 +173,15 @@ fun LogItemView(
                     ?.inWholeSeconds?.seconds?.toString()
                 "$modified - $duration"
             }
+            val maxValues: String? = remember(osdFile) {
+                osdFile?.let { osdFile ->
+                    val msg = listOf(
+                        osdFile.maxSpeed?.label(),
+                        osdFile.maxHeight?.label(),
+                    ).mapNotNull { it }.joinToString(" ")
+                    if (msg.isNotEmpty()) "max: $msg" else null
+                }
+            }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -158,6 +191,13 @@ fun LogItemView(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    if (maxValues != null) {
+                        Text(
+                            text = maxValues,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                     val types = logEntry.files.joinToString { it.extension }
                     Text(
                         text = "Files: $types",
@@ -165,7 +205,7 @@ fun LogItemView(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                if (logEntry.hasGpsData()) {
+                if (osdFile?.hasGpsData ?: false) {
                     Icon(
                         imageVector = MaterialIconsSatellite_alt,
                         contentDescription = stringResource(Res.string.screen_osd_player_gps)

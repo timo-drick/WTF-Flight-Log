@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 
@@ -47,15 +48,10 @@ val generateBuildConfig by tasks.registering {
 
 kotlin {
 
-    androidLibrary {
+    android {
         namespace = "de.moaps.composemultiplatformtilemap"
-        compileSdk = 36
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
-
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-
         androidResources {
             enable = true
         }
@@ -88,25 +84,23 @@ kotlin {
 
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.logging)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                implementation(libs.ktor.client.okhttp)
-            }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
         }
         jvmMain.dependencies {
             implementation(libs.ktor.client.okhttp)
         }
         wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)
+        }
+        
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }

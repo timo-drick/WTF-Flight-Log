@@ -1,10 +1,10 @@
 package de.drick.wtf_osd
 
 import de.drick.core.log
+import kotlinx.coroutines.yield
 
 
-
-class GpsPoint(val latitude: Double, val longitude: Double)
+data class GpsPoint(val latitude: Double, val longitude: Double)
 
 data class GpsData(
     val wayPoints: List<GpsRecord>
@@ -15,22 +15,20 @@ data class GpsRecord(
     val osdMillis: Long
 )
 
-fun extractGps(osdRecord: OsdRecord): GpsData {
-    val font = osdRecord.fontVariant
+val latRegex = Regex("""SYM_LAT(?:SYM_NONE|\s)*([+-]?\d+.\d+)\D""")
+val lonRegex = Regex("""SYM_LON(?:SYM_NONE|\s)*([+-]?\d+.\d+)\D""")
+
+suspend fun extractGps(osdRecord: OsdRecord): GpsData {
     val positionList = mutableListOf<GpsRecord>()
-    val lat = font.LAT
-    val lon = font.LON
-    if (lat == null || lon == null) return GpsData(positionList)
+    val symbols = Symbols(osdRecord)
     osdRecord.frames.forEach { frame ->
+        yield()
         try {
-            val latChars = frame.data.detectTrailingString(font, lat, 10)
-            val lonChars = frame.data.detectTrailingString(font, lon, 10)
-            if (latChars != null && lonChars != null) {
-                val lat = latChars.toDouble()
-                val lon = lonChars.toDouble()
-                if (lat != 0.0 || lon != 0.0) {
-                    positionList.add(GpsRecord(GpsPoint(lat, lon), frame.millis))
-                }
+            val string = symbols.toString(frame.data)
+            val lat = latRegex.find(string)?.groupValues?.last()?.toDouble()
+            val lon = lonRegex.find(string)?.groupValues?.last()?.toDouble()
+            if (lat != null && lon != null && (lat != 0.0 || lon != 0.0)) {
+                positionList.add(GpsRecord(GpsPoint(lat, lon), frame.millis))
             }
         } catch (err: Throwable) {
             log("Error while parsing GPS data: ${err.message}")
