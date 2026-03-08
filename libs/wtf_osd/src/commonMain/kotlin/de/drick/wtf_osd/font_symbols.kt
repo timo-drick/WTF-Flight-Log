@@ -41,14 +41,25 @@ private fun CharArray.toNullString(): String {
     }
 }
 
+/*fun String.replaceSym(symbols: Symbols): String {
+
+}*/
 
 class Symbols(val osdRecord: OsdRecord) {
 
-    fun toString(frame: ShortArray): String = frame.toCharArray()
-            .toLinesList(osdRecord, replaceCharsWithSym = true)
+    fun toString(frame: ShortArray, replaceCharsWithSym: Boolean = true): String = frame.toCharArray()
+            .toLinesList(osdRecord, replaceCharsWithSym = replaceCharsWithSym)
             .joinToString("\n")
 
     fun fromCode(code: Int) = entries().firstOrNull { it.code == code }
+
+    fun replaceSymbols(symString: String): String {
+        var newString = symString
+        entries().forEach {
+            newString.replace(it.name, Char(it.code).toString())
+        }
+        return newString
+    }
 
     private fun entries(): List<Symbol> = when (osdRecord.fontVariant) {
         FontVariant.BETAFLIGHT -> BetaflightSymbols.entries
@@ -69,7 +80,7 @@ fun CharArray.toLinesList(osdRecord: OsdRecord, replaceCharsWithSym: Boolean = f
                 val char = this@toLinesList[index]
                 if (replaceCharsWithSym) {
                     val sym = symbols.fromCode(char.code)
-                    if (sym != null) {
+                    if (sym != null) {6
                         append(sym.replaceWith ?: sym.name)
                     } else {
                         append(char)

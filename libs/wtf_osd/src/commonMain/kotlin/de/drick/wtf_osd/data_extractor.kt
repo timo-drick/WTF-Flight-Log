@@ -1,5 +1,7 @@
 package de.drick.wtf_osd
 
+import kotlinx.coroutines.yield
+
 enum class SpeedUnit(val short: String, val description: String) {
     Unknown("?", "Unit not detected!"),
     Kmh("Km/h", "Kilometer per hour)"),
@@ -26,29 +28,33 @@ data class Height(
 
 data class FlightData(
     val millis: Long,
+    val aircraftIdentifier: String?,
     val speed: Speed?,
     val height: Height?,
     val amp: Float?
 )
 
-fun extractFlightData(symbols: Symbols) = symbols.osdRecord.frames.map { frame ->
-    extractDataPoint(symbols, frame)
+suspend fun extractFlightData(symbols: Symbols, aircraftIdentifier: Set<String>) = symbols.osdRecord.frames.map { frame ->
+    yield()
+    extractDataPoint(symbols, frame, aircraftIdentifier)
 }
 
 
-private val speedRegexBetaflight = Regex("""SYM_SPEED\D*(\d+(?:.\d+)?)\D*(SYM_KPH|SYM_MPH)""")
-private val altitudeRegexBetaflight = Regex("""SYM_ALTITUDE\D*(\d+(?:.\d+)?)\D*(SYM_M)""")
+private val speedRegexBetaflight = Regex("""SYM_SPEED\D*(\d+(?:.\d+)?)(SYM_KPH|SYM_MPH)""")
+private val altitudeRegexBetaflight = Regex("""SYM_ALTITUDE\D*(\d+(?:.\d+)?)(SYM_M)""")
 /**
  * Sample:   2.33SYM_AMP
  */
 private val ampereBetaflight = Regex("""\D(\d+(?:.\d+)?)?SYM_AMP""")
 private val ampereINAV = ampereBetaflight
 
-private val speedRegexINAV = Regex("""SYM_AIR\D*(\d+(?:.\d+)?)\D*(SYM_KMH|SYM_MPH)""")
+private val speedRegexINAV = Regex("""SYM_AIR(?:SYM_NONE)*(\d+(?:.\d+)?)(SYM_KMH|SYM_MPH)""")
 private val altitudeRegexINAV = Regex("""\D(\d+(?:.\d+)?)(SYM_ALT_M|SYM_ALT_KM|SYM_ALT_FT|SYM_ALT_KFT)""")
 
-fun extractDataPoint(symbols: Symbols, frame: MspFrame): FlightData {
+fun extractDataPoint(symbols: Symbols, frame: MspFrame, aircraftIdentifier: Set<String>): FlightData {
     val string = symbols.toString(frame.data)
+    val stringRaw = symbols.toString(frame.data, false)
+
     val speedRegex = when (symbols.osdRecord.fontVariant) {
         FontVariant.BETAFLIGHT -> speedRegexBetaflight
         FontVariant.INAV -> speedRegexINAV
@@ -88,11 +94,14 @@ fun extractDataPoint(symbols: Symbols, frame: MspFrame): FlightData {
         else -> null
     }
     val amps = ampRegex?.find(string)?.groupValues?.last()?.toFloat()
+    val identifier = aircraftIdentifier.find { string.contains(it) }
+
 
     //val lat = latRegex.find(string)?.groupValues?.last()
     //val lon = lonRegex.find(string)?.groupValues?.last()
     val data = FlightData(
         millis = frame.millis,
+        aircraftIdentifier = identifier,
         speed = speed,
         height = height,
         amp = amps

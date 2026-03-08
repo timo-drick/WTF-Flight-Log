@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.androidMultiplatformLibrary) apply false
-    alias(libs.plugins.kotlinAndroid) apply false
     alias(libs.plugins.android.lint) apply false
     alias(libs.plugins.version.catalog.update) // Check for dependency updates
 }

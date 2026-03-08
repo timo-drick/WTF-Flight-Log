@@ -1,7 +1,7 @@
 package de.drick.wtf_osd
 
 import de.drick.core.log
-
+import kotlinx.coroutines.yield
 
 
 data class GpsPoint(val latitude: Double, val longitude: Double)
@@ -18,10 +18,11 @@ data class GpsRecord(
 val latRegex = Regex("""SYM_LAT(?:SYM_NONE|\s)*([+-]?\d+.\d+)\D""")
 val lonRegex = Regex("""SYM_LON(?:SYM_NONE|\s)*([+-]?\d+.\d+)\D""")
 
-fun extractGps(osdRecord: OsdRecord): GpsData {
+suspend fun extractGps(osdRecord: OsdRecord): GpsData {
     val positionList = mutableListOf<GpsRecord>()
     val symbols = Symbols(osdRecord)
     osdRecord.frames.forEach { frame ->
+        yield()
         try {
             val string = symbols.toString(frame.data)
             val lat = latRegex.find(string)?.groupValues?.last()?.toDouble()

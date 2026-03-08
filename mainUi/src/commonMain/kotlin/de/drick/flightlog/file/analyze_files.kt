@@ -1,5 +1,6 @@
 package de.drick.flightlog.file
 
+import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.flightlog.ui.components.toGeoPoint
 import de.drick.wtf_osd.ParseResult
 import de.drick.wtf_osd.Symbols
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.milliseconds
 
-fun List<FileItem>.analyzeFlow() = flow {
+fun List<FileItem>.analyzeFlow(aircraftIdentifier: List<AircraftIdentifier>) = flow {
+    val identifier = aircraftIdentifier.map { it.name }.toSet()
     groupBy { it.name }
         .forEach { (name, fileList) ->
             val items = fileList.mapNotNull { fileItem ->
@@ -25,7 +27,8 @@ fun List<FileItem>.analyzeFlow() = flow {
                                 val symbols = Symbols(osd.record)
                                 val duration = osd.record.frames.last().millis.milliseconds
                                 val gps = extractGps(osd.record)
-                                val data = extractFlightData(symbols)
+                                val data = extractFlightData(symbols, identifier)
+                                val identifier = data.find { it.aircraftIdentifier != null }?.aircraftIdentifier
                                 val maxSpeed = data.mapNotNull { it.speed }.maxByOrNull { it.value }
                                 val maxHeight = data.mapNotNull { it.height }.maxByOrNull { it.value }
                                 OSDFile(
@@ -34,6 +37,7 @@ fun List<FileItem>.analyzeFlow() = flow {
                                     duration = duration,
                                     hasGpsData = gps.wayPoints.isNotEmpty(),
                                     startPosition = gps.wayPoints.firstOrNull()?.position?.toGeoPoint(),
+                                    aircraftIdentifier = identifier,
                                     maxSpeed = maxSpeed,
                                     maxHeight = maxHeight
                                 )
@@ -62,6 +66,8 @@ fun List<FileItem>.analyzeFlow() = flow {
                     else -> null
                 }
             }
-            emit(LogItem(name, items.toImmutableSet()))
+            if (items.isNotEmpty()) {
+                emit(LogItem(name, items.toImmutableSet()))
+            }
         }
     }.flowOn(Dispatchers.Default)

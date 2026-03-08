@@ -13,19 +13,6 @@ kotlin {
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
-        namespace = "de.drick.wtf_osd"
-        compileSdk = 36
-        minSdk = 26
-
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-        androidResources {
-            enable = true
-        }
-    }
-
     jvm()
 
     @OptIn(ExperimentalWasmDsl::class)
@@ -33,6 +20,17 @@ kotlin {
         browser()
         binaries.executable()
     }
+
+    android {
+        namespace = "de.drick.wtf_osd"
+        compileSdk = 36
+        minSdk = 26
+
+        androidResources {
+            enable = true
+        }
+    }
+
 
     // Source set declarations.
     // Declaring a target automatically creates a source set with the same name. By default, the

@@ -1,6 +1,7 @@
 package de.drick.wtf_osd
 
 import de.drick.core.log
+import kotlinx.coroutines.yield
 import kotlinx.io.IOException
 import kotlinx.io.Source
 import kotlinx.io.readByteArray
@@ -22,7 +23,7 @@ private const val REC_MAGIC = "MSPOSD"
  *     rec_config_t config;
  * } __attribute__((packed)) rec_file_header_t;
  */
-fun parseOsdFile(src: Source): ParseResult<OsdRecord> {
+suspend fun parseOsdFile(src: Source): ParseResult<OsdRecord> {
     try {
         // Read the first 6 bytes
         val headerBytes = src.peek().readByteArray(7)
@@ -59,7 +60,7 @@ private fun fontVariant(shortName: String) = when(shortName) {
     else -> FontVariant.GENERIC
 }
 
-private fun parseO3OsdFile(src: Source): OsdRecord {
+private suspend fun parseO3OsdFile(src: Source): OsdRecord {
     // Read the first 40 bytes
     val header = src.readByteArray(40)
     val firmwarePart = header.sliceArray(0 until 4).toText()
@@ -91,6 +92,7 @@ private fun parseO3OsdFile(src: Source): OsdRecord {
             frameData[i] = src.readShortLe()
         }
         frames.add(MspFrame(timeMs.toLong(), frameData))
+        yield()
     }
 
     return OsdRecord(
@@ -107,7 +109,7 @@ private fun parseO3OsdFile(src: Source): OsdRecord {
     )
 }
 
-private fun parseOldMspOsdFile(src: Source) : OsdRecord {
+private suspend fun parseOldMspOsdFile(src: Source) : OsdRecord {
     //Read header
     val header = src.readByteArray(7).toText()
     val version = src.readShortLe().toUShort()
@@ -179,6 +181,7 @@ private fun parseOldMspOsdFile(src: Source) : OsdRecord {
                 }
             }
             frames.add(MspFrame(millis, frameData))
+            yield()
         }
     }
     println("Frames: ${frames.size}")

@@ -70,6 +70,7 @@ data class OSDFile(
     val duration: Duration,
     val hasGpsData: Boolean,
     val startPosition: GeoPoint?,
+    val aircraftIdentifier: String?,
     val maxSpeed: Speed?,
     val maxHeight: Height?
 ) : FileItem by file

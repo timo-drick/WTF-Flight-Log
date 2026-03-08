@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -42,6 +43,8 @@ import de.drick.flightlog.ui.components.SrtOverlayView
 import de.drick.flightlog.ui.components.VideoPlayer
 import de.drick.flightlog.ui.mockLogItem
 import de.drick.wtf_osd.FontVariant
+import io.github.kdroidfilter.composemediaplayer.InitialPlayerState
+import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 import wtfflightlog.mainui.generated.resources.Res
 import wtfflightlog.mainui.generated.resources.preview_map
 import kotlinx.coroutines.delay
@@ -76,7 +79,7 @@ fun FullScreenPlayerPanel(
     val gpsData = osdData?.gpsData
     val srtData = state.srtData
 
-    val playerState = state.playerState
+    val playerState = rememberVideoPlayerState()
 
 
     var showControlOverlay by remember { mutableStateOf(false) }
@@ -93,6 +96,19 @@ fun FullScreenPlayerPanel(
     }
 
     var zoomLevel by remember { mutableDoubleStateOf(14.0) }
+
+    LaunchedEffect(state) {
+        if (state.videoFile != null) {
+            playerState.openFile(state.videoFile.file.platformFile(), InitialPlayerState.PLAY)
+            delay(100)
+            playerState.seekTo(state.currentSliderPosition)
+        }
+    }
+    DisposableEffect(state) {
+        onDispose {
+            state.currentSliderPosition = playerState.sliderPos
+        }
+    }
 
     LaunchedEffect(showControlOverlay, lastTouchTs) {
         if (showControlOverlay) {

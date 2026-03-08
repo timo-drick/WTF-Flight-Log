@@ -71,6 +71,7 @@ fun mockOsdFile(
     duration: Duration = 400140.milliseconds,
     hasGpsData: Boolean = false,
     startPosition: GeoPoint? = null,
+    aircraftIdentifier: String? = null,
     maxSpeed: Speed? = null,
     maxHeight: Height? = null
 ) = OSDFile(
@@ -79,6 +80,7 @@ fun mockOsdFile(
     duration = duration,
     hasGpsData = hasGpsData,
     startPosition = startPosition,
+    aircraftIdentifier = aircraftIdentifier,
     maxSpeed = maxSpeed,
     maxHeight = maxHeight
 )

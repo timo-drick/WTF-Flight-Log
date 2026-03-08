@@ -3,7 +3,9 @@ package de.drick.flightlog.ui
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.draggable2D
 import androidx.compose.foundation.gestures.rememberDraggable2DState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
@@ -37,8 +41,9 @@ import kotlin.time.Duration.Companion.seconds
 @Preview(heightDp = 300, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_NO)
 @Composable
 private fun PreviewLogItemList() {
+    val scope = rememberCoroutineScope()
     val testState = remember {
-        FlightLogState().apply {
+        FlightLogState(scope).apply {
             addItem(mockLogItem("Test entry 2", FontVariant.ARDUPILOT))
             addItem(mockLogItem("Test entry 1", FontVariant.BETAFLIGHT))
             addItem(mockLogItem("Test entry 3", FontVariant.INAV))

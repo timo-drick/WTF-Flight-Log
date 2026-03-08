@@ -28,6 +28,7 @@ import de.drick.flightlog.ui.icons.BootstrapFileFont
 import de.drick.flightlog.ui.icons.MaterialIconsMovie
 import de.drick.flightlog.ui.icons.MaterialIconsSatellite_alt
 import de.drick.wtf_osd.FontVariant
+import de.drick.wtf_osd.Height
 import de.drick.wtf_osd.Speed
 import de.drick.wtf_osd.SpeedUnit
 import wtfflightlog.mainui.generated.resources.Res
@@ -55,7 +56,8 @@ private fun PreviewLogItemView() {
         osdFile = mockOsdFile(
             font = FontVariant.BETAFLIGHT,
             hasGpsData = true,
-            maxSpeed = Speed(89, SpeedUnit.Kmh)
+            maxSpeed = Speed(89, SpeedUnit.Kmh),
+            aircraftIdentifier = "DOLPHIN"
         ),
         srtFile = mockSrtFile(duration = 345100.milliseconds)
     )
@@ -97,6 +99,9 @@ fun LogItem.duration(): Duration? {
 
 fun LogItem.getOSDFile() =
     files.filterIsInstance<OSDFile>().firstOrNull()
+
+fun Speed?.label() = this?.let { "$value ${unit.short}" } ?: "-"
+fun Height?.label() = this?.let { "$value ${unit.short}" } ?: "-"
 
 @Composable
 fun LogItemView(
@@ -142,13 +147,21 @@ fun LogItemView(
                 .weight(1f)
                 .clickable(onClick = onClick)
         ) {
-            Text(
-                text = logEntry.name,
-                style = MaterialTheme.typography.titleMedium
-            )
             val osdFile = remember(logEntry) {
                 logEntry.getOSDFile()
             }
+            val name = remember(logEntry) {
+                val identifier = osdFile?.aircraftIdentifier
+                if (identifier != null) {
+                    "${logEntry.name} - $identifier"
+                } else {
+                    logEntry.name
+                }
+            }
+            Text(
+                text = name,
+                style = MaterialTheme.typography.titleMedium
+            )
             val lastModified: String = remember(logEntry) {
                 val modified = logEntry.lastModified
                     ?.toLocalDateTime(TimeZone.currentSystemDefault())
@@ -160,9 +173,9 @@ fun LogItemView(
             }
             val maxValues: String? = remember(osdFile) {
                 osdFile?.let { osdFile ->
-                    val msg = listOf<String?>(
-                        osdFile.maxSpeed?.let { "${it.value} ${it.unit.short}" },
-                        osdFile.maxHeight?.let { "${it.value} ${it.unit.short}" },
+                    val msg = listOf(
+                        osdFile.maxSpeed?.label(),
+                        osdFile.maxHeight?.label(),
                     ).mapNotNull { it }.joinToString(" ")
                     if (msg.isNotEmpty()) "max: $msg" else null
                 }
