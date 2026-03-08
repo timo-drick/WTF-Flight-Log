@@ -3,20 +3,23 @@ package de.drick.flightlog.ui
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.draggable2D
 import androidx.compose.foundation.gestures.rememberDraggable2DState
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
@@ -29,6 +32,8 @@ import de.drick.compose.tilemap.TileMapView
 import de.drick.compose.tilemap.rememberViewPortState
 import de.drick.compose.tilemap.tileProviderMapBoxDark
 import de.drick.compose.tilemap.tileProviderMapBoxLight
+import de.drick.flightlog.ui.components.Table
+import de.drick.flightlog.ui.components.TableColumn
 import de.drick.flightlog.cornerRadius
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
@@ -69,7 +74,6 @@ fun LogItem.startPosition() =
     files.filterIsInstance<OSDFile>().firstOrNull()?.startPosition
 
 data class FlightDataOverview(
-    val global: UiFlightData,
     val aircraftMap: Map<AircraftIdentifier, UiFlightData>
 )
 
@@ -81,11 +85,17 @@ data class UiFlightData(
 )
 
 fun calculateOverview(aircraftIdentifierList: List<AircraftIdentifier>, completeList: List<LogItem>) = FlightDataOverview(
-    global = completeList.calculateFlightData(),
     aircraftMap = aircraftIdentifierList.associateWith { id ->
         completeList.filter { it.getOSDFile()?.aircraftIdentifier == id.name }
             .calculateFlightData()
-    }
+    } + Pair(
+        first = AircraftIdentifier("Unknown"),
+        second = completeList.filter { it.getOSDFile()?.aircraftIdentifier == null }
+            .calculateFlightData()
+    ) + Pair(
+        first = AircraftIdentifier("All"),
+        second = completeList.calculateFlightData()
+    )
 )
 
 fun List<LogItem>.calculateFlightData(): UiFlightData {
@@ -126,9 +136,6 @@ fun LogItemListOverview(
     val flightData = remember(logList) {
         calculateOverview(state.aircraftIdentifierList, logList)
     }
-    val flightTime = remember(flightData) {
-        flightData.global.duration.inWholeSeconds.seconds.toString()
-    }
     val positions = remember(logList) {
         logList.mapNotNull { it.startPosition() }
     }
@@ -154,27 +161,23 @@ fun LogItemListOverview(
         shape = RoundedCornerShape(MaterialTheme.cornerRadius()),
         color = MaterialTheme.colorScheme.surfaceContainer
     ) {
-        Column(Modifier.padding(8.dp)) {
-            Text("Log entries: ${state.list.size}")
-            Text("Flight time: $flightTime")
-            Text("Maximum speed: ${flightData.global.maxSpeed.label()}")
-            Text("Maximum height: ${flightData.global.maxHeight.label()}")
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text("Detected aircrafts: ${state.aircraftIdentifierList.size}")
-            }
-            /*positions.forEach { pos ->
-                Text("Pos: $pos")
-            }*/
+        Column(Modifier.padding(8.dp).verticalScroll(rememberScrollState())) {
+            Text(
+                text = "Flight Log Overview",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            FlightDataSummaryTable(flightData)
+
+            Spacer(Modifier.height(16.dp))
+
             val dragState = rememberDraggable2DState { offset ->
                 viewPortState.movePx(offset.x, offset.y)
             }
             TileMapView(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
+                    .height(400.dp)
                     .focusable()
                     .draggable2D(dragState)
                     .pointerInput(Unit) {
@@ -203,4 +206,71 @@ fun LogItemListOverview(
             }
         }
     }
+}
+
+@Composable
+fun FlightDataSummaryTable(overview: FlightDataOverview) {
+    val columns = remember {
+        listOf<TableColumn<Pair<String, UiFlightData>>>(
+            TableColumn(
+                header = "Aircraft",
+                weight = 0.3f,
+                content = { item, style, modifier -> Text(item.first, modifier = modifier, style = style) }
+            ),
+            TableColumn(
+                header = "Count",
+                weight = 0.15f,
+                content = { item, style, modifier ->
+                    Text(
+                        text = item.second.count.toString(),
+                        modifier = modifier.padding(horizontal = 4.dp),
+                        style = style
+                    )
+                }
+            ),
+            TableColumn(
+                header = "Time",
+                weight = 0.2f,
+                content = { item, style, modifier ->
+                    Text(
+                        text = item.second.duration.inWholeSeconds.seconds.toString(),
+                        modifier = modifier.padding(horizontal = 4.dp),
+                        style = style
+                    )
+                }
+            ),
+            TableColumn(
+                header = "Max Speed",
+                weight = 0.175f,
+                content = { item, style, modifier ->
+                    Text(
+                        text = item.second.maxSpeed.label(),
+                        modifier = modifier.padding(horizontal = 4.dp),
+                        style = style
+                    )
+                }
+            ),
+            TableColumn(
+                header = "Max Height",
+                weight = 0.175f,
+                content = { item, style, modifier ->
+                    Text(
+                        text = item.second?.maxHeight?.label() ?: "-",
+                        modifier = modifier.padding(horizontal = 4.dp),
+                        style = style
+                    )
+                }
+            )
+        )
+    }
+
+    val aircraftItems = remember(overview) {
+        overview.aircraftMap.filter { it.value.count > 0 }.map { it.key.name to it.value }
+    }
+
+    Table(
+        modifier = Modifier.fillMaxWidth().width(IntrinsicSize.Max),
+        items = aircraftItems,
+        columns = columns
+    )
 }
