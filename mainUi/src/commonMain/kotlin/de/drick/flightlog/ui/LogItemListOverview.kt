@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventType
@@ -33,23 +32,29 @@ import de.drick.compose.tilemap.tileProviderMapBoxLight
 import de.drick.flightlog.cornerRadius
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
+import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.wtf_osd.FontVariant
+import de.drick.wtf_osd.Height
+import de.drick.wtf_osd.HeightUnit
+import de.drick.wtf_osd.Speed
+import de.drick.wtf_osd.SpeedUnit
+import de.drick.wtf_osd.unifiedValue
 import io.github.kdroidfilter.platformtools.darkmodedetector.isSystemInDarkMode
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 @Preview(heightDp = 300, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_YES)
 @Preview(heightDp = 300, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_NO)
 @Composable
 private fun PreviewLogItemList() {
-    val scope = rememberCoroutineScope()
     val testState = remember {
-        FlightLogState(scope).apply {
-            addItem(mockLogItem("Test entry 2", FontVariant.ARDUPILOT))
-            addItem(mockLogItem("Test entry 1", FontVariant.BETAFLIGHT))
-            addItem(mockLogItem("Test entry 3", FontVariant.INAV))
-            addItem(mockLogItem("Test entry 4", FontVariant.GENERIC))
-
-        }
+        mockFlightLogState(
+            isWorking = false,
+            mockLogItem("Test entry 2", FontVariant.ARDUPILOT),
+            mockLogItem("Test entry 1", FontVariant.BETAFLIGHT),
+            mockLogItem("Test entry 3", FontVariant.INAV),
+            mockLogItem("Test entry 4", FontVariant.GENERIC),
+        )
     }
     BasePreview {
         LogItemListOverview(
@@ -63,17 +68,66 @@ private fun PreviewLogItemList() {
 fun LogItem.startPosition() =
     files.filterIsInstance<OSDFile>().firstOrNull()?.startPosition
 
+data class FlightDataOverview(
+    val global: UiFlightData,
+    val aircraftMap: Map<AircraftIdentifier, UiFlightData>
+)
+
+data class UiFlightData(
+    val count: Int,
+    val duration: Duration,
+    val maxSpeed: Speed,
+    val maxHeight: Height
+)
+
+fun calculateOverview(aircraftIdentifierList: List<AircraftIdentifier>, completeList: List<LogItem>) = FlightDataOverview(
+    global = completeList.calculateFlightData(),
+    aircraftMap = aircraftIdentifierList.associateWith { id ->
+        completeList.filter { it.getOSDFile()?.aircraftIdentifier == id.name }
+            .calculateFlightData()
+    }
+)
+
+fun List<LogItem>.calculateFlightData(): UiFlightData {
+    var count = 0
+    var duration = 0.seconds
+    var maxSpeed = Speed(0, SpeedUnit.Unknown)
+    var maxHeight = Height(0f, HeightUnit.Unknown)
+    forEach { item ->
+        count++
+        item.duration()?.let { duration += it }
+        item.getOSDFile()?.let { osdFile ->
+            osdFile.maxSpeed?.let { newSpeed ->
+                if (newSpeed.unifiedValue() > maxSpeed.unifiedValue()) {
+                    maxSpeed = newSpeed
+                }
+            }
+            osdFile.maxHeight?.let { newHeight ->
+                if (newHeight.unifiedValue() > maxHeight.unifiedValue()) {
+                    maxHeight = newHeight
+                }
+            }
+        }
+    }
+    return UiFlightData(
+        count = count,
+        duration = duration,
+        maxSpeed = maxSpeed,
+        maxHeight = maxHeight
+    )
+}
+
 @Composable
 fun LogItemListOverview(
     state: FlightLogState,
     modifier: Modifier = Modifier
 ) {
     val logList = state.list
-    val flightTime = remember(logList) {
-        logList
-            .sumOf { it.duration()?.inWholeSeconds ?: 0 }
-            .seconds
-            .toString()
+    val flightData = remember(logList) {
+        calculateOverview(state.aircraftIdentifierList, logList)
+    }
+    val flightTime = remember(flightData) {
+        flightData.global.duration.inWholeSeconds.seconds.toString()
     }
     val positions = remember(logList) {
         logList.mapNotNull { it.startPosition() }
@@ -101,8 +155,16 @@ fun LogItemListOverview(
         color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Column(Modifier.padding(8.dp)) {
-            Text("Log entries: ${state.entryCount}")
+            Text("Log entries: ${state.list.size}")
             Text("Flight time: $flightTime")
+            Text("Maximum speed: ${flightData.global.maxSpeed.label()}")
+            Text("Maximum height: ${flightData.global.maxHeight.label()}")
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text("Detected aircrafts: ${state.aircraftIdentifierList.size}")
+            }
             /*positions.forEach { pos ->
                 Text("Pos: $pos")
             }*/

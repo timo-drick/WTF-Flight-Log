@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -41,14 +41,14 @@ import de.drick.wtf_osd.FontVariant
 @Preview(heightDp = 600, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_NO)
 @Composable
 private fun PreviewLogItemList() {
-    val scope = rememberCoroutineScope()
     val state = remember {
-        FlightLogState(scope).apply {
-            addItem(mockLogItem("Test entry 1", FontVariant.BETAFLIGHT))
-            addItem(mockLogItem("Test entry 2", FontVariant.ARDUPILOT))
-            addItem(mockLogItem("Test entry 3", FontVariant.INAV))
-            addItem(mockLogItem("Test entry 4", FontVariant.GENERIC))
-        }
+        mockFlightLogState(
+            isWorking = true,
+            mockLogItem("Test entry 1", FontVariant.BETAFLIGHT),
+            mockLogItem("Test entry 2", FontVariant.ARDUPILOT),
+            mockLogItem("Test entry 3", FontVariant.INAV),
+            mockLogItem("Test entry 4", FontVariant.GENERIC)
+        )
     }
     BasePreview {
         LogItemListPane(
@@ -74,7 +74,7 @@ fun LogItemListPane(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             SuspendButton(onClick = {
-                state.import()
+                state.importFiles()
             }) {
                 Text("Import files")
             }
@@ -82,6 +82,9 @@ fun LogItemListPane(
                 onClick = onEditAircraftListClick
             ) {
                 Text("Edit aircraft list")
+            }
+            if (state.isWorking) {
+                CircularProgressIndicator()
             }
         }
         LazyColumn(

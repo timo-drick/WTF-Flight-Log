@@ -2,19 +2,22 @@ package de.drick.wtf_osd
 
 import kotlinx.coroutines.yield
 
-enum class SpeedUnit(val short: String, val description: String) {
+enum class SpeedUnit(val short: String, val description: String, val convertToKmh: Float = 1f) {
     Unknown("?", "Unit not detected!"),
     Kmh("Km/h", "Kilometer per hour)"),
-    Mph("Mph", "miles per hour")
+    Mph("Mph", "miles per hour", 1.609344f)
 }
 
-enum class HeightUnit(val short: String, val description: String) {
+enum class HeightUnit(val short: String, val description: String, val convertToMeter: Float = 1f) {
     Unknown("?", "Unit not detected!"),
     Meter("m", "meter"),
-    KMeter("Km", "Kilometer"),
-    Feet("ft", "feet"),
-    KFeet("kft", "? not sure")
+    KMeter("Km", "Kilometer", 1000f),
+    Feet("ft", "feet", 0.3048f),
+    KFeet("kft", "? not sure", 3048f)
 }
+
+fun Speed.unifiedValue() = value * unit.convertToKmh
+fun Height.unifiedValue() = value * unit.convertToMeter
 
 data class Speed(
     val value: Int,

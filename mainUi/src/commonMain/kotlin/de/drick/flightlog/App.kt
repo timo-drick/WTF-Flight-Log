@@ -30,7 +30,7 @@ data class AircraftIdentifierPaneData(val state: FlightLogState)
 fun App() {
     val scope = rememberCoroutineScope()
     val flightLogState = remember {
-        FlightLogState(scope)
+        FlightLogStateImpl(scope)
     }
     val listPaneData = remember { ListPaneData(flightLogState) }
     val backStack = remember { mutableStateListOf<Any>(listPaneData) }

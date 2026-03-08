@@ -29,6 +29,7 @@ import de.drick.flightlog.ui.icons.MaterialIconsMovie
 import de.drick.flightlog.ui.icons.MaterialIconsSatellite_alt
 import de.drick.wtf_osd.FontVariant
 import de.drick.wtf_osd.Height
+import de.drick.wtf_osd.HeightUnit
 import de.drick.wtf_osd.Speed
 import de.drick.wtf_osd.SpeedUnit
 import wtfflightlog.mainui.generated.resources.Res
@@ -57,6 +58,7 @@ private fun PreviewLogItemView() {
             font = FontVariant.BETAFLIGHT,
             hasGpsData = true,
             maxSpeed = Speed(89, SpeedUnit.Kmh),
+            maxHeight = Height(101f, HeightUnit.Meter),
             aircraftIdentifier = "DOLPHIN"
         ),
         srtFile = mockSrtFile(duration = 345100.milliseconds)

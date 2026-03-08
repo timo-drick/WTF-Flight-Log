@@ -52,6 +52,9 @@ kotlin {
         namespace = "de.moaps.composemultiplatformtilemap"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
+        androidResources {
+            enable = true
+        }
     }
 
     jvm()
