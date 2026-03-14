@@ -93,8 +93,8 @@ fun LogItem.duration(): Duration? {
     val osdFile = files.filterIsInstance<OSDFile>().firstOrNull()
     val srtFile = files.filterIsInstance<SRTFile>().firstOrNull()
     return when {
-        srtFile != null -> srtFile.duration
         osdFile != null -> osdFile.duration
+        srtFile != null -> srtFile.duration
         else -> null
     }
 }

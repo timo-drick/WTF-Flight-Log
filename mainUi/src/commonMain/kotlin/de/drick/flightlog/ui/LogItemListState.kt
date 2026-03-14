@@ -10,12 +10,10 @@ import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.analyzeFlow
 import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.flightlog.localStorage.AircraftIdentifierDB
-import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.dialogs.FileKitMode
-import io.github.vinceglb.filekit.dialogs.openFilePicker
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -34,7 +32,7 @@ interface FlightLogState {
     val list: List<LogItem>
     val groups: Map<String?, List<LogItem>>
     val aircraftIdentifierList: List<AircraftIdentifier>
-    suspend fun importFiles()
+    fun importFiles(files: List<PlatformFile>)
     fun rescanLogItems()
     fun addAircraft(aircraftIdentifier: AircraftIdentifier)
     fun removeAircraft(aircraftIdentifier: AircraftIdentifier)
@@ -73,7 +71,7 @@ class FlightLogStateImpl(
     private var runningScanJob: Job? = null
     override fun rescanLogItems() {
         runningScanJob?.cancel()
-        runningScanJob = scope.launch {
+        runningScanJob = scope.launch(Dispatchers.Default) {
             workingLock.withLock {
                 isWorking = true
                 logList.clear()
@@ -99,17 +97,12 @@ class FlightLogStateImpl(
         updateAircraftList()
     }
 
-    override suspend fun importFiles() {
-        FileKit.openFilePicker(mode = FileKitMode.Multiple())
-            ?.let { selectedFiles ->
-                addFiles(selectedFiles)
-            }
-    }
-
-    private fun addFiles(fileList: List<PlatformFile>) {
-        val newFiles = fileList.filterNot { platformFileList.contains(it) }
-        platformFileList.addAll(newFiles)
-        rescanLogItems()
+    override fun importFiles(files: List<PlatformFile>) {
+        scope.launch {
+            val newFiles = files.filterNot { platformFileList.contains(it) }
+            platformFileList.addAll(newFiles)
+            rescanLogItems()
+        }
     }
 
     private fun updateList() {

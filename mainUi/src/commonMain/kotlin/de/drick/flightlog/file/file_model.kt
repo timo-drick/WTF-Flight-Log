@@ -72,7 +72,9 @@ data class OSDFile(
     val startPosition: GeoPoint?,
     val aircraftIdentifier: String?,
     val maxSpeed: Speed?,
-    val maxHeight: Height?
+    val maxHeight: Height?,
+    val distanceTotal: Double?,
+    val maxDistanceHome: Double?
 ) : FileItem by file
 
 data class SRTFile(

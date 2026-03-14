@@ -55,6 +55,7 @@ import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -113,7 +114,7 @@ class LogItemState(
 
     suspend fun init() {
         if (initialized.not()) {
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.Default) {
                 osdData = logItem.files
                     .filterIsInstance<OSDFile>()
                     .firstOrNull()
@@ -158,12 +159,12 @@ fun LogItemDetailPane(
     val logItem = state.logItem
 
     LaunchedEffect(state) {
-        state.init()
         if (videoFile != null) {
             playerState.openFile(videoFile.file.platformFile())
             delay(100)
             playerState.seekTo(state.currentSliderPosition)
         }
+        state.init()
     }
 
     DisposableEffect(state) {
@@ -199,6 +200,12 @@ fun LogItemDetailPane(
                 Text("Aircraft: $aircraftName")
                 Text("Maximum speed: ${osdData.file.maxSpeed.label()}")
                 Text("Maximum height: ${osdData.file.maxHeight.label()}")
+                osdData.file.maxDistanceHome?.let {
+                    Text("Maximum distance to home: ${it.roundToInt()} m")
+                }
+                osdData.file.distanceTotal?.let {
+                    Text("Travel distance: ${it.roundToInt()} m")
+                }
             }
             Text("Flight time: ${logItem.duration()?.inWholeSeconds?.seconds?.toString()}")
             Spacer(Modifier.height(8.dp))
