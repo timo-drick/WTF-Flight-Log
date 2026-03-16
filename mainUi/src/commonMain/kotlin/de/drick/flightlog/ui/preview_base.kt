@@ -41,7 +41,7 @@ fun mockFlightLogState(
     override val list = logItem.toList()
     override val groups = list.group()
     override val aircraftIdentifierList = emptyList<AircraftIdentifier>()
-    override suspend fun importFiles() {}
+    override fun importFiles(files: List<PlatformFile>) {}
     override fun rescanLogItems() {}
     override fun addAircraft(aircraftIdentifier: AircraftIdentifier) {}
     override fun removeAircraft(aircraftIdentifier: AircraftIdentifier) {}
@@ -90,7 +90,9 @@ fun mockOsdFile(
     startPosition: GeoPoint? = null,
     aircraftIdentifier: String? = null,
     maxSpeed: Speed? = null,
-    maxHeight: Height? = null
+    maxHeight: Height? = null,
+    distanceTotal: Double? = null,
+    maxDistanceHome: Double? = null
 ) = OSDFile(
     file = mockBaseFile(font.fileName(), "osd"),
     fontVariant = font,
@@ -99,7 +101,9 @@ fun mockOsdFile(
     startPosition = startPosition,
     aircraftIdentifier = aircraftIdentifier,
     maxSpeed = maxSpeed,
-    maxHeight = maxHeight
+    maxHeight = maxHeight,
+    distanceTotal = distanceTotal,
+    maxDistanceHome = maxDistanceHome
 )
 fun mockSrtFile(name: String = "srtfile", duration: Duration) = SRTFile(
     file = mockBaseFile(name, "srt"),

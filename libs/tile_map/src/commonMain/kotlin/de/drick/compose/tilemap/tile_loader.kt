@@ -17,6 +17,9 @@ import io.ktor.http.isSuccess
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlin.collections.set
 import kotlin.math.max
 import kotlin.math.min
 
@@ -74,6 +77,30 @@ private val client by lazy {
                 level = LogLevel.HEADERS
             }
         }
+    }
+}
+
+@Serializable
+data class ElevationResult(
+    val elevation: List<Double>
+)
+
+/**
+ * https://open-meteo.com/en/docs/elevation-api
+ */
+suspend fun getElevation(point: GeoPoint): Double? {
+    val url = URLBuilder("https://api.open-meteo.com/v1/elevation").apply {
+        parameters.append("latitude", point.latitude.toString())
+        parameters.append("longitude", point.longitude.toString())
+    }.build()
+    val response = client.request(url)
+    if (response.status.isSuccess()) {
+        val resultString = response.bodyAsText()
+        val result = Json.decodeFromString<ElevationResult>(resultString)
+        return result.elevation.firstOrNull()
+    } else {
+        log("Failed to load elevation from $url, status: ${response.status}")
+        return null
     }
 }
 

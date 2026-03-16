@@ -29,6 +29,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.drick.compose.tilemap.exportKmlTrack
+import de.drick.filehandling.rememberFileSaver
 import de.drick.flightlog.cornerRadius
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
@@ -37,17 +39,21 @@ import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.ui.components.GpsView
 import de.drick.flightlog.ui.components.OsdCanvasView
 import de.drick.flightlog.ui.components.SrtOverlayView
+import de.drick.flightlog.ui.components.SuspendButton
 import de.drick.flightlog.ui.components.VideoPlayer
 import de.drick.flightlog.ui.components.VideoPlayerControls
+import de.drick.flightlog.ui.components.toGeoPoint
 import de.drick.wtf_osd.FontVariant
 import de.drick.wtf_osd.GpsData
+import de.drick.wtf_osd.GpsRecord
 import de.drick.wtf_osd.OsdFont
 import de.drick.wtf_osd.OsdRecord
 import de.drick.wtf_osd.ParseResult
 import de.drick.wtf_osd.Speed
 import de.drick.wtf_osd.SpeedUnit
 import de.drick.wtf_osd.SrtData
-import de.drick.wtf_osd.extractGps
+import de.drick.wtf_osd.Symbols
+import de.drick.wtf_osd.extractFlightData
 import de.drick.wtf_osd.loadOsdFont
 import de.drick.wtf_osd.parseOsdFile
 import de.drick.wtf_osd.parseSrtFile
@@ -55,6 +61,7 @@ import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -113,7 +120,7 @@ class LogItemState(
 
     suspend fun init() {
         if (initialized.not()) {
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.Default) {
                 osdData = logItem.files
                     .filterIsInstance<OSDFile>()
                     .firstOrNull()
@@ -122,10 +129,13 @@ class LogItemState(
                             is ParseResult.Error -> TODO()
                             is ParseResult.Success -> {
                                 val font = loadOsdFont(osdFile.fontVariant)
-                                val gps = extractGps(result.record).let {
-                                    if (it.wayPoints.isEmpty()) null else it
+                                val symbols = Symbols(result.record)
+                                val flightData = extractFlightData(symbols, emptySet())
+                                val gpsRecords = flightData.mapNotNull { data ->
+                                    data.gpsPoint?.let { GpsRecord(it, data.millis) }
                                 }
-                                OsdData(osdFile, font, result.record, gps)
+                                val gpsData = if (gpsRecords.size > 1) GpsData(gpsRecords) else null
+                                OsdData(osdFile, font, result.record, gpsData)
                             }
                         }
                     }
@@ -157,13 +167,15 @@ fun LogItemDetailPane(
     val playerState = rememberVideoPlayerState()
     val logItem = state.logItem
 
+    val fileSaver = rememberFileSaver()
+
     LaunchedEffect(state) {
-        state.init()
         if (videoFile != null) {
             playerState.openFile(videoFile.file.platformFile())
             delay(100)
             playerState.seekTo(state.currentSliderPosition)
         }
+        state.init()
     }
 
     DisposableEffect(state) {
@@ -191,6 +203,16 @@ fun LogItemDetailPane(
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier
                 )
+                Spacer(Modifier.weight(1f))
+                osdData?.gpsData?.let { gpsData ->
+                    SuspendButton(onClick = {
+                        val points = gpsData.wayPoints.map { it.position.toGeoPoint() }
+                        val kml = exportKmlTrack(points).encodeToByteArray()
+                        fileSaver.saveToFile(kml, "${logItem.name}.kml")
+                    }) {
+                        Text("Export KML")
+                    }
+                }
             }
             osdData?.let { osdData ->
                 val aircraftName = remember(osdData) {
@@ -199,6 +221,12 @@ fun LogItemDetailPane(
                 Text("Aircraft: $aircraftName")
                 Text("Maximum speed: ${osdData.file.maxSpeed.label()}")
                 Text("Maximum height: ${osdData.file.maxHeight.label()}")
+                osdData.file.maxDistanceHome?.let {
+                    Text("Maximum distance to home: ${it.roundToInt()} m")
+                }
+                osdData.file.distanceTotal?.let {
+                    Text("Travel distance: ${it.roundToInt()} m")
+                }
             }
             Text("Flight time: ${logItem.duration()?.inWholeSeconds?.seconds?.toString()}")
             Spacer(Modifier.height(8.dp))

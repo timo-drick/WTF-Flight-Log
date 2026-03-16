@@ -35,6 +35,7 @@ plugins {
 include(":libs:log")
 include(":libs:wtf_osd")
 include(":libs:tile_map")
+include(":libs:file_handling")
 
 include(":mainUi")
 include(":startpoints:androidApp")

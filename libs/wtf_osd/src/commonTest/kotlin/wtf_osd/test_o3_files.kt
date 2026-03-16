@@ -1,9 +1,19 @@
-package de.drick.wtf_osd
+package wtf_osd
 
+import de.drick.wtf_osd.FlightData
+import de.drick.wtf_osd.FontVariant
+import de.drick.wtf_osd.GpsPoint
+import de.drick.wtf_osd.Height
+import de.drick.wtf_osd.HeightUnit
+import de.drick.wtf_osd.ParseResult
+import de.drick.wtf_osd.Speed
+import de.drick.wtf_osd.SpeedUnit
+import de.drick.wtf_osd.Symbols
+import de.drick.wtf_osd.extractFlightData
+import de.drick.wtf_osd.parseOsdFile
 import kotlinx.coroutines.test.runTest
-import kotlinx.io.asSource
-import kotlinx.io.buffered
-import kotlin.jvm.javaClass
+import kotlinx.io.Buffer
+import wtfflightlog.libs.wtf_osd.generated.resources.Res
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -30,10 +40,11 @@ class BetaflightParserTest {
         assertEquals(
             expected = FlightData(
                 millis = 202200,
-                speed = Speed(value=2, unit= SpeedUnit.Kmh),
+                speed = Speed(value = 2, unit = SpeedUnit.Kmh),
                 height = Height(3f, HeightUnit.Meter),
                 amp = 81.22f,
-                aircraftIdentifier = null
+                aircraftIdentifier = null,
+                gpsPoint = null
             ),
             actual = data[2434]
         )
@@ -45,34 +56,37 @@ class BetaflightParserTest {
         println("Parsed frames: ${osdRecord.frames.size}")
         val duration = osdRecord.frames.last().millis.milliseconds
         println("Duration: $duration")
-        val gpsData = extractGps(osdRecord)
-        assertEquals(700, gpsData.wayPoints.size)
-        assertEquals(
-            expected = GpsRecord(GpsPoint(38.4997578, -9.1823096), 6),
-            actual = gpsData.wayPoints.first()
-        )
-        assertEquals(
-            expected = GpsRecord(GpsPoint(38.4997303, -9.1823309), 384014),
-            actual = gpsData.wayPoints.last()
-        )
         val symbols = Symbols(osdRecord)
         val data = extractFlightData(symbols, aircraftIdentifier)
+        val wayPoints = data.mapNotNull { it.gpsPoint }
+        assertEquals(700, wayPoints.size)
+        assertEquals(
+            expected = GpsPoint(38.4997578, -9.1823096, 0.10000000149011612),
+            actual = wayPoints.first()
+        )
+        assertEquals(
+            expected = GpsPoint(38.4997303, -9.1823309, altitude=38.29999923706055),
+            actual = wayPoints.last()
+        )
         assertEquals(
             expected = FlightData(
                 millis = 309957,
                 speed = Speed(value=61, unit= SpeedUnit.Kmh),
                 height = Height(value=15.5f, unit= HeightUnit.Meter),
                 amp = 11.12f,
-                aircraftIdentifier = "SPC5"
+                aircraftIdentifier = "SPC5",
+                gpsPoint = GpsPoint(latitude=38.4997991, longitude=-9.1808245, altitude=15.5)
             ),
             actual = data[578]
         )
     }
+}
 
-    private suspend fun parseOsdTestFile(fileName: String): OsdRecord {
-        val inputStream = javaClass.classLoader.getResourceAsStream(fileName)
-        assertNotNull(inputStream)
-        val result = parseOsdFile(inputStream.asSource().buffered()) as ParseResult.Success
-        return result.record
-    }
+suspend fun parseOsdTestFile(fileName: String): de.drick.wtf_osd.OsdRecord {
+    val data = Res.readBytes("files/$fileName")
+    assertNotNull(data)
+    val buffer = Buffer()
+    buffer.write(data)
+    val result = parseOsdFile(buffer) as ParseResult.Success
+    return result.record
 }

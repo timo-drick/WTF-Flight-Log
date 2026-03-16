@@ -16,4 +16,4 @@ jobs:
           java-version: "17"
 
       - name: Run tests
-        run: ./gradlew allTests
+        run: ./gradlew jvmTest # Currently the wasmJsTest does not work with composeResources

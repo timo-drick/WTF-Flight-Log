@@ -4,12 +4,16 @@ import kotlin.math.*
 
 const val EARTH_RADIUS = 6373000.0 // Used in Mapbox for meter calculation
 
-data class GeoPoint(val latitude: Double, val longitude: Double)
+data class GeoPoint(val latitude: Double, val longitude: Double, val alt: Double? = null)
 
 fun degreesToRadians(degrees: Double): Double = (degrees % 360) * PI / 180
 fun radiansToDegree(radians: Double): Double = radians * 180.0 / PI
 fun radiansToMeters(radians: Double): Double = radians * EARTH_RADIUS
 fun metersToRadians(meters: Double): Double = meters / EARTH_RADIUS
+
+fun List<GeoPoint>.calculateGeoDistance() = zipWithNext { a, b -> a.distanceTo(b) }.sum()
+fun GeoPoint.distanceTo(p: GeoPoint) = calculateGeoDistance(this, p)
+fun GeoPoint.maxDistanceTo(list: List<GeoPoint>) = list.maxOf { distanceTo(it) }
 
 /**
  * Calculating the Distance Between Two GPS Coordinates with Haversine Formula

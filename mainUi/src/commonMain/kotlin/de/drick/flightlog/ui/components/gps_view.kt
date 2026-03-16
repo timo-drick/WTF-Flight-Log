@@ -34,7 +34,7 @@ import kotlinx.coroutines.isActive
 val Ble2 = Color(0xff90caf9)
 val Ble7 = Color(0xff1976d2)
 
-fun GpsPoint.toGeoPoint() = GeoPoint(latitude, longitude)
+fun GpsPoint.toGeoPoint() = GeoPoint(latitude, longitude, altitude)
 
 @Composable
 fun GpsView(

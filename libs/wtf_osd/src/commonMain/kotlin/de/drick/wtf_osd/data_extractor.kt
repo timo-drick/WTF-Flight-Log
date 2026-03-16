@@ -31,6 +31,7 @@ data class Height(
 
 data class FlightData(
     val millis: Long,
+    val gpsPoint: GpsPoint?,
     val aircraftIdentifier: String?,
     val speed: Speed?,
     val height: Height?,
@@ -99,11 +100,13 @@ fun extractDataPoint(symbols: Symbols, frame: MspFrame, aircraftIdentifier: Set<
     val amps = ampRegex?.find(string)?.groupValues?.last()?.toFloat()
     val identifier = aircraftIdentifier.find { string.contains(it) }
 
+    val gpsPoint = extractGps(frame, symbols, height?.value?.toDouble())
 
     //val lat = latRegex.find(string)?.groupValues?.last()
     //val lon = lonRegex.find(string)?.groupValues?.last()
     val data = FlightData(
         millis = frame.millis,
+        gpsPoint = gpsPoint,
         aircraftIdentifier = identifier,
         speed = speed,
         height = height,

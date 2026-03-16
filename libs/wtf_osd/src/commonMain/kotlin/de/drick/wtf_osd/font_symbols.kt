@@ -77,7 +77,11 @@ fun CharArray.toLinesList(osdRecord: OsdRecord, replaceCharsWithSym: Boolean = f
         val line = buildString {
             for (x in 0 until osdRecord.charWidth) {
                 val index = y * osdRecord.charWidth + x
-                val char = this@toLinesList[index]
+                val charRaw = this@toLinesList[index]
+                val char = if (osdRecord.fontVariant == FontVariant.BETAFLIGHT) {
+                    // Because of different pages for colors we need to offset for this
+                    Char(charRaw.code % 256)
+                } else charRaw
                 if (replaceCharsWithSym) {
                     val sym = symbols.fromCode(char.code)
                     if (sym != null) {6

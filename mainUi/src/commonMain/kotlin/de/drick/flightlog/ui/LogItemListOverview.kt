@@ -45,6 +45,8 @@ import de.drick.wtf_osd.Speed
 import de.drick.wtf_osd.SpeedUnit
 import de.drick.wtf_osd.unifiedValue
 import io.github.kdroidfilter.platformtools.darkmodedetector.isSystemInDarkMode
+import kotlin.math.max
+import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -80,8 +82,11 @@ data class FlightDataOverview(
 data class UiFlightData(
     val count: Int,
     val duration: Duration,
+    val maxDuration: Duration,
     val maxSpeed: Speed,
-    val maxHeight: Height
+    val maxHeight: Height,
+    val maxDistanceHome: Int,
+    val maxDistanceTotal: Int
 )
 
 fun calculateOverview(aircraftIdentifierList: List<AircraftIdentifier>, completeList: List<LogItem>) = FlightDataOverview(
@@ -101,11 +106,17 @@ fun calculateOverview(aircraftIdentifierList: List<AircraftIdentifier>, complete
 fun List<LogItem>.calculateFlightData(): UiFlightData {
     var count = 0
     var duration = 0.seconds
+    var maxDuration = 0.seconds
     var maxSpeed = Speed(0, SpeedUnit.Unknown)
     var maxHeight = Height(0f, HeightUnit.Unknown)
+    var maxDistanceHome = 0
+    var maxDistanceTotal = 0
     forEach { item ->
         count++
-        item.duration()?.let { duration += it }
+        item.duration()?.let {
+            duration += it
+            maxDuration = if (maxDuration < it) it else maxDuration
+        }
         item.getOSDFile()?.let { osdFile ->
             osdFile.maxSpeed?.let { newSpeed ->
                 if (newSpeed.unifiedValue() > maxSpeed.unifiedValue()) {
@@ -117,13 +128,22 @@ fun List<LogItem>.calculateFlightData(): UiFlightData {
                     maxHeight = newHeight
                 }
             }
+            osdFile.maxDistanceHome?.let { newDistance ->
+                maxDistanceHome = max(maxDistanceHome, newDistance.roundToInt())
+            }
+            osdFile.distanceTotal?.let { newDistance ->
+                maxDistanceTotal = max(maxDistanceTotal, newDistance.roundToInt())
+            }
         }
     }
     return UiFlightData(
         count = count,
-        duration = duration,
+        duration = duration.inWholeSeconds.seconds,
+        maxDuration = maxDuration.inWholeSeconds.seconds,
         maxSpeed = maxSpeed,
-        maxHeight = maxHeight
+        maxHeight = maxHeight,
+        maxDistanceHome = maxDistanceHome,
+        maxDistanceTotal = maxDistanceTotal
     )
 }
 
@@ -233,7 +253,18 @@ fun FlightDataSummaryTable(overview: FlightDataOverview) {
                 weight = 0.2f,
                 content = { item, style, modifier ->
                     Text(
-                        text = item.second.duration.inWholeSeconds.seconds.toString(),
+                        text = item.second.duration.toString(),
+                        modifier = modifier.padding(horizontal = 4.dp),
+                        style = style
+                    )
+                }
+            ),
+            TableColumn(
+                header = "Max Time",
+                weight = 0.2f,
+                content = { item, style, modifier ->
+                    Text(
+                        text = item.second.maxDuration.toString(),
                         modifier = modifier.padding(horizontal = 4.dp),
                         style = style
                     )
@@ -255,7 +286,29 @@ fun FlightDataSummaryTable(overview: FlightDataOverview) {
                 weight = 0.175f,
                 content = { item, style, modifier ->
                     Text(
-                        text = item.second?.maxHeight?.label() ?: "-",
+                        text = item.second.maxHeight.label() ?: "-",
+                        modifier = modifier.padding(horizontal = 4.dp),
+                        style = style
+                    )
+                }
+            ),
+            TableColumn(
+                header = "Max Dist Travel",
+                weight = 0.175f,
+                content = { item, style, modifier ->
+                    Text(
+                        text = "${item.second.maxDistanceTotal} m",
+                        modifier = modifier.padding(horizontal = 4.dp),
+                        style = style
+                    )
+                }
+            ),
+            TableColumn(
+                header = "Max Dist Home",
+                weight = 0.175f,
+                content = { item, style, modifier ->
+                    Text(
+                        text = "${item.second.maxDistanceHome} m",
                         modifier = modifier.padding(horizontal = 4.dp),
                         style = style
                     )
