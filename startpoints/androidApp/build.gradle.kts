@@ -4,39 +4,37 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
-kotlin {
-    android {
-        namespace = "de.drick.flightlog"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
+android {
+    namespace = "de.drick.flightlog"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
-        defaultConfig {
-            applicationId = "de.drick.flightlog"
-            minSdk = libs.versions.android.minSdk.get().toInt()
-            versionCode = 1
-            versionName = "1.0"
-        }
-        packaging {
-            resources {
-                excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            }
-        }
-        buildTypes {
-            getByName("release") {
-                isMinifyEnabled = true
-            }
-        }
-        buildFeatures {
-            compose = true
-            buildConfig = true
+    defaultConfig {
+        applicationId = "de.drick.flightlog"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
-    dependencies {
-        implementation(project(":mainUi"))
-        implementation(libs.androidx.activity.compose)
-        implementation(libs.compose.ui)
-        debugImplementation(libs.compose.uiTooling)
-
-        implementation(libs.filekit.dialogs.compose)
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+        }
     }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+}
+
+dependencies {
+    implementation(project(":mainUi"))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.compose.ui)
+    debugImplementation(libs.compose.uiTooling)
+
+    implementation(libs.filekit.dialogs.compose)
 }

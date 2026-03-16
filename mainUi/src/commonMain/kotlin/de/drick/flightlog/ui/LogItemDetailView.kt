@@ -29,6 +29,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.drick.compose.tilemap.exportKmlTrack
+import de.drick.filehandling.rememberFileSaver
 import de.drick.flightlog.cornerRadius
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
@@ -37,17 +39,21 @@ import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.ui.components.GpsView
 import de.drick.flightlog.ui.components.OsdCanvasView
 import de.drick.flightlog.ui.components.SrtOverlayView
+import de.drick.flightlog.ui.components.SuspendButton
 import de.drick.flightlog.ui.components.VideoPlayer
 import de.drick.flightlog.ui.components.VideoPlayerControls
+import de.drick.flightlog.ui.components.toGeoPoint
 import de.drick.wtf_osd.FontVariant
 import de.drick.wtf_osd.GpsData
+import de.drick.wtf_osd.GpsRecord
 import de.drick.wtf_osd.OsdFont
 import de.drick.wtf_osd.OsdRecord
 import de.drick.wtf_osd.ParseResult
 import de.drick.wtf_osd.Speed
 import de.drick.wtf_osd.SpeedUnit
 import de.drick.wtf_osd.SrtData
-import de.drick.wtf_osd.extractGps
+import de.drick.wtf_osd.Symbols
+import de.drick.wtf_osd.extractFlightData
 import de.drick.wtf_osd.loadOsdFont
 import de.drick.wtf_osd.parseOsdFile
 import de.drick.wtf_osd.parseSrtFile
@@ -123,10 +129,13 @@ class LogItemState(
                             is ParseResult.Error -> TODO()
                             is ParseResult.Success -> {
                                 val font = loadOsdFont(osdFile.fontVariant)
-                                val gps = extractGps(result.record).let {
-                                    if (it.wayPoints.isEmpty()) null else it
+                                val symbols = Symbols(result.record)
+                                val flightData = extractFlightData(symbols, emptySet())
+                                val gpsRecords = flightData.mapNotNull { data ->
+                                    data.gpsPoint?.let { GpsRecord(it, data.millis) }
                                 }
-                                OsdData(osdFile, font, result.record, gps)
+                                val gpsData = if (gpsRecords.size > 1) GpsData(gpsRecords) else null
+                                OsdData(osdFile, font, result.record, gpsData)
                             }
                         }
                     }
@@ -157,6 +166,8 @@ fun LogItemDetailPane(
     val srtData = state.srtData
     val playerState = rememberVideoPlayerState()
     val logItem = state.logItem
+
+    val fileSaver = rememberFileSaver()
 
     LaunchedEffect(state) {
         if (videoFile != null) {
@@ -192,6 +203,16 @@ fun LogItemDetailPane(
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier
                 )
+                Spacer(Modifier.weight(1f))
+                osdData?.gpsData?.let { gpsData ->
+                    SuspendButton(onClick = {
+                        val points = gpsData.wayPoints.map { it.position.toGeoPoint() }
+                        val kml = exportKmlTrack(points).encodeToByteArray()
+                        fileSaver.saveToFile(kml, "${logItem.name}.kml")
+                    }) {
+                        Text("Export KML")
+                    }
+                }
             }
             osdData?.let { osdData ->
                 val aircraftName = remember(osdData) {

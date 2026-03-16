@@ -25,6 +25,9 @@ kotlin {
         namespace = "de.drick.wtf_osd"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
+        androidResources {
+            enable = true
+        }
     }
 
 
@@ -47,6 +50,7 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.compose.components.resources)
         }
     }
 
