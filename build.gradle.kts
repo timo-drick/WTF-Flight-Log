@@ -1,9 +1,5 @@
-import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
-import com.android.build.api.dsl.LibraryExtension
 import nl.littlerobots.vcu.plugin.resolver.VersionSelectors
 import nl.littlerobots.vcu.plugin.versionCatalogUpdate
-import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 plugins {
     // this is necessary to avoid the plugins to be loaded multiple times
@@ -15,6 +11,7 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary) apply false
     alias(libs.plugins.android.lint) apply false
     alias(libs.plugins.version.catalog.update) // Check for dependency updates
+    alias(libs.plugins.detekt)
 }
 
 versionCatalogUpdate {

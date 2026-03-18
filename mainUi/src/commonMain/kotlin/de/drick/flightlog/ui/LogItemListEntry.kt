@@ -107,8 +107,8 @@ fun Height?.label() = this?.let { "$value ${unit.short}" } ?: "-"
 
 @Composable
 fun LogItemView(
-    modifier: Modifier = Modifier,
     logEntry: LogItem,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     val iconSize = 48.dp

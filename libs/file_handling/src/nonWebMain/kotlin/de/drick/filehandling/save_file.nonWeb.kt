@@ -10,7 +10,7 @@ import io.github.vinceglb.filekit.write
 import kotlinx.coroutines.launch
 
 class FileSaverImpl: FileSaver {
-    private val settings = FileKitDialogSettings(title = "Test title")
+    private val settings = FileKitDialogSettings.createDefault()
     private var launcher: SaverResultLauncher? = null
     private var data: ByteArray? = null
 

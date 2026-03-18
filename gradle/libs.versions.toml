@@ -14,9 +14,11 @@ compose-lifecycle = "2.10.0-beta01"
 compose-nav3 = "1.1.0-alpha06"
 composeMediaplayer = "0.8.7"
 composeMultiplatform = "1.10.2"
+detekt = "2.0.0-alpha.2"
+detektComposeRules = "0.5.6"
 filekit = "0.13.0"
 junit = "4.13.2"
-kotlin = "2.3.10"
+kotlin = "2.3.20"
 kotlinx-serialization = "1.10.0"
 kotlinxCollectionsImmutable = "0.4.0"
 kotlinxCoroutines = "1.10.2"
@@ -50,6 +52,7 @@ compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.re
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-uiTooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
+detektComposeRules = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektComposeRules" }
 filekit-coil = { module = "io.github.vinceglb:filekit-coil", version.ref = "filekit" }
 filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekit" }
 filekit-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "filekit" }
@@ -81,6 +84,7 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }
