@@ -9,15 +9,15 @@ import io.github.vinceglb.filekit.extension
 import io.github.vinceglb.filekit.nameWithoutExtension
 import io.github.vinceglb.filekit.readBytes
 import io.github.vinceglb.filekit.size
+import kotlinx.collections.immutable.ImmutableList
 import kotlin.time.Instant
-import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.io.Buffer
 import kotlinx.io.Source
 import kotlin.time.Duration
 
 data class LogItem(
     val name: String,
-    val files: ImmutableSet<FileItem>
+    val files: ImmutableList<FileItem>
 ) {
     val lastModified: Instant? = files.mapNotNull { it.lastModified }.maxOrNull()
 }

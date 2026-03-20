@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -86,14 +88,16 @@ private fun PreviewLogItemDetail() {
     val testState = remember {
         val item = mockLogItem(
             name = "Test entry 2",
-            osdFile = mockOsdFile(
+            mockOsdFile(
                 font = FontVariant.BETAFLIGHT,
                 hasGpsData = true,
                 maxSpeed = Speed(89, SpeedUnit.Kmh),
                 aircraftIdentifier = "DOLPHIN"
             ),
-            srtFile = mockSrtFile(duration = 345100.milliseconds)
-        )
+            mockSrtFile(duration = 345100.milliseconds),
+            mockVideoFile("VF1"),
+            mockVideoFile("VF2"),
+            )
         LogItemState(item)
     }
     BasePreview {
@@ -109,14 +113,33 @@ private fun PreviewLogItemDetail() {
 class LogItemState(
     val logItem: LogItem
 ) {
-    val videoFile = logItem.files.filterIsInstance<VideoFile>().firstOrNull()
+    val videoFileList = logItem.files.filterIsInstance<VideoFile>()
+
+    var videoFile by mutableStateOf(videoFileList.firstOrNull())
+        private set
+
+    var selectedVideoIndex by mutableStateOf(0)
+
+    var videoTimeOffset: Long by mutableStateOf(0)
+        private set
 
     var osdData : OsdData? by mutableStateOf(null)
     var srtData : SrtData? by mutableStateOf(null)
 
-    private var initialized = false
 
     var currentSliderPosition: Float by mutableStateOf(0f)
+
+    private var initialized = false
+    private val srtDataList = mutableListOf<SrtData>()
+
+    fun selectVideo(index: Int) {
+        selectedVideoIndex = index
+        videoTimeOffset = srtDataList
+            .take(index)
+            .sumOf { it.frames.last().endTimeMs.toLong() }
+        videoFile = videoFileList[index]
+        srtData = srtDataList[index]
+    }
 
     suspend fun init() {
         if (initialized.not()) {
@@ -139,15 +162,17 @@ class LogItemState(
                             }
                         }
                     }
-                srtData = logItem.files
+                val list: List<SrtData> = logItem.files
                     .filterIsInstance<SRTFile>()
-                    .firstOrNull()
-                    ?.let { srtFile ->
+                    .mapNotNull { srtFile ->
                         when (val result = parseSrtFile(srtFile.source())) {
-                            is ParseResult.Error -> TODO()
+                            is ParseResult.Error -> null
                             is ParseResult.Success -> result.record
                         }
                     }
+                srtDataList.clear()
+                srtDataList.addAll(list)
+                srtData = list.firstOrNull()
                 initialized = true
             }
         }
@@ -169,7 +194,7 @@ fun LogItemDetailPane(
 
     val fileSaver = rememberFileSaver()
 
-    LaunchedEffect(state) {
+    LaunchedEffect(videoFile) {
         if (videoFile != null) {
             playerState.openFile(videoFile.file.platformFile())
             delay(100)
@@ -238,6 +263,26 @@ fun LogItemDetailPane(
                     Column(
                         modifier = Modifier.weight(0.6667f)
                     ) {
+                        if (state.videoFileList.size > 1) {
+                            PrimaryTabRow(
+                                modifier = Modifier,
+                                selectedTabIndex = state.selectedVideoIndex
+                            ) {
+                                repeat(state.videoFileList.size) { index ->
+                                    val videoFile = state.videoFileList[index]
+                                    Tab(
+                                        selected = state.selectedVideoIndex == index,
+                                        onClick = {
+                                            playerState.pause()
+                                            state.selectVideo(index)
+                                        },
+                                        text = {
+                                            Text(videoFile.name)
+                                        }
+                                    )
+                                }
+                            }
+                        }
                         Box(
                             modifier = modifier
                                 .aspectRatio(playerState.aspectRatio)
@@ -256,7 +301,7 @@ fun LogItemDetailPane(
                                         osdRecord = data.record,
                                         osdFont = data.font,
                                         positionProvider = {
-                                            (playerState.currentTime * 1000.0).roundToLong()
+                                            (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                                         }
                                     )
                                 }
@@ -283,7 +328,9 @@ fun LogItemDetailPane(
                             .aspectRatio(1f),
                         gpsData = gps,
                         zoomLevel = 17.0,
-                        positionProvider = { (playerState.currentTime * 1000.0).roundToLong() }
+                        positionProvider = {
+                            (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
+                        }
                     )
                 }
             }

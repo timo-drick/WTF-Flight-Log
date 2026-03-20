@@ -9,45 +9,111 @@ import de.drick.wtf_osd.Symbols
 import de.drick.wtf_osd.extractFlightData
 import de.drick.wtf_osd.parseOsdFile
 import de.drick.wtf_osd.parseSrtFile
-import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import kotlin.collections.filter
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
+
+suspend fun List<FileItem>.toTypedItem(identifier: Set<String>) = mapNotNull { fileItem ->
+    when (fileItem.extension.lowercase()) {
+        "osd" -> analyzeOsdFile(fileItem, identifier)
+        "srt" -> {
+            val srt = withContext(Dispatchers.Default) {
+                parseSrtFile(fileItem.source())
+            }
+            when(srt) {
+                is ParseResult.Success -> {
+                    val duration = srt.record.frames.last().endTimeMs.milliseconds
+                    SRTFile(
+                        file = fileItem,
+                        duration = duration
+                    )
+                }
+                is ParseResult.Error -> ErrorFile(fileItem, srt.type.name)
+            }
+        }
+        "mov", "mp4" -> VideoFile(fileItem)
+        else -> null
+    }
+}
+
+private val logItemNameRegex = Regex("""(\D*)(\d+)""")
 
 fun List<FileItem>.analyzeFlow(aircraftIdentifier: List<AircraftIdentifier>) = flow {
     val identifier = aircraftIdentifier.map { it.name }.toSet()
     groupBy { it.name }.forEach { (name, fileList) ->
-        val items = fileList.mapNotNull { fileItem ->
-            when (fileItem.extension.lowercase()) {
-                "osd" -> analyzeOsdFile(fileItem, identifier)
-                "srt" -> {
-                    val srt = withContext(Dispatchers.Default) {
-                        parseSrtFile(fileItem.source())
-                    }
-                    when(srt) {
-                        is ParseResult.Success -> {
-                            val duration = srt.record.frames.last().endTimeMs.milliseconds
-                            SRTFile(
-                                file = fileItem,
-                                duration = duration
-                            )
-                        }
-                        is ParseResult.Error -> ErrorFile(fileItem, srt.type.name)
-                    }
-                }
-                "mov", "mp4" -> {
-                    VideoFile(fileItem)
-                }
-                else -> null
-            }
-        }
+        val items = fileList.toTypedItem(identifier)
         if (items.isNotEmpty()) {
-            emit(LogItem(name, items.toImmutableSet()))
+            emit(LogItem(name, items.distinct().toImmutableList()))
         }
     }
 }.flowOn(Dispatchers.Default)
+
+fun List<LogItem>.mergeItems(): List<LogItem> {
+    val originalList = this
+    val itemsWithOsdFile = originalList.filter { it.files.filterIsInstance<OSDFile>().isNotEmpty() }
+    val logItemsToRemove = mutableListOf<LogItem>()
+    val mergedLogItems = mutableMapOf<String, LogItem>()
+    itemsWithOsdFile.forEach { logItem ->
+        println("Osd item: ${logItem.name}")
+        //Check if there are more files belonging to this log:
+        val osdFileDuration = logItem.files.filterIsInstance<OSDFile>().firstOrNull()?.duration
+        val srtFileDuration = logItem.files.filterIsInstance<SRTFile>().firstOrNull()?.duration
+        if (osdFileDuration != null && srtFileDuration != null) {
+            var srtDuration: Duration = srtFileDuration
+            var previousLogItem = logItem
+            val collectedFiles = logItem.files.toMutableList()
+            while (osdFileDuration - srtDuration > 1.seconds) {
+                println("OSD duration is longer than srt search for next files!")
+                val nextItem = getNextName(previousLogItem.name)?.let { nextName ->
+                    println("Next: $nextName")
+                    originalList.find { it.name == nextName }
+                }
+                println(nextItem)
+                if (nextItem != null) {
+                    logItemsToRemove.add(nextItem)
+                    collectedFiles.addAll(nextItem.files)
+                    srtDuration = collectedFiles.filterIsInstance<SRTFile>()
+                        .fold(Duration.ZERO) { acc, item -> acc + item.duration }
+                    previousLogItem = nextItem
+                } else {
+                    break
+                }
+            }
+            if (collectedFiles.size != logItem.files.size) {
+                mergedLogItems[logItem.name] = logItem.copy(
+                    files = collectedFiles.toImmutableList()
+                )
+            }
+        }
+    }
+    println("Merged items:")
+    mergedLogItems.forEach { println(it) }
+    println("Items to remove:")
+    logItemsToRemove.forEach { println(it) }
+    return originalList.mapNotNull { originalItem ->
+        val mergedItem = mergedLogItems[originalItem.name]
+        when {
+            mergedItem != null -> mergedItem
+            logItemsToRemove.contains(originalItem) -> null
+            else -> originalItem
+        }
+    }
+}
+
+fun getNextName(name: String): String? {
+    logItemNameRegex.find(name)?.destructured?.let { (namePart, index) ->
+        val numbers = index.length
+        val nextIndex = (index.toInt() + 1).toString().padStart(numbers, '0')
+        return "${namePart}${nextIndex}"
+    }
+    return null
+}
 
 private suspend fun analyzeOsdFile(fileItem: FileItem, identifier: Set<String>) = when(val osd = parseOsdFile(fileItem.source())) {
     is ParseResult.Success -> {

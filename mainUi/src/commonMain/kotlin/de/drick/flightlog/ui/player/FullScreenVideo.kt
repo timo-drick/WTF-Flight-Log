@@ -78,6 +78,7 @@ fun FullScreenPlayerPanel(
     val osdData = state.osdData
     val gpsData = osdData?.gpsData
     val srtData = state.srtData
+    val videoFile = state.videoFile
 
     val playerState = rememberVideoPlayerState()
 
@@ -98,8 +99,8 @@ fun FullScreenPlayerPanel(
     var zoomLevel by remember { mutableDoubleStateOf(14.0) }
 
     LaunchedEffect(state) {
-        if (state.videoFile != null) {
-            playerState.openFile(state.videoFile.file.platformFile(), InitialPlayerState.PLAY)
+        if (videoFile != null) {
+            playerState.openFile(videoFile.file.platformFile(), InitialPlayerState.PLAY)
             delay(100)
             playerState.seekTo(state.currentSliderPosition)
         }
@@ -187,7 +188,7 @@ fun FullScreenPlayerPanel(
                             osdRecord = data.record,
                             osdFont = data.font,
                             positionProvider = {
-                                (playerState.currentTime * 1000.0).roundToLong()
+                                (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                             }
                         )
                     }
@@ -212,7 +213,7 @@ fun FullScreenPlayerPanel(
                     gpsData = gpsData,
                     zoomLevel = zoomLevel,
                     positionProvider = {
-                        (playerState.currentTime * 1000.0).roundToLong()
+                        (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                     }
                 )
             }
