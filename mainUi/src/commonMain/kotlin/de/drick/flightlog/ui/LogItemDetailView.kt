@@ -114,9 +114,12 @@ class LogItemState(
     val logItem: LogItem
 ) {
     val videoFileList = logItem.files.filterIsInstance<VideoFile>()
+    private val srtFileList = logItem.files.filterIsInstance<SRTFile>()
 
     var videoFile by mutableStateOf(videoFileList.firstOrNull())
         private set
+
+    val videoFileCount = videoFileList.size
 
     var selectedVideoIndex by mutableStateOf(0)
 
@@ -134,11 +137,14 @@ class LogItemState(
 
     fun selectVideo(index: Int) {
         selectedVideoIndex = index
-        videoTimeOffset = srtDataList
+        videoTimeOffset = srtFileList
             .take(index)
-            .sumOf { it.frames.last().endTimeMs.toLong() }
+            .sumOf { it.duration.inWholeMilliseconds }
         videoFile = videoFileList[index]
-        srtData = srtDataList[index]
+        currentSliderPosition = 0f
+        if (index < srtDataList.size) {
+            srtData = srtDataList[index]
+        }
     }
 
     suspend fun init() {
@@ -172,7 +178,7 @@ class LogItemState(
                     }
                 srtDataList.clear()
                 srtDataList.addAll(list)
-                srtData = list.firstOrNull()
+                srtData = list[selectedVideoIndex]
                 initialized = true
             }
         }
@@ -263,12 +269,12 @@ fun LogItemDetailPane(
                     Column(
                         modifier = Modifier.weight(0.6667f)
                     ) {
-                        if (state.videoFileList.size > 1) {
+                        if (state.videoFileCount > 1) {
                             PrimaryTabRow(
                                 modifier = Modifier,
                                 selectedTabIndex = state.selectedVideoIndex
                             ) {
-                                repeat(state.videoFileList.size) { index ->
+                                repeat(state.videoFileCount) { index ->
                                     val videoFile = state.videoFileList[index]
                                     Tab(
                                         selected = state.selectedVideoIndex == index,
