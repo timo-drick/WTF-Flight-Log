@@ -3,6 +3,7 @@ package de.drick.flightlog.ui
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import de.drick.flightlog.FlightLogTheme
 import de.drick.flightlog.file.ByteSize
 import de.drick.flightlog.file.FileItem
@@ -24,9 +25,12 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Instant
 
 @Composable
-fun BasePreview(content: @Composable () -> Unit) {
+fun BasePreview(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
     FlightLogTheme {
-        Scaffold {
+        Scaffold(modifier) {
             content()
         }
     }
@@ -41,10 +45,10 @@ fun mockFlightLogState(
     override val list = logItem.toList()
     override val groups = list.group()
     override val aircraftIdentifierList = emptyList<AircraftIdentifier>()
-    override fun importFiles(files: List<PlatformFile>) {}
-    override fun rescanLogItems() {}
-    override fun addAircraft(aircraftIdentifier: AircraftIdentifier) {}
-    override fun removeAircraft(aircraftIdentifier: AircraftIdentifier) {}
+    override fun importFiles(files: List<PlatformFile>) { /* only mock */ }
+    override fun rescanLogItems() { /* only mock */ }
+    override fun addAircraft(aircraftIdentifier: AircraftIdentifier) { /* only mock */ }
+    override fun removeAircraft(aircraftIdentifier: AircraftIdentifier) { /* only mock */ }
 }
 
 fun mockLogItem(
@@ -67,6 +71,8 @@ fun mockLogItem(
     return LogItem(name, files.toPersistentSet())
 }
 
+private const val MOCK_TIME_STAMP = 1770542159025
+
 fun mockBaseFile(
     fileName: String,
     extension: String,
@@ -75,7 +81,7 @@ fun mockBaseFile(
     override val name = fileName
     override val extension = extension
     override val size = size
-    override val lastModified: Instant = Instant.fromEpochMilliseconds(1770542159025)
+    override val lastModified: Instant = Instant.fromEpochMilliseconds(MOCK_TIME_STAMP)
     override suspend fun source(): Source = TODO("Not yet implemented for mock files")
     override fun platformFile(): PlatformFile = TODO("Not yet implemented")
 }

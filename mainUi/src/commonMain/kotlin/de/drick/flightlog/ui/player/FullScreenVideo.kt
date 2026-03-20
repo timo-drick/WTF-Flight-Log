@@ -71,8 +71,8 @@ private fun PreviewFullScreenPlayerPanel() {
 @Composable
 fun FullScreenPlayerPanel(
     state: LogItemState,
-    modifier: Modifier = Modifier,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val previewMode = LocalInspectionMode.current
     val osdData = state.osdData
