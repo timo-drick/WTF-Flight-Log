@@ -286,7 +286,7 @@ fun FlightDataSummaryTable(overview: FlightDataOverview) {
                 weight = 0.175f,
                 content = { item, style, modifier ->
                     Text(
-                        text = item.second.maxHeight.label() ?: "-",
+                        text = item.second.maxHeight.label(),
                         modifier = modifier.padding(horizontal = 4.dp),
                         style = style
                     )

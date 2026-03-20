@@ -44,6 +44,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import wtfflightlog.mainui.generated.resources.screen_osd_player_gps
+import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -103,7 +104,7 @@ fun LogItem.getOSDFile() =
     files.filterIsInstance<OSDFile>().firstOrNull()
 
 fun Speed?.label() = this?.let { "$value ${unit.short}" } ?: "-"
-fun Height?.label() = this?.let { "$value ${unit.short}" } ?: "-"
+fun Height?.label() = this?.let { "${value.roundToInt()} ${unit.short}" } ?: "-"
 
 @Composable
 fun LogItemView(

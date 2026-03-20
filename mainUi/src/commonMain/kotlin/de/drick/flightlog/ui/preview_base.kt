@@ -18,7 +18,7 @@ import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.wtf_osd.Height
 import de.drick.wtf_osd.Speed
 import io.github.vinceglb.filekit.PlatformFile
-import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.io.Source
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -51,6 +51,8 @@ fun mockFlightLogState(
     override fun removeAircraft(aircraftIdentifier: AircraftIdentifier) { /* only mock */ }
 }
 
+fun mockLogItem(name: String, vararg file: FileItem) = LogItem(name, file.toPersistentList())
+
 fun mockLogItem(
     name: String,
     variant: FontVariant?
@@ -68,7 +70,7 @@ fun mockLogItem(
     files.add(mockVideoFile("Video"))
     osdFile?.let { files.add(osdFile) }
     srtFile?.let { files.add(srtFile) }
-    return LogItem(name, files.toPersistentSet())
+    return LogItem(name, files.toPersistentList())
 }
 
 private const val MOCK_TIME_STAMP = 1770542159025

@@ -8,6 +8,7 @@ import de.drick.flightlog.file.BaseFile
 import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.analyzeFlow
+import de.drick.flightlog.file.mergeItems
 import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.flightlog.localStorage.AircraftIdentifierDB
 import io.github.vinceglb.filekit.PlatformFile
@@ -80,9 +81,15 @@ class FlightLogStateImpl(
                     .sortedByDescending { it.lastModified }
                 fileItemList.analyzeFlow(aircraftIdentifierList).collect { item ->
                     logList.add(item)
-                    updateList()
+                    list = logList.toPersistentList()
+                    groups = list.group()
                     yield()
                 }
+                val mergedList = list.mergeItems()
+                    .sortedByDescending { it.lastModified }
+                    .toPersistentList()
+                list = mergedList
+                groups = list.group()
                 isWorking = false
             }
         }
@@ -103,11 +110,6 @@ class FlightLogStateImpl(
             platformFileList.addAll(newFiles)
             rescanLogItems()
         }
-    }
-
-    private fun updateList() {
-        list = logList.toPersistentList()
-        groups = list.group()
     }
 }
 
