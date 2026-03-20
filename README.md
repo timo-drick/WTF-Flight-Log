@@ -13,19 +13,26 @@ https://timo-drick.github.io/WTF-Flight-Log/
 
 
 Please note that this project is under heavy development.
-Since the FPV.WTF team rooted the DJI googles the project: https://github.com/fpv-wtf/msp-osd brings the full betaflight OSD to digital video.
-It is also possible to record the osd data onto the googles.
+Since the FPV.WTF team rooted the DJI goggles the project: https://github.com/fpv-wtf/msp-osd brings the full betaflight OSD to digital video.
+It is also possible to record the osd data onto the goggles.
 You than have 3 different files: DJIG0003.mp4, DJIG0003.srt and DJIG0003.osd
 The ...osd file contains the OSD character data.
 Supported devices: 
-- DJI Googles V1 and V2
+- DJI Goggles V1 and V2
 - Older air units Vista and original one
 - O3 Air Unit
 - ~~O4 Air Unit~~ not supported
 
+Features:
+- Reads Goggle video, osd, srt files and merge them into log items
+- Detects flight times by analyzing the osd time stamp
+- Detects gps lat,lon on osd and shows a map
+- Export gps data as KML file for Google Earth viewer.
+- Merges split video files. (The DJI Goggle split video after 10 min. Merging them into one log item)
+
 ## Enable osd recording
 Follow the instructions on (https://github.com/fpv-wtf/msp-osd) to install msp-osd.
-Than connect your google and input following in the wtfos configurator cli:
+Than connect your goggle and input following in the wtfos configurator cli:
 ```
 $ package-config set msp-osd rec_enabled true
 $ package-config apply msp-osd
