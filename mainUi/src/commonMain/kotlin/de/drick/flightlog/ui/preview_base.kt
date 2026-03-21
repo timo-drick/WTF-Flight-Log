@@ -38,7 +38,12 @@ fun BasePreview(
 
 fun mockFlightLogState(
     isWorking: Boolean = false,
-    vararg logItem: LogItem
+    vararg logItem: LogItem = arrayOf(
+        mockLogItem("Test entry 1", FontVariant.BETAFLIGHT),
+        mockLogItem("Test entry 2", FontVariant.ARDUPILOT),
+        mockLogItem("Test entry 3", FontVariant.INAV),
+        mockLogItem("Test entry 4", FontVariant.GENERIC)
+    )
 ) = object : FlightLogState {
     override val isWorking = isWorking
     override val lazyListState = LazyListState()

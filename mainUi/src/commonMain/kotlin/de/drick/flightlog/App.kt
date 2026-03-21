@@ -15,14 +15,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import de.drick.flightlog.ui.*
+import de.drick.flightlog.ui.AircraftIdentifierPane
+import de.drick.flightlog.ui.FlightLogState
+import de.drick.flightlog.ui.FlightLogStateImpl
+import de.drick.flightlog.ui.LogItemDetailPane
+import de.drick.flightlog.ui.LogItemListOverview
+import de.drick.flightlog.ui.LogItemListPane
+import de.drick.flightlog.ui.LogItemState
+import de.drick.flightlog.ui.mockFlightLogState
 import de.drick.flightlog.ui.player.FullScreenPlayerPanel
-import de.drick.wtf_osd.FontVariant
 
 
 data class ListPaneData(val state: FlightLogState)
@@ -37,13 +44,7 @@ data class AircraftIdentifierPaneData(val state: FlightLogState)
 @Composable
 private fun PreviewApp() {
     val state = remember {
-        mockFlightLogState(
-            isWorking = true,
-            mockLogItem("Test entry 1", FontVariant.BETAFLIGHT),
-            mockLogItem("Test entry 2", FontVariant.ARDUPILOT),
-            mockLogItem("Test entry 3", FontVariant.INAV),
-            mockLogItem("Test entry 4", FontVariant.GENERIC)
-        )
+        mockFlightLogState(isWorking = true)
     }
     val backStack = remember {
         mutableStateListOf<Any>(
@@ -69,7 +70,8 @@ fun App() {
 @Composable
 fun MainScreen(
     flightLogState: FlightLogState,
-    backStack: MutableList<Any>,
+    backStack: SnapshotStateList<Any>,
+    modifier: Modifier = Modifier
 ) {
     val windowAdaptiveInfo = currentWindowAdaptiveInfo()
     val directive = remember(windowAdaptiveInfo) {
@@ -81,6 +83,7 @@ fun MainScreen(
     val padding = if (backStack.last() is FullScreenPane) 0.dp else MaterialTheme.panePadding()
     FlightLogTheme {
         Scaffold(
+            modifier = modifier,
             contentWindowInsets = WindowInsets.safeDrawing
         ) { paddingValues ->
             NavDisplay(

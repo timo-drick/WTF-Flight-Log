@@ -2,7 +2,7 @@ package de.drick.core
 
 import android.util.Log
 
-private const val logFileName = "log.kt"
+private const val LOG_FILE_NAME = "log.kt"
 
 actual fun logPlatform(error: Throwable?, msg: () -> String) {
     val (threadName, message) = analyze(msg())
@@ -18,7 +18,7 @@ private fun analyze(msg: String?): Pair<String, String> {
     val threadName = ct.name
     val traces = ct.stackTrace
     val max = traces.size-1
-    val stackTrace = traces.slice(3..max).find { it.fileName != logFileName }
+    val stackTrace = traces.slice(3..max).find { it.fileName != LOG_FILE_NAME }
     val message = if (stackTrace != null) {
         val cname = stackTrace.className.substringAfterLast(".")
         "[${stackTrace.fileName}:${stackTrace.lineNumber}] $cname.${stackTrace.methodName} : $msg"

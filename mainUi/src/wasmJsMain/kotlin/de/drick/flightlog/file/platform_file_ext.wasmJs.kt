@@ -12,5 +12,6 @@ actual fun PlatformFile.lastModifiedTime(): Instant? {
 /**
  * Workaround of wrong defined lastModified return type in org.w3c.files.File
  */
+@Suppress("UnusedParameter")
 @OptIn(ExperimentalWasmJsInterop::class)
 private fun getLastModifiedDouble(file: JsAny): Double = js("file.lastModified")

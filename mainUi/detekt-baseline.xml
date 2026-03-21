@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComposableParamOrder:LogItemListView.kt:@Composable fun LogItemListPane</ID>
+    <ID>ComposableParamOrder:scrollbar.kt:@Composable fun ScrollBar</ID>
+    <ID>ComposableParamOrder:suspend_button.kt:@Composable fun SuspendButton</ID>
+    <ID>CyclomaticComplexMethod:FullScreenVideo.kt:@Composable fun FullScreenPlayerPanel</ID>
+    <ID>CyclomaticComplexMethod:LogItemListEntry.kt:@Composable fun LogItemView</ID>
+    <ID>CyclomaticComplexMethod:gps_view.kt:@Composable fun GpsView</ID>
+    <ID>CyclomaticComplexMethod:osd_canvas_view.kt:@Composable fun OsdCanvasView</ID>
+    <ID>EmptyDefaultConstructor:local_storage.kt:AircraftIdentifierDB</ID>
+    <ID>LambdaParameterEventTrailing:LogItemListEntry.kt:onClick: () -&gt; Unit</ID>
+    <ID>LambdaParameterEventTrailing:LogItemListView.kt:onEditAircraftListClick: () -&gt; Unit</ID>
+    <ID>LambdaParameterInRestartableEffect:gps_view.kt:positionProvider: () -&gt; Long</ID>
+    <ID>LambdaParameterInRestartableEffect:osd_canvas_view.kt:positionProvider: () -&gt; Long</ID>
+    <ID>LambdaParameterInRestartableEffect:srt_canvas_view.kt:positionProvider: () -&gt; Long</ID>
+    <ID>LongMethod:App.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) @Composable fun MainScreen</ID>
+    <ID>LongMethod:FullScreenVideo.kt:@Composable fun FullScreenPlayerPanel</ID>
+    <ID>LongMethod:LogItemDetailView.kt:@Composable fun LogItemDetailPane</ID>
+    <ID>LongMethod:LogItemListEntry.kt:@Composable fun LogItemView</ID>
+    <ID>LongMethod:LogItemListOverview.kt:@Composable fun FlightDataSummaryTable</ID>
+    <ID>LongMethod:LogItemListView.kt:@Composable fun LogItemListPane</ID>
+    <ID>LongMethod:gps_view.kt:@Composable fun GpsView</ID>
+    <ID>MatchingDeclarationName:lazy_source.kt:LazyByteArraySource : RawSource</ID>
+    <ID>MatchingDeclarationName:table.kt:TableColumn&lt;T&gt;</ID>
+    <ID>MaxLineLength:LogItemListOverview.kt:fun</ID>
+    <ID>ModifierMissing:LogItemListOverview.kt:@Composable fun FlightDataSummaryTable</ID>
+    <ID>ModifierNotUsedAtRoot:LogItemDetailView.kt:modifier = modifier .aspectRatio(playerState.aspectRatio) .weight(1f, fill = false)</ID>
+    <ID>ModifierNotUsedAtRoot:suspend_button.kt:modifier = modifier</ID>
+    <ID>ModifierReused:LogItemDetailView.kt:Box( modifier = modifier .aspectRatio(playerState.aspectRatio) .weight(1f, fill = false) , contentAlignment = Alignment.BottomCenter ) { VideoPlayer( modifier = Modifier.aspectRatio(playerState.aspectRatio), playerState = playerState, contentScale = ContentScale.Fit ) { osdData?.let { data -&gt; OsdCanvasView( modifier = Modifier.fillMaxSize(), osdRecord = data.record, osdFont = data.font, positionProvider = { (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset } ) } srtData?.let { data -&gt; SrtOverlayView( modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp), srtData = data, positionProvider = { (playerState.currentTime * 1000.0).roundToLong() } ) } } }</ID>
+    <ID>ModifierReused:LogItemDetailView.kt:Surface( modifier = modifier, shape = RoundedCornerShape(MaterialTheme.cornerRadius()), color = MaterialTheme.colorScheme.surfaceContainer ) { Column(modifier = Modifier.fillMaxSize().padding(8.dp)) { Row( modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp) ) { TextButton(onClick = onBackClick) { Text("x") } Text( text = logItem.name, style = MaterialTheme.typography.titleLarge, modifier = Modifier ) Spacer(Modifier.weight(1f)) osdData?.gpsData?.let { gpsData -&gt; SuspendButton(onClick = { val points = gpsData.wayPoints.map { it.position.toGeoPoint() } val kml = exportKmlTrack(points).encodeToByteArray() fileSaver.saveToFile(kml, "${logItem.name}.kml") }) { Text("Export KML") } } } osdData?.let { osdData -&gt; val aircraftName = remember(osdData) { osdData.file.aircraftIdentifier ?: "Unknown" } Text("Aircraft: $aircraftName") Text("Maximum speed: ${osdData.file.maxSpeed.label()}") Text("Maximum height: ${osdData.file.maxHeight.label()}") osdData.file.maxDistanceHome?.let { Text("Maximum distance to home: ${it.roundToInt()} m") } osdData.file.distanceTotal?.let { Text("Travel distance: ${it.roundToInt()} m") } } Text("Flight time: ${logItem.duration()?.inWholeSeconds?.seconds?.toString()}") Spacer(Modifier.height(8.dp)) Row( modifier = Modifier.weight(1f, fill = false), horizontalArrangement = Arrangement.spacedBy(8.dp) ) { if (videoFile != null) { Column( modifier = Modifier.weight(0.6667f) ) { if (state.videoFileCount &gt; 1) { PrimaryTabRow( modifier = Modifier, selectedTabIndex = state.selectedVideoIndex ) { repeat(state.videoFileCount) { index -&gt; val videoFile = state.videoFileList[index] Tab( selected = state.selectedVideoIndex == index, onClick = { playerState.pause() state.selectVideo(index) }, text = { Text(videoFile.name) } ) } } } Box( modifier = modifier .aspectRatio(playerState.aspectRatio) .weight(1f, fill = false) , contentAlignment = Alignment.BottomCenter ) { VideoPlayer( modifier = Modifier.aspectRatio(playerState.aspectRatio), playerState = playerState, contentScale = ContentScale.Fit ) { osdData?.let { data -&gt; OsdCanvasView( modifier = Modifier.fillMaxSize(), osdRecord = data.record, osdFont = data.font, positionProvider = { (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset } ) } srtData?.let { data -&gt; SrtOverlayView( modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp), srtData = data, positionProvider = { (playerState.currentTime * 1000.0).roundToLong() } ) } } } VideoPlayerControls(playerState, onFullScreenClick) } } val gps = osdData?.gpsData if (gps != null) { GpsView( modifier = Modifier .clipToBounds() .weight(.3333f) .aspectRatio(1f), gpsData = gps, zoomLevel = 17.0, positionProvider = { (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset } ) } } } }</ID>
+    <ID>MutableStateAutoboxing:LogItemDetailView.kt:LogItemState$mutableStateOf(0)</ID>
+    <ID>MutableStateAutoboxing:LogItemDetailView.kt:LogItemState$mutableStateOf(0f)</ID>
+    <ID>NewLineAtEndOfFile:LogItemListOverview.kt:de.drick.flightlog.ui.LogItemListOverview.kt</ID>
+    <ID>NewLineAtEndOfFile:analyze_files.kt:de.drick.flightlog.file.analyze_files.kt</ID>
+    <ID>NewLineAtEndOfFile:lazy_source.kt:de.drick.flightlog.file.lazy_source.kt</ID>
+    <ID>NewLineAtEndOfFile:scrollbar.kt:de.drick.flightlog.ui.components.scrollbar.kt</ID>
+    <ID>NewLineAtEndOfFile:suspend_button.kt:de.drick.flightlog.ui.components.suspend_button.kt</ID>
+    <ID>NewLineAtEndOfFile:video_player.kt:de.drick.flightlog.ui.components.video_player.kt</ID>
+    <ID>PreviewPublic:scrollbar.kt:@Preview @Composable fun ScrollBarPreview</ID>
+    <ID>TooGenericExceptionCaught:local_storage.kt:KeyValuePersistentStorage$err: Throwable</ID>
+    <ID>TopLevelPropertyNaming:byte_format.kt:private const val BytePrecisionLossErrorMessage = "ByteSize provides precision at the byte level. Representing a fractional value as " + "bytes may lead to precision loss. It is recommended to convert the value to a whole " + "number before using (Binary/Decimal)ByteSize."</ID>
+    <ID>WildcardImport:AircraftIdentifierPane.kt:import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AircraftIdentifierPane.kt:import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:AircraftIdentifierPane.kt:import androidx.compose.runtime.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -17,7 +17,7 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 
 
-/*fun LonLat.toGeoPoint() = GeoPoint(latitude = lat, longitude = lon)
+fun LonLat.toGeoPoint() = GeoPoint(latitude = lat, longitude = lon)
 
 data class MapCircle(
     val p: GeoPoint,
@@ -123,4 +123,4 @@ fun TestMapUavZonesPortugal(
             )
         }
     }
-}*/
+}

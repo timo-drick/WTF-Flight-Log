@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:gps_extractor.kt:lat != null &amp;&amp; lon != null &amp;&amp; (lat != 0.0 || lon != 0.0)</ID>
+    <ID>CyclomaticComplexMethod:data_extractor.kt:fun extractDataPoint: FlightData</ID>
+    <ID>CyclomaticComplexMethod:osd_msp_file_parser.kt:private suspend fun parseOldMspOsdFile : OsdRecord</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:osd_srt_file_parser.kt:val (index, startTime, endTime, secondLine) = matchResult.destructured</ID>
+    <ID>LongMethod:osd_msp_file_parser.kt:private suspend fun parseOldMspOsdFile : OsdRecord</ID>
+    <ID>MatchingDeclarationName:osd_font.kt:FontVariant</ID>
+    <ID>MaxLineLength:Res.kt:Res$public</ID>
+    <ID>MaxLineLength:Res.kt:Res$public suspend</ID>
+    <ID>MaxLineLength:data_extractor.kt:suspend</ID>
+    <ID>MaxLineLength:osd_srt_file_parser.kt:/*private val srtBlockRegex = """^(\d+${'$'})\n(\d{2}:\d{2}:\d{2},\d{3})\s*--&gt;\s*(\d{2}:\d{2}:\d{2},\d{3})\n.+glsBat:(\S+)\s+delay:(\d+)ms.+bitrate:(\d+.\d)Mbps""" .toRegex(RegexOption.MULTILINE) */</ID>
+    <ID>NewLineAtEndOfFile:data_extractor.kt:de.drick.wtf_osd.data_extractor.kt</ID>
+    <ID>NewLineAtEndOfFile:font_symbols.kt:de.drick.wtf_osd.font_symbols.kt</ID>
+    <ID>NewLineAtEndOfFile:osd_msp_file_parser.kt:de.drick.wtf_osd.osd_msp_file_parser.kt</ID>
+    <ID>PackageNaming:ExpectResourceCollectors.kt:package wtfflightlog.libs.wtf_osd.generated.resources</ID>
+    <ID>PackageNaming:Res.kt:package wtfflightlog.libs.wtf_osd.generated.resources</ID>
+    <ID>PackageNaming:data_extractor.kt:package de.drick.wtf_osd</ID>
+    <ID>PackageNaming:font_symbols.kt:package de.drick.wtf_osd</ID>
+    <ID>PackageNaming:gps_extractor.kt:package de.drick.wtf_osd</ID>
+    <ID>PackageNaming:osd_data_model.kt:package de.drick.wtf_osd</ID>
+    <ID>PackageNaming:osd_font.kt:package de.drick.wtf_osd</ID>
+    <ID>PackageNaming:osd_msp_file_parser.kt:package de.drick.wtf_osd</ID>
+    <ID>PackageNaming:osd_srt_file_parser.kt:package de.drick.wtf_osd</ID>
+    <ID>ThrowingExceptionsWithoutMessageOrCause:osd_msp_file_parser.kt:Throwable()</ID>
+    <ID>ThrowingExceptionsWithoutMessageOrCause:osd_srt_file_parser.kt:IllegalStateException()</ID>
+    <ID>TooGenericExceptionCaught:gps_extractor.kt:err: Throwable</ID>
+    <ID>TooGenericExceptionCaught:osd_msp_file_parser.kt:err: Exception</ID>
+    <ID>TooGenericExceptionCaught:osd_srt_file_parser.kt:err: Exception</ID>
+    <ID>UnusedParameter:font_symbols.kt:fontVariant: FontVariant</ID>
+    <ID>WildcardImport:osd_font.kt:import androidx.compose.ui.graphics.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

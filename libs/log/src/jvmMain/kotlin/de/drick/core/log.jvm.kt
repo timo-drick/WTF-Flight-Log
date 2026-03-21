@@ -7,14 +7,14 @@ actual fun logPlatform(error: Throwable?, msg: () -> String) {
     logJvm(msg(), error)
 }
 
-const val logFileName = "log.kt"
+private const val LOG_FILE_NAME = "log.kt"
 
 fun logJvm(msg: Any, error: Throwable? = null) {
     val ct = Thread.currentThread()
     val threadName = ct.name
     val traces = ct.stackTrace
     val max = traces.size-1
-    val stackTrace = traces.slice(3..max).find { it.fileName != logFileName }
+    val stackTrace = traces.slice(3..max).find { it.fileName != LOG_FILE_NAME }
     val message = if (stackTrace != null) {
         val cname = stackTrace.className.substringAfterLast(".")
         "[${stackTrace.fileName}:${stackTrace.lineNumber}] $cname.${stackTrace.methodName} : $msg"

@@ -117,30 +117,6 @@ fun FullScreenPlayerPanel(
             showControlOverlay = false
         }
     }
-    /*LaunchedEffect(playerState) {
-        view.keepScreenOn = (videoPlayerState.state == VideoPlayerState.PlayBackState.PLAY)
-        log("Keep screen on: ${view.keepScreenOn}")
-    }*/
-    /*val activity = LocalActivity.current
-    LifecycleResumeEffect(videoFile) {
-        activity?.apply {
-            val controller = WindowCompat.getInsetsController(window, window.decorView)
-            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-        }
-        log("Resume started")
-        videoPlayerState.play(videoFile)
-        onPauseOrDispose {
-            activity?.apply {
-                val controller = WindowCompat.getInsetsController(window, window.decorView)
-                controller.show(WindowInsetsCompat.Type.systemBars())
-            }
-            view.keepScreenOn = false
-            log("Resume ended keep screen on: ${view.keepScreenOn}")
-            videoPlayerState.stop()
-        }
-    }*/
-
     val controlButtonState by remember {
         derivedStateOf {
             when {

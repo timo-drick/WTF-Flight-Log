@@ -1,6 +1,6 @@
 package de.drick.flightlog.file
 
-import de.drick.compose.tilemap.calculateGeoDistance
+import de.drick.compose.tilemap.calculateDistance
 import de.drick.compose.tilemap.maxDistanceTo
 import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.flightlog.ui.components.toGeoPoint
@@ -115,29 +115,30 @@ fun getNextName(name: String): String? {
     return null
 }
 
-private suspend fun analyzeOsdFile(fileItem: FileItem, identifier: Set<String>) = when(val osd = parseOsdFile(fileItem.source())) {
-    is ParseResult.Success -> {
-        val symbols = Symbols(osd.record)
-        val duration = osd.record.frames.last().millis.milliseconds
-        val data = extractFlightData(symbols, identifier)
-        val gpsPoints = data.mapNotNull { it.gpsPoint?.toGeoPoint() }
-        val distanceTotal = if (gpsPoints.size > 2) gpsPoints.calculateGeoDistance() else null
-        val maxDistanceHome = if (gpsPoints.size > 2) gpsPoints.first().maxDistanceTo(gpsPoints) else null
-        val identifier = data.find { it.aircraftIdentifier != null }?.aircraftIdentifier
-        val maxSpeed = data.mapNotNull { it.speed }.maxByOrNull { it.value }
-        val maxHeight = data.mapNotNull { it.height }.maxByOrNull { it.value }
-        OSDFile(
-            file = fileItem,
-            fontVariant = osd.record.fontVariant,
-            duration = duration,
-            hasGpsData = gpsPoints.isNotEmpty(),
-            startPosition = gpsPoints.firstOrNull(),
-            aircraftIdentifier = identifier,
-            maxSpeed = maxSpeed,
-            maxHeight = maxHeight,
-            distanceTotal = distanceTotal,
-            maxDistanceHome = maxDistanceHome
-        )
+private suspend fun analyzeOsdFile(fileItem: FileItem, identifier: Set<String>) =
+    when(val osd = parseOsdFile(fileItem.source())) {
+        is ParseResult.Success -> {
+            val symbols = Symbols(osd.record)
+            val duration = osd.record.frames.last().millis.milliseconds
+            val data = extractFlightData(symbols, identifier)
+            val gpsPoints = data.mapNotNull { it.gpsPoint?.toGeoPoint() }
+            val distanceTotal = if (gpsPoints.size > 2) gpsPoints.calculateDistance() else null
+            val maxDistanceHome = if (gpsPoints.size > 2) gpsPoints.first().maxDistanceTo(gpsPoints) else null
+            val identifier = data.find { it.aircraftIdentifier != null }?.aircraftIdentifier
+            val maxSpeed = data.mapNotNull { it.speed }.maxByOrNull { it.value }
+            val maxHeight = data.mapNotNull { it.height }.maxByOrNull { it.value }
+            OSDFile(
+                file = fileItem,
+                fontVariant = osd.record.fontVariant,
+                duration = duration,
+                hasGpsData = gpsPoints.isNotEmpty(),
+                startPosition = gpsPoints.firstOrNull(),
+                aircraftIdentifier = identifier,
+                maxSpeed = maxSpeed,
+                maxHeight = maxHeight,
+                distanceTotal = distanceTotal,
+                maxDistanceHome = maxDistanceHome
+            )
+        }
+        is ParseResult.Error -> ErrorFile(fileItem, osd.type.name)
     }
-    is ParseResult.Error -> ErrorFile(fileItem, osd.type.name)
-}

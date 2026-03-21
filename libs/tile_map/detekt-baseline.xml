@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>InvalidPackageDeclaration:altitude_interpolation_test.kt:package de.drick.tilemap</ID>
+    <ID>InvalidPackageDeclaration:test_uav_zones.kt:package de.drick.tilemap</ID>
+    <ID>LongMethod:kml_export.kt:suspend fun exportKmlTrack: String</ID>
+    <ID>LongMethod:test_vector_uav_zones.kt:@Composable fun TestMapUavZonesPortugal</ID>
+    <ID>MatchingDeclarationName:altitude_interpolation_test.kt:TestAltitudeInterpolation</ID>
+    <ID>MatchingDeclarationName:test_uav_zones.kt:UAVZonesParserTestCommon</ID>
+    <ID>MaxLineLength:map_tile_view.kt:drawLine(barColor, Offset(barEndX, barY - tickHeight / 2), Offset(barEndX, barY + tickHeight / 2), strokeWidth = strokeBar)</ID>
+    <ID>MaxLineLength:map_tile_view.kt:drawLine(barColor, Offset(barStartX, barY - tickHeight / 2), Offset(barStartX, barY + tickHeight / 2), strokeWidth = strokeBar)</ID>
+    <ID>MaxLineLength:map_tile_view.kt:drawLine(outlineColor, Offset(barEndX, barY - tickHeight / 2), Offset(barEndX, barY + tickHeight / 2), strokeWidth = strokeOutline + strokeBar)</ID>
+    <ID>MaxLineLength:map_tile_view.kt:drawLine(outlineColor, Offset(barStartX, barY - tickHeight / 2), Offset(barStartX, barY + tickHeight / 2), strokeWidth = strokeOutline + strokeBar)</ID>
+    <ID>MaxLineLength:map_tile_view.kt:style = TextStyle(color = outlineColor, fontSize = 12.sp, shadow = androidx.compose.ui.graphics.Shadow(color = outlineColor, blurRadius = 4f))</ID>
+    <ID>MayBeConstant:tile_math.kt:// https://en.wikipedia.org/wiki/World_Geodetic_System#WGS84 val earthRadius = 6378137.0 // in meters WGS84</ID>
+    <ID>NewLineAtEndOfFile:altitude_interpolation_test.kt:de.drick.tilemap.altitude_interpolation_test.kt</ID>
+    <ID>NewLineAtEndOfFile:kml_export.kt:de.drick.compose.tilemap.kml_export.kt</ID>
+    <ID>NewLineAtEndOfFile:map_tile_view.kt:de.drick.compose.tilemap.map_tile_view.kt</ID>
+    <ID>NewLineAtEndOfFile:test_uav_zones.kt:de.drick.tilemap.test_uav_zones.kt</ID>
+    <ID>NewLineAtEndOfFile:tile_loader.kt:de.drick.compose.tilemap.tile_loader.kt</ID>
+    <ID>TooGenericExceptionCaught:tile_loader.kt:TileProvider$err: Throwable</ID>
+    <ID>TooManyFunctions:geometry.kt:de.drick.compose.tilemap.geometry.kt</ID>
+    <ID>TooManyFunctions:tile_math.kt:de.drick.compose.tilemap.tile_math.kt</ID>
+    <ID>TopLevelPropertyNaming:tile_loader.kt:const val debugModeEnabled = false</ID>
+    <ID>TopLevelPropertyNaming:tile_loader.kt:private const val mapboxToken = BuildConfig.MAPBOX_TOKEN</ID>
+    <ID>UnusedParameter:test_vector_uav_zones.kt:modifier: Modifier = Modifier</ID>
+  </CurrentIssues>
+</SmellBaseline>

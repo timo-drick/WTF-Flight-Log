@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
-    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -72,20 +71,3 @@ kotlin {
         }
     }
 }
-
-dependencies {
-    detektPlugins(libs.detektComposeRules)
-}
-
-detekt {
-    buildUponDefaultConfig = true
-    allRules = false
-}
-
-tasks.withType<dev.detekt.gradle.Detekt>().configureEach {
-    exclude {
-        it.file.invariantSeparatorsPath.contains("/build/generated/")
-    }
-    exclude("de/drick/flightlog/ui/icons/**")
-}
-

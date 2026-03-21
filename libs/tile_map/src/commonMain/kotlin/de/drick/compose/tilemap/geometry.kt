@@ -1,6 +1,14 @@
 package de.drick.compose.tilemap
 
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.asin
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 const val EARTH_RADIUS = 6373000.0 // Used in Mapbox for meter calculation
 
@@ -11,7 +19,7 @@ fun radiansToDegree(radians: Double): Double = radians * 180.0 / PI
 fun radiansToMeters(radians: Double): Double = radians * EARTH_RADIUS
 fun metersToRadians(meters: Double): Double = meters / EARTH_RADIUS
 
-fun List<GeoPoint>.calculateGeoDistance() = zipWithNext { a, b -> a.distanceTo(b) }.sum()
+fun List<GeoPoint>.calculateDistance() = zipWithNext { a, b -> a.distanceTo(b) }.sum()
 fun GeoPoint.distanceTo(p: GeoPoint) = calculateGeoDistance(this, p)
 fun GeoPoint.maxDistanceTo(list: List<GeoPoint>) = list.maxOf { distanceTo(it) }
 
@@ -24,7 +32,8 @@ fun calculateGeoDistance(p1: GeoPoint, p2: GeoPoint): Double {
     val deltaLambda = degreesToRadians(p2.longitude - p1.longitude)
     val phi1 = degreesToRadians(p1.latitude)
     val phi2 = degreesToRadians(p2.latitude)
-    val a = (sin(deltaPhi / 2.0).pow(2.0) + sin(deltaLambda / 2).pow(2.0) * cos(phi1) * cos(phi2))
+    val a = (sin(deltaPhi / 2.0).pow(2.0)
+            + sin(deltaLambda / 2).pow(2.0) * cos(phi1) * cos(phi2))
     return radiansToMeters(2 * atan2(sqrt(a), sqrt(1 - a)))
 }
 
@@ -67,10 +76,10 @@ fun nearestPointOnLine(pt: GeoPoint, start: GeoPoint, stop: GeoPoint): GeoPoint 
     val perpendicularPt1 = destination(pt, heightDistance, direction + 90.0)
     val perpendicularPt2 = destination(pt, heightDistance, direction - 90.0)
     val intersect = lineIntersects(
-        line1Start = perpendicularPt1.toVec2(),
-        line1Stop = perpendicularPt2.toVec2(),
-        line2Start = start.toVec2(),
-        line2Stop = stop.toVec2()
+        l1a = perpendicularPt1.toVec2(),
+        l1b = perpendicularPt2.toVec2(),
+        l2a = start.toVec2(),
+        l2b = stop.toVec2()
     )
     var closestPtOnLine = if (startDist < stopDist) start else stop
     val closestDist = min(startDist, stopDist)
@@ -89,8 +98,12 @@ fun destination(from: GeoPoint, distance: Double, bearing: Double) : GeoPoint {
     val lat1 = degreesToRadians(from.latitude)
     val bearingRad = degreesToRadians(bearing)
     val radians = metersToRadians(distance)
-    val lat2 = asin(sin(lat1) * cos(radians) + cos(lat1) * sin(radians) * cos(bearingRad))
-    val long2 = long1 + atan2(sin(bearingRad) * sin(radians) * cos(lat1), cos(radians) - sin(lat1) * sin(lat2))
+    val lat2 = asin(sin(lat1) * cos(radians)
+            + cos(lat1) * sin(radians) * cos(bearingRad))
+    val long2 = long1 + atan2(
+        y = sin(bearingRad) * sin(radians) * cos(lat1),
+        x = cos(radians) - sin(lat1) * sin(lat2)
+    )
     return GeoPoint(radiansToDegree(lat2), radiansToDegree(long2))
 }
 
@@ -121,17 +134,18 @@ fun GeoPoint.toVec2() = Vec2(latitude, longitude)
 fun Vec2.toGeoPoint() = GeoPoint(x, y)
 
 // https://github.com/Turfjs/turf/blob/master/packages/turf-line-intersect/index.ts
-private fun lineIntersects(line1Start: Vec2, line1Stop: Vec2, line2Start: Vec2, line2Stop: Vec2): Vec2? {
-    // 1 -> line1Start
-    // 2 -> line1Stop
-    // 3 -> line2Start
-    // 4 -> line2Stop
+private fun lineIntersects(
+    l1a: Vec2, // line 1 start
+    l1b: Vec2, // line 1 end
+    l2a: Vec2, // line 2 start
+    l2b: Vec2  // line 2 end
+): Vec2? {
     // denom = (y4-y3) * (x2-x1)  -  (x4-x3) * (y2-y1)
-    val denom = (line2Stop.y - line2Start.y) * (line1Stop.x - line1Start.x) - (line2Stop.x - line2Start.x) * (line1Stop.y - line1Start.y)
+    val denom = (l2b.y - l2a.y) * (l1b.x - l1a.x) - (l2b.x - l2a.x) * (l1b.y - l1a.y)
     // numeA = (x4-x3) * (y1-y3)  -  (y4-y3) * (x1-x3)
-    val numeA = (line2Stop.x - line2Start.x) * (line1Start.y - line2Start.y) - (line2Stop.y - line2Start.y) * (line1Start.x - line2Start.x)
+    val numeA = (l2b.x - l2a.x) * (l1a.y - l2a.y) - (l2b.y - l2a.y) * (l1a.x - l2a.x)
     // numeB = (x2-x1) * (y1-y3)  -  (y2-y1) * (x1-x3)
-    val numeB = (line1Stop.x - line1Start.x) * (line1Start.y - line2Start.y) - (line1Stop.y - line1Start.y) * (line1Start.x - line2Start.x)
+    val numeB = (l1b.x - l1a.x) * (l1a.y - l2a.y) - (l1b.y - l1a.y) * (l1a.x - l2a.x)
 
     if (denom == 0.0) {
         return null
@@ -142,8 +156,8 @@ private fun lineIntersects(line1Start: Vec2, line1Stop: Vec2, line2Start: Vec2, 
 
     if (uA in 0.0..1.0 && uB in 0.0..1.0) {
         return Vec2(
-            x = line1Start.x + uA * (line1Stop.x - line1Start.x),
-            y = line1Start.y + uA * (line1Stop.y - line1Start.y)
+            x = l1a.x + uA * (l1b.x - l1a.x),
+            y = l1a.y + uA * (l1b.y - l1a.y)
         )
     }
     return null
