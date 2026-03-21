@@ -178,7 +178,9 @@ class LogItemState(
                     }
                 srtDataList.clear()
                 srtDataList.addAll(list)
-                srtData = list[selectedVideoIndex]
+                if (selectedVideoIndex < list.size) {
+                    srtData = list[selectedVideoIndex]
+                }
                 initialized = true
             }
         }
