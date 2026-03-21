@@ -85,9 +85,10 @@ fun VideoPlayerControls(
 
 @Composable
 fun VolumeAndPlaybackControls(
-    playerState: VideoPlayerState
+    playerState: VideoPlayerState,
+    modifier: Modifier = Modifier
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,

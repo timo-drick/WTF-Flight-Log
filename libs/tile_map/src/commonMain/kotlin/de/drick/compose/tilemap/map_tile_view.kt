@@ -88,18 +88,11 @@ class TileLayerState(
         log("${tileProvider.name}: load ${tilesToLoad.size}")
 
         tilesToLoad.forEach { tile ->
-            try {
-                log("${tileProvider.name}: loading...: ${tile.pos}")
-                val image = tileProvider.loadTile(tile.pos)
-                tile.image = image
-                log("${tileProvider.name}: loaded: ${tile.pos}")
-                onInvalidate()
-            } catch (err: CancellationException) {
-                log("${tileProvider.name}: download interrupted")
-                throw err // Propagate cancellation to stop when scope is canceled
-            } catch (err: Throwable) {
-                log(err)
-            }
+            log("${tileProvider.name}: loading...: ${tile.pos}")
+            val image = tileProvider.loadTile(tile.pos)
+            tile.image = image
+            log("${tileProvider.name}: loaded: ${tile.pos}")
+            onInvalidate()
         }
         log("${tileProvider.name}: Loading finished")
     }
@@ -264,11 +257,11 @@ fun rememberViewPortState(
 @Composable
 fun rememberViewPortState(
     isDarkMode: Boolean,
+    lightTileProvider: TileProvider,
     initialZoom: Float = 10f,
     initPos: GeoPoint = GeoPoint(0.0, 0.0),
     tileSize: Int = 512,
-    darkTileProvider: TileProvider,
-    lightTileProvider: TileProvider
+    darkTileProvider: TileProvider = lightTileProvider
 ): ViewPortState {
     val provider = if (isDarkMode) darkTileProvider else lightTileProvider
     val scope = rememberCoroutineScope()
@@ -282,9 +275,16 @@ fun rememberViewPortState(
 }
 
 
-private val scaleSteps = listOf(1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000)
+private val scaleSteps = listOf(
+    1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000,
+    20000, 50000, 100000, 200000, 500000, 1000000, 2000000
+)
 
-private fun DrawScope.drawScaleBar(metersPerPixel: Double, canvasSize: Size, textMeasurer: TextMeasurer) {
+private fun DrawScope.drawScaleBar(
+    metersPerPixel: Double,
+    canvasSize: Size,
+    textMeasurer: TextMeasurer
+) {
     val maxBarWidthPx = canvasSize.width / 2f
     val maxBarMeters = maxBarWidthPx * metersPerPixel
     val scaleMeters = scaleSteps.lastOrNull { it <= maxBarMeters } ?: scaleSteps.first()

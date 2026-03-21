@@ -15,7 +15,7 @@ class FileSaverImpl: FileSaver {
     private var data: ByteArray? = null
 
     @Composable
-    fun init() {
+    fun InitEffect() {
         val scope = rememberCoroutineScope()
         launcher = rememberFileSaverLauncher(settings) {
             it?.let { file ->
@@ -34,6 +34,6 @@ class FileSaverImpl: FileSaver {
 @Composable
 actual fun rememberFileSaver(): FileSaver {
     val fileSaver =  remember { FileSaverImpl() }
-    fileSaver.init()
+    fileSaver.InitEffect()
     return fileSaver
 }

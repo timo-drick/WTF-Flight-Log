@@ -23,3 +23,18 @@ versionCatalogUpdate {
         versions.add("material3") // Would like to switch to stable version
     }
 }
+
+subprojects {
+    pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") {
+        apply(plugin = "dev.detekt")
+        dependencies {
+            detektPlugins(libs.detektComposeRules)
+        }
+        detekt {
+            buildUponDefaultConfig = true
+            allRules = false
+            baseline = file("${projectDir}/detekt-baseline.xml")
+            source = files(projectDir.resolve("src"))
+        }
+    }
+}
