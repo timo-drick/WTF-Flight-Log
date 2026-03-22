@@ -52,39 +52,17 @@ fun TestMapUavZonesPortugal(
     LaunchedEffect(zones, viewPortState.zoom) {
         val zoom = viewPortState.zoom.toInt()
         val color = Color.Red.copy(alpha = 0.3f)
-        zones?.let { zones ->
-            val geometryList = zones.features.flatMap { zone ->
-                zone.geometry
-            }
-            val newCircles = geometryList
-                .map { it.horizontalProjection }
-                .filterIsInstance<CircleProjection>()
-                .map {
-                    val p = it.center.toGeoPoint()
-                    val radius = metersToTileLength(p, zoom, it.radius)
-                    val pxRadius = radius.toFloat() * viewPortState.tileSize.toFloat()
-                    MapCircle(p, pxRadius.coerceIn(1f, null), color)
-                }
-            uavZoneCircles = newCircles
-            uavZonePolygons = geometryList
-                .map { it.horizontalProjection }
-                .filterIsInstance<PolygonProjection>()
-                .flatMap {
-                    it.coordinates
-                }.map {
-                    val pointList = it.map { lonLat ->
-                        lonLat.toGeoPoint().toTilePos(zoom)
-                    }
-                    MapPolygon(pointList, color)
-                }
-
+        zones?.let { zoneData ->
+            val geometryList = zoneData.features.flatMap { it.geometry }
+            uavZoneCircles = extractCircles(geometryList, zoom, viewPortState, color)
+            uavZonePolygons = extractPolygons(geometryList, zoom, color)
         }
     }
     val dragState = rememberDraggable2DState { offset ->
         viewPortState.movePx(offset.x, offset.y)
     }
     TileMapView(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .focusable()
             .draggable2D(dragState)
@@ -124,3 +102,34 @@ fun TestMapUavZonesPortugal(
         }
     }
 }
+
+private fun extractCircles(
+    geometryList: List<ZoneGeometry>,
+    zoom: Int,
+    viewPortState: ViewPortState,
+    color: Color
+) = geometryList
+    .map { it.horizontalProjection }
+    .filterIsInstance<CircleProjection>()
+    .map {
+        val p = it.center.toGeoPoint()
+        val radius = metersToTileLength(p, zoom, it.radius)
+        val pxRadius = radius.toFloat() * viewPortState.tileSize.toFloat()
+        MapCircle(p, pxRadius.coerceIn(1f, null), color)
+    }
+
+private fun extractPolygons(
+    geometryList: List<ZoneGeometry>,
+    zoom: Int,
+    color: Color
+) = geometryList
+    .map { it.horizontalProjection }
+    .filterIsInstance<PolygonProjection>()
+    .flatMap {
+        it.coordinates
+    }.map { coordinates: List<LonLat> ->
+        val pointList = coordinates.map { lonLat ->
+            lonLat.toGeoPoint().toTilePos(zoom)
+        }
+        MapPolygon(pointList, color)
+    }

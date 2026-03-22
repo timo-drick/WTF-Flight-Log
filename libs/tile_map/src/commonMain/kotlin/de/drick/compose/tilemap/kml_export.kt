@@ -23,13 +23,35 @@ suspend fun exportKmlTrack(
 ): String {
     require(points.isNotEmpty()) { "Points list cannot be empty" }
     val interpolatedPoints = points.interpolateAltitudes().removeConsecutiveDuplicates()
-    //.distinctBy { "${it.longitude.formatDecimals(7)},${it.latitude.formatDecimals(7)}" }
     val elevationFirstPoint = getElevation(points.first()) ?: 0.0
     val coordinates = interpolatedPoints.joinToString(" ") { it.kmlCoordinate(elevationFirstPoint) }
     val colorString = pathColor.toAabbggrr()
     val first = points.first().kmlCoordinate()
     val last = points.last().kmlCoordinate()
-    return """
+    return generateKml(
+        name = name,
+        description = description,
+        colorString = colorString,
+        firstCoordinate = first,
+        lastCoordinate = last,
+        tessellate = tessellate,
+        extrude = extrude,
+        isAbsoluteAltitude = points.any { it.alt != null },
+        coordinates = coordinates
+    )
+}
+
+private fun generateKml(
+    name: String,
+    description: String,
+    colorString: String,
+    firstCoordinate: String,
+    lastCoordinate: String,
+    tessellate: Boolean,
+    extrude: Boolean,
+    isAbsoluteAltitude: Boolean,
+    coordinates: String
+): String = """
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
@@ -73,7 +95,7 @@ suspend fun exportKmlTrack(
       <styleUrl>#startStyle</styleUrl>
       <Point>
         <altitudeMode>clampToGround</altitudeMode>
-        <coordinates>$first</coordinates>
+        <coordinates>$firstCoordinate</coordinates>
       </Point>
     </Placemark>
     
@@ -83,7 +105,7 @@ suspend fun exportKmlTrack(
       <LineString>
         <tessellate>${tessellate.kmlBoolean()}</tessellate>
         <extrude>${extrude.kmlBoolean()}</extrude>
-        <altitudeMode>${if (points.any { it.alt != null }) "absolute" else "clampToGround"}</altitudeMode>
+        <altitudeMode>${if (isAbsoluteAltitude) "absolute" else "clampToGround"}</altitudeMode>
         <coordinates>
             $coordinates
         </coordinates>
@@ -97,13 +119,12 @@ suspend fun exportKmlTrack(
       <styleUrl>#endStyle</styleUrl>
       <Point>
         <altitudeMode>clampToGround</altitudeMode>
-        <coordinates>$last</coordinates>
+        <coordinates>$lastCoordinate</coordinates>
       </Point>
     </Placemark>
   </Document>
 </kml>
-    """.trimIndent()
-}
+""".trimIndent()
 
 private fun Boolean.kmlBoolean() = if (this) "1" else "0"
 private fun GeoPoint.kmlCoordinate(elevationOffset: Double = 0.0): String {
@@ -133,7 +154,7 @@ private fun Color.toAabbggrr(): String {
     return "#$aa$bb$gg$rr".uppercase()
 }
 
-fun List<GeoPoint>.interpolateAltitudes(): List<GeoPoint> {
+fun <T>List<T>.interpolateBy(value: (T) -> Double?, replace: (T, Double) -> T): List<T> {
     if (size < 2) return this
 
     val result = toMutableList()
@@ -141,13 +162,13 @@ fun List<GeoPoint>.interpolateAltitudes(): List<GeoPoint> {
     // Process forward to find interpolatable gaps
     var i = 0
     while (i < size - 1) {
-        val startAlt = result[i].alt
+        val startAlt = value(result[i])
         if (startAlt != null) {
             var j = i + 1
             // Skip nulls
-            while (j < size && result[j].alt == null) j++
-            if (j < size && result[j].alt != null) {
-                val endAlt = result[j].alt!!
+            while (j < size && value(result[j]) == null) j++
+            if (j < size && value(result[j]) != null) {
+                val endAlt = requireNotNull(value(result[j]))
                 // Interpolate from i to j (inclusive)
                 val steps = j - i - 1  // Number of gaps between known points
 
@@ -155,7 +176,7 @@ fun List<GeoPoint>.interpolateAltitudes(): List<GeoPoint> {
                     val t = (step + 1).toDouble() / (steps + 1.0)
                     val interpolatedAlt = startAlt + t * (endAlt - startAlt)
                     val k = i + step + 1
-                    result[k] = result[k].copy(alt = interpolatedAlt)
+                    result[k] = replace(result[k], interpolatedAlt)
                 }
                 i = j  // Jump to end
             } else {
@@ -168,3 +189,9 @@ fun List<GeoPoint>.interpolateAltitudes(): List<GeoPoint> {
 
     return result
 }
+
+fun List<GeoPoint>.interpolateAltitudes(): List<GeoPoint> =
+    interpolateBy(
+        value = { it.alt },
+        replace = { i, v -> i.copy(alt = v)}
+    )

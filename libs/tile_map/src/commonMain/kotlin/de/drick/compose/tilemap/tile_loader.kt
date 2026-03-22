@@ -23,7 +23,7 @@ import kotlin.collections.set
 import kotlin.math.max
 import kotlin.math.min
 
-const val debugModeEnabled = false
+const val DEBUG_MODE_ENABLED = false
 
 val tileProviderOsm = TileProvider(
     name = "Open Street Map",
@@ -34,14 +34,14 @@ val tileProviderOsm = TileProvider(
     }
 )
 
-private const val mapboxToken = BuildConfig.MAPBOX_TOKEN
+private const val MAPBOX_TOKEN = BuildConfig.MAPBOX_TOKEN
 
 val tileProviderMapBoxSat = TileProvider(
     name = "MapBox",
     tileLoaderUrl = { pos ->
         URLBuilder("https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/512").apply {
             appendPathSegments(pos.zoom.toString(), pos.tileX.toString(), pos.tileY.toString())
-            parameters.append("access_token", mapboxToken)
+            parameters.append("access_token", MAPBOX_TOKEN)
         }.build()
     }
 )
@@ -51,7 +51,7 @@ val tileProviderMapBoxLight = TileProvider(
     tileLoaderUrl = { pos ->
         URLBuilder("https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/512").apply {
             appendPathSegments(pos.zoom.toString(), pos.tileX.toString(), pos.tileY.toString())
-            parameters.append("access_token", mapboxToken)
+            parameters.append("access_token", MAPBOX_TOKEN)
         }.build()
     }
 )
@@ -60,14 +60,14 @@ val tileProviderMapBoxDark = TileProvider(
     tileLoaderUrl = { pos ->
         URLBuilder("https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/512").apply {
             appendPathSegments(pos.zoom.toString(), pos.tileX.toString(), pos.tileY.toString())
-            parameters.append("access_token", mapboxToken)
+            parameters.append("access_token", MAPBOX_TOKEN)
         }.build()
     }
 )
 
 private val client by lazy {
     HttpClient {
-        if (debugModeEnabled) {
+        if (DEBUG_MODE_ENABLED) {
             install(Logging) {
                 logger = object : Logger {
                     override fun log(message: String) {
@@ -126,7 +126,7 @@ class TileProvider(
                 }
             } catch (int: CancellationException) {
                 throw int
-            } catch (err: Throwable) {
+            } catch (@Suppress("TooGenericExceptionCaught") err: Exception) {
                 log("No valid image data:\n${response.bodyAsText()}", err)
                 null
             }

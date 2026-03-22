@@ -1,4 +1,4 @@
-package de.drick.tilemap
+package tilemap
 
 import de.drick.compose.tilemap.decodeUavZones
 import kotlinx.coroutines.test.runTest

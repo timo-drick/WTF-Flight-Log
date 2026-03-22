@@ -1,4 +1,4 @@
-package de.drick.tilemap
+package tilemap
 
 import de.drick.compose.tilemap.GeoPoint
 import de.drick.compose.tilemap.interpolateAltitudes

@@ -5,7 +5,6 @@ import kotlin.math.atan
 import kotlin.math.cos
 import kotlin.math.exp
 import kotlin.math.ln
-import kotlin.math.sinh
 import kotlin.math.tan
 
 fun GeoPoint.toTilePos(zoom: Int): TilePos {
@@ -18,40 +17,14 @@ fun GeoPoint.toTilePos(zoom: Int): TilePos {
     )
 }
 
-fun TilePos.toGeoPoint() = GeoPoint(
-    latitude = tileYToLat(y, zoom),
-    longitude = tileXToLon(x, zoom)
-)
-
-private fun tileXToLon(x: Double, zoom: Int): Double {
-    val n = 1 shl zoom
-    return x / n * 360.0 - 180.0
-}
-
-private fun tileYToLat(y: Double, zoom: Int): Double {
-    val n = 1 shl zoom
-    val latRad = atan(sinh(PI * (1 - 2.0 * y / n)))
-    return latRad.toDegrees()
-}
-
 fun metersToTileLength(geoPoint: GeoPoint, zoom: Int, meters: Double): Double {
     val n = 1 shl zoom
     val latRad = geoPoint.latitude.toRadians()
-    return meters * n / (2.0 * PI * earthRadius * cos(latRad))
+    return meters * n / (2.0 * PI * EARTH_RADIUS_WGS84 * cos(latRad))
 }
-
-fun TilePos.wrap(): TilePos {
-    val n = (1 shl zoom).toDouble()
-    val wrappedX = ((x % n) + n) % n
-    val wrappedY = ((y % n) + n) % n
-    return copy(x = wrappedX, y = wrappedY)
-}
-
-fun Double.toRadians(): Double = this / 180.0 * PI
-fun Double.toDegrees(): Double = this * 180.0 / PI
 
 // https://en.wikipedia.org/wiki/World_Geodetic_System#WGS84
-val earthRadius = 6378137.0 // in meters WGS84
+const val EARTH_RADIUS_WGS84 = 6378137.0 // in meters WGS84
 
 // EPSG:4326 lon,lat
 
@@ -63,11 +36,11 @@ fun GeoPoint.toMeter() = convert4326To3857(this)
 fun MeterPos.toGeoPoint() = convert3857To4326(this)
 
 private fun convert4326To3857(geoPoint: GeoPoint) = MeterPos(
-    x = earthRadius * geoPoint.longitude.toRadians(),
-    y = earthRadius * ln(tan(PI / 4 + geoPoint.latitude.toRadians() / 2))
+    x = EARTH_RADIUS_WGS84 * geoPoint.longitude.toRadians(),
+    y = EARTH_RADIUS_WGS84 * ln(tan(PI / 4 + geoPoint.latitude.toRadians() / 2))
 )
 
 private fun convert3857To4326(meterPos: MeterPos) =  GeoPoint(
-    latitude = (2 * atan(exp(meterPos.y / earthRadius)) - PI / 2).toDegrees(),
-    longitude = (meterPos.x / earthRadius).toDegrees()
+    latitude = (2 * atan(exp(meterPos.y / EARTH_RADIUS_WGS84)) - PI / 2).toDegrees(),
+    longitude = (meterPos.x / EARTH_RADIUS_WGS84).toDegrees()
 )
