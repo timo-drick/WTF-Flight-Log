@@ -1,6 +1,7 @@
 package de.drick.wtf_osd
 
 import kotlinx.coroutines.yield
+import kotlinx.serialization.Serializable
 
 enum class SpeedUnit(val short: String, val description: String, val convertToKmh: Float = 1f) {
     Unknown("?", "Unit not detected!"),
@@ -19,11 +20,13 @@ enum class HeightUnit(val short: String, val description: String, val convertToM
 fun Speed.unifiedValue() = value * unit.convertToKmh
 fun Height.unifiedValue() = value * unit.convertToMeter
 
+@Serializable
 data class Speed(
     val value: Int,
     val unit: SpeedUnit
 )
 
+@Serializable
 data class Height(
     val value: Float,
     val unit: HeightUnit

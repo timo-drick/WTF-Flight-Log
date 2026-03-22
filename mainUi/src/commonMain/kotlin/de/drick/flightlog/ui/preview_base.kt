@@ -51,7 +51,7 @@ fun mockFlightLogState(
     override val groups = list.group()
     override val aircraftIdentifierList = emptyList<AircraftIdentifier>()
     override fun importFiles(files: List<PlatformFile>) { /* only mock */ }
-    override fun rescanLogItems() { /* only mock */ }
+    override fun rescanLogItems(force: Boolean) { /* only mock */ }
     override fun addAircraft(aircraftIdentifier: AircraftIdentifier) { /* only mock */ }
     override fun removeAircraft(aircraftIdentifier: AircraftIdentifier) { /* only mock */ }
 }
