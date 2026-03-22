@@ -149,7 +149,7 @@ fun MainScreen(
                         AircraftIdentifierPane(
                             state = key.state,
                             onBack = {
-                                flightLogState.rescanLogItems()
+                                flightLogState.rescanLogItems(true)
                                 backStack.removeLast()
                             }
                         )

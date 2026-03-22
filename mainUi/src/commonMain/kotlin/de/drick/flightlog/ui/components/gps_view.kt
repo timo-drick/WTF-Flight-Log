@@ -52,7 +52,7 @@ fun GpsView(
             initialPos = gpsData.wayPoints.first().position.toGeoPoint(),
             tileSize = 256,
             tileProviderMapBoxSat,
-            tileProviderDipulZones
+            //tileProviderDipulZones
         )
     }
     val overviewPoints = remember(gpsData) {

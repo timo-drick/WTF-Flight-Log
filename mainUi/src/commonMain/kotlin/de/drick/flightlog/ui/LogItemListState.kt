@@ -7,11 +7,17 @@ import androidx.compose.runtime.setValue
 import de.drick.flightlog.file.BaseFile
 import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
-import de.drick.flightlog.file.analyzeFlow
+import de.drick.flightlog.file.OSDFile
+import de.drick.flightlog.file.lastModifiedTime
 import de.drick.flightlog.file.mergeItems
+import de.drick.flightlog.file.toTypedItem
 import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.flightlog.localStorage.AircraftIdentifierDB
+import de.drick.flightlog.localStorage.OsdSummeryDataCache
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.name
+import io.github.vinceglb.filekit.size
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,17 +40,37 @@ interface FlightLogState {
     val groups: Map<String?, List<LogItem>>
     val aircraftIdentifierList: List<AircraftIdentifier>
     fun importFiles(files: List<PlatformFile>)
-    fun rescanLogItems()
+    fun rescanLogItems(force: Boolean = false)
     fun addAircraft(aircraftIdentifier: AircraftIdentifier)
     fun removeAircraft(aircraftIdentifier: AircraftIdentifier)
+}
+
+fun PlatformFile.id(): String {
+    val size = size()
+    val lastModified = lastModifiedTime()?.toEpochMilliseconds() ?: 0
+    return "$name:${(lastModified + size).hashCode()}"
+}
+
+inline fun <K, V> MutableMap<K, V>.getOrPutIfNotNull(key: K, defaultValue: () -> V?): V? {
+    val value = get(key)
+    return if (value == null) {
+        val answer = defaultValue()
+        if (answer != null) {
+            put(key, answer)
+        }
+        answer
+    } else {
+        value
+    }
 }
 
 class FlightLogStateImpl(
     private val scope: CoroutineScope
 ): FlightLogState {
     private val aircraftDB = AircraftIdentifierDB()
-    private val platformFileList = mutableListOf<PlatformFile>()
-    private val workingLock = Mutex()
+    private val platformFileMap = mutableMapOf<String, PlatformFile>()
+    private val fileItemMap = mutableMapOf<String, FileItem>()
+    private val fileScanningLock = Mutex()
 
     override val lazyListState = LazyListState()
     override var isWorking by mutableStateOf(false)
@@ -66,24 +92,46 @@ class FlightLogStateImpl(
     }
 
     private fun updateAircraftList() {
-        aircraftIdentifierList = aircraftDB.loadAll()
+        scope.launch {
+            aircraftIdentifierList = aircraftDB.loadAll()
+        }
     }
 
     private var runningScanJob: Job? = null
-    override fun rescanLogItems() {
+    override fun rescanLogItems(
+        force: Boolean
+    ) {
         runningScanJob?.cancel()
         runningScanJob = scope.launch(Dispatchers.Default) {
-            workingLock.withLock {
+            fileScanningLock.withLock {
                 isWorking = true
-                logList.clear()
-                val fileItemList = platformFileList
+                val fileItemList = platformFileMap.values
                     .map { it.toFileItem() }
                     .sortedByDescending { it.lastModified }
-                fileItemList.analyzeFlow(aircraftIdentifierList).collect { item ->
-                    logList.add(item)
-                    list = logList.toPersistentList()
-                    groups = list.group()
-                    yield()
+                val identifier = aircraftIdentifierList.map { it.name }.toSet()
+                logList.clear()
+                if (force) {
+                    val osdCacheKeyToDeleteList = fileItemMap.values.filterIsInstance<OSDFile>()
+                        .filter { it.aircraftIdentifier == null || it.aircraftIdentifier !in identifier }
+                        .map { it.platformFile().id() }
+                    osdCacheKeyToDeleteList.forEach {
+                        OsdSummeryDataCache.remove(it)
+                        fileItemMap.remove(it)
+                    }
+                }
+                fileItemList.groupBy { it.name }.forEach { (name, fileList) ->
+                    val items = fileList.mapNotNull { fileItem ->
+                        fileItemMap.getOrPutIfNotNull(fileItem.file.id()) {
+                            fileItem.toTypedItem(identifier)
+                        }
+                    }
+                    if (items.isNotEmpty()) {
+                        val logItem = LogItem(name, items.distinct().toImmutableList())
+                        logList.add(logItem)
+                        list = logList.toPersistentList()
+                        groups = list.group()
+                        yield()
+                    }
                 }
                 val mergedList = list.mergeItems()
                     .sortedByDescending { it.lastModified }
@@ -96,18 +144,21 @@ class FlightLogStateImpl(
     }
 
     override fun addAircraft(aircraftIdentifier: AircraftIdentifier) {
-        aircraftDB.addAircraft(aircraftIdentifier)
-        updateAircraftList()
+        scope.launch {
+            aircraftDB.addAircraft(aircraftIdentifier)
+            updateAircraftList()
+        }
     }
     override fun removeAircraft(aircraftIdentifier: AircraftIdentifier) {
-        aircraftDB.removeAircraft(aircraftIdentifier)
-        updateAircraftList()
+        scope.launch {
+            aircraftDB.removeAircraft(aircraftIdentifier)
+            updateAircraftList()
+        }
     }
 
     override fun importFiles(files: List<PlatformFile>) {
         scope.launch {
-            val newFiles = files.filterNot { platformFileList.contains(it) }
-            platformFileList.addAll(newFiles)
+            platformFileMap.putAll(files.associateBy { it.id() })
             rescanLogItems()
         }
     }

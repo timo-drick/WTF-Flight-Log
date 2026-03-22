@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import de.drick.core.log
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -37,8 +36,10 @@ import org.jetbrains.compose.resources.painterResource
 import wtfflightlog.libs.tile_map.generated.resources.Res
 import wtfflightlog.libs.tile_map.generated.resources.preview_map
 import kotlin.math.PI
+import kotlin.math.atan
 import kotlin.math.cos
 import kotlin.math.roundToInt
+import kotlin.math.sinh
 
 
 data class TileImage(
@@ -53,6 +54,31 @@ data class TilePos(
 ) {
     val tileX get() = x.toInt()
     val tileY get() = y.toInt()
+
+    fun toGeoPoint() = GeoPoint(
+        latitude = tileYToLat(y, zoom),
+        longitude = tileXToLon(x, zoom)
+    )
+
+    fun wrap(): TilePos {
+        val n = (1 shl zoom).toDouble()
+        val wrappedX = ((x % n) + n) % n
+        val wrappedY = ((y % n) + n) % n
+        return copy(x = wrappedX, y = wrappedY)
+    }
+
+    companion object {
+        fun tileXToLon(x: Double, zoom: Int): Double {
+            val n = 1 shl zoom
+            return x / n * 360.0 - 180.0
+        }
+
+        fun tileYToLat(y: Double, zoom: Int): Double {
+            val n = 1 shl zoom
+            val latRad = atan(sinh(PI * (1 - 2.0 * y / n)))
+            return latRad.toDegrees()
+        }
+    }
 }
 
 data class VisibleTileRange(
@@ -213,7 +239,7 @@ class ViewPortState(
     fun metersPerPixel(): Double {
         val latRad = centerPos.toGeoPoint().latitude.toRadians()
         val n = 1 shl tileZoom
-        return 2.0 * PI * earthRadius * cos(latRad) / (n * tileSize)
+        return 2.0 * PI * EARTH_RADIUS_WGS84 * cos(latRad) / (n * tileSize)
     }
 
     fun geoPointToOffset(p: GeoPoint): Offset {
@@ -305,14 +331,39 @@ private fun DrawScope.drawScaleBar(
     val strokeBar = 2f
 
     // Draw outline
-    drawLine(outlineColor, Offset(barStartX, barY), Offset(barEndX, barY), strokeWidth = strokeOutline + strokeBar)
-    drawLine(outlineColor, Offset(barStartX, barY - tickHeight / 2), Offset(barStartX, barY + tickHeight / 2), strokeWidth = strokeOutline + strokeBar)
-    drawLine(outlineColor, Offset(barEndX, barY - tickHeight / 2), Offset(barEndX, barY + tickHeight / 2), strokeWidth = strokeOutline + strokeBar)
+    drawLine(
+        color = outlineColor,
+        start = Offset(barStartX, barY),
+        end = Offset(barEndX, barY),
+        strokeWidth = strokeOutline + strokeBar
+    )
+    drawLine(
+        color = outlineColor,
+        start = Offset(barStartX, barY - tickHeight / 2),
+        end = Offset(barStartX, barY + tickHeight / 2),
+        strokeWidth = strokeOutline + strokeBar
+    )
+    drawLine(
+        color = outlineColor,
+        start = Offset(barEndX, barY - tickHeight / 2),
+        end = Offset(barEndX, barY + tickHeight / 2),
+        strokeWidth = strokeOutline + strokeBar
+    )
 
     // Draw bar
     drawLine(barColor, Offset(barStartX, barY), Offset(barEndX, barY), strokeWidth = strokeBar)
-    drawLine(barColor, Offset(barStartX, barY - tickHeight / 2), Offset(barStartX, barY + tickHeight / 2), strokeWidth = strokeBar)
-    drawLine(barColor, Offset(barEndX, barY - tickHeight / 2), Offset(barEndX, barY + tickHeight / 2), strokeWidth = strokeBar)
+    drawLine(
+        color = barColor,
+        start = Offset(barStartX, barY - tickHeight / 2),
+        end = Offset(barStartX, barY + tickHeight / 2),
+        strokeWidth = strokeBar
+    )
+    drawLine(
+        color = barColor,
+        start = Offset(barEndX, barY - tickHeight / 2),
+        end = Offset(barEndX, barY + tickHeight / 2),
+        strokeWidth = strokeBar
+    )
 
     // Draw label
     val textLayoutResult = textMeasurer.measure(label, TextStyle(color = barColor, fontSize = 12.sp))
@@ -323,7 +374,11 @@ private fun DrawScope.drawScaleBar(
         textMeasurer = textMeasurer,
         text = label,
         topLeft = Offset(textX, textY),
-        style = TextStyle(color = outlineColor, fontSize = 12.sp, shadow = androidx.compose.ui.graphics.Shadow(color = outlineColor, blurRadius = 4f))
+        style = TextStyle(
+            color = outlineColor,
+            fontSize = 12.sp,
+            shadow = androidx.compose.ui.graphics.Shadow(color = outlineColor, blurRadius = 4f)
+        )
     )
     drawText(
         textMeasurer = textMeasurer,

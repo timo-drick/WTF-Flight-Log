@@ -36,18 +36,14 @@ switch (font_variant)
 }
  */
 
-enum class FontVariant(val variant: Int, val suffix: String, val logoOffset: LogoOffset? = null) {
-    GENERIC(0, "", LogoOffset(24, 4, 160)),
-    BETAFLIGHT(1, "_btfl", LogoOffset(24, 4, 160)),
-    INAV(2, "_inav", LogoOffset(10, 4, 259)),
-    ARDUPILOT(3, "_ardu", LogoOffset(6, 4, 257)),
-    KISS_ULTRA(4, "_ultr"),
-    QUIC(5, "_ultr", LogoOffset(24, 4, 300));
+enum class FontVariant(val suffix: String, val logoOffset: LogoOffset? = null) {
+    GENERIC("", LogoOffset(24, 4, 160)),
+    BETAFLIGHT("_btfl", LogoOffset(24, 4, 160)),
+    INAV("_inav", LogoOffset(10, 4, 259)),
+    ARDUPILOT("_ardu", LogoOffset(6, 4, 257)),
+    KISS_ULTRA("_ultr"),
+    QUIC("_ultr", LogoOffset(24, 4, 300));
 
-
-    companion object {
-        fun fromVariant(variant: Int) = entries[variant.coerceIn(0, entries.size - 1)]
-    }
     fun fileName() = "font$suffix.png"
 
     data class LogoOffset(

@@ -13,6 +13,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlin.time.Instant
 import kotlinx.io.Buffer
 import kotlinx.io.Source
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlin.time.Duration
 
 data class LogItem(
@@ -64,6 +66,20 @@ data class VideoFile(
     //TODO maybe add duration
 ) : FileItem by file
 
+@Serializable
+@SerialName("OSDSummery")
+data class OSDSummeryData(
+    val fontVariant: FontVariant,
+    val duration: Duration,
+    val hasGpsData: Boolean,
+    val startPosition: GeoPoint?,
+    val aircraftIdentifier: String?,
+    val maxSpeed: Speed?,
+    val maxHeight: Height?,
+    val distanceTotal: Double?,
+    val maxDistanceHome: Double?
+)
+
 data class OSDFile(
     val file: FileItem,
     val fontVariant: FontVariant,
@@ -76,6 +92,12 @@ data class OSDFile(
     val distanceTotal: Double?,
     val maxDistanceHome: Double?
 ) : FileItem by file
+
+@Serializable
+@SerialName("SrtSummery")
+data class SrtSummeryData(
+    val duration: Duration
+)
 
 data class SRTFile(
     val file: FileItem,

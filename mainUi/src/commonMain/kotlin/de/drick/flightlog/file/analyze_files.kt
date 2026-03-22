@@ -1,9 +1,11 @@
 package de.drick.flightlog.file
 
+import de.drick.compose.tilemap.GeoPointMath.maxDistanceTo
 import de.drick.compose.tilemap.calculateDistance
-import de.drick.compose.tilemap.maxDistanceTo
-import de.drick.flightlog.localStorage.AircraftIdentifier
+import de.drick.flightlog.localStorage.OsdSummeryDataCache
+import de.drick.flightlog.localStorage.SrtSummeryDataCache
 import de.drick.flightlog.ui.components.toGeoPoint
+import de.drick.flightlog.ui.id
 import de.drick.wtf_osd.ParseResult
 import de.drick.wtf_osd.Symbols
 import de.drick.wtf_osd.extractFlightData
@@ -11,48 +13,21 @@ import de.drick.wtf_osd.parseOsdFile
 import de.drick.wtf_osd.parseSrtFile
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import kotlin.collections.filter
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
-suspend fun List<FileItem>.toTypedItem(identifier: Set<String>) = mapNotNull { fileItem ->
-    when (fileItem.extension.lowercase()) {
-        "osd" -> analyzeOsdFile(fileItem, identifier)
-        "srt" -> {
-            val srt = withContext(Dispatchers.Default) {
-                parseSrtFile(fileItem.source())
-            }
-            when(srt) {
-                is ParseResult.Success -> {
-                    val duration = srt.record.frames.last().endTimeMs.milliseconds
-                    SRTFile(
-                        file = fileItem,
-                        duration = duration
-                    )
-                }
-                is ParseResult.Error -> ErrorFile(fileItem, srt.type.name)
-            }
-        }
-        "mov", "mp4" -> VideoFile(fileItem)
-        else -> null
-    }
+suspend fun FileItem.toTypedItem(identifier: Set<String>): FileItem? = when (extension.lowercase()) {
+    "osd" -> getCachedOsdFile(this, identifier)
+    "srt" -> getCachedSrtFile(this)
+    "mov", "mp4" -> VideoFile(this)
+    else -> null
 }
 
-private val logItemNameRegex = Regex("""(\D*)(\d+)""")
 
-fun List<FileItem>.analyzeFlow(aircraftIdentifier: List<AircraftIdentifier>) = flow {
-    val identifier = aircraftIdentifier.map { it.name }.toSet()
-    groupBy { it.name }.forEach { (name, fileList) ->
-        val items = fileList.toTypedItem(identifier)
-        if (items.isNotEmpty()) {
-            emit(LogItem(name, items.distinct().toImmutableList()))
-        }
-    }
-}.flowOn(Dispatchers.Default)
+private val logItemNameRegex = Regex("""(\D*)(\d+)""")
 
 fun List<LogItem>.mergeItems(): List<LogItem> {
     val originalList = this
@@ -113,6 +88,72 @@ fun getNextName(name: String): String? {
         return "${namePart}${nextIndex}"
     }
     return null
+}
+
+val srtCache = SrtSummeryDataCache
+
+private suspend fun getCachedSrtFile(fileItem: FileItem): FileItem {
+    val id = fileItem.platformFile().id()
+    val summeryData = srtCache.load(id)
+    return if (summeryData != null) {
+        SRTFile(
+            file = fileItem,
+            duration = summeryData.duration
+        )
+    } else {
+        val srt = withContext(Dispatchers.Default) {
+            parseSrtFile(fileItem.source())
+        }
+        when (srt) {
+            is ParseResult.Success -> {
+                val duration = srt.record.frames.last().endTimeMs.milliseconds
+                srtCache.save(id, SrtSummeryData(duration))
+                SRTFile(
+                    file = fileItem,
+                    duration = duration
+                )
+            }
+            is ParseResult.Error -> ErrorFile(fileItem, srt.type.name)
+        }
+    }
+}
+
+private val osdSummeryDataCache = OsdSummeryDataCache
+
+private suspend fun getCachedOsdFile(fileItem: FileItem, identifier: Set<String>): FileItem {
+    val id = fileItem.platformFile().id()
+    val cachedData = osdSummeryDataCache.load(id)
+    return if (cachedData != null) {
+        OSDFile(
+            file = fileItem,
+            fontVariant = cachedData.fontVariant,
+            duration = cachedData.duration,
+            hasGpsData = cachedData.hasGpsData,
+            startPosition = cachedData.startPosition,
+            aircraftIdentifier = cachedData.aircraftIdentifier,
+            maxSpeed = cachedData.maxSpeed,
+            maxHeight = cachedData.maxHeight,
+            distanceTotal = cachedData.distanceTotal,
+            maxDistanceHome = cachedData.maxDistanceHome
+        )
+    } else {
+        val file = analyzeOsdFile(fileItem, identifier)
+        if (file is OSDFile) {
+            val data = OSDSummeryData(
+                fontVariant = file.fontVariant,
+                duration = file.duration,
+                hasGpsData = file.hasGpsData,
+                startPosition = file.startPosition,
+                aircraftIdentifier = file.aircraftIdentifier,
+                maxSpeed = file.maxSpeed,
+                maxHeight = file.maxHeight,
+                distanceTotal = file.distanceTotal,
+                maxDistanceHome = file.maxDistanceHome
+            )
+            osdSummeryDataCache.save(id, data)
+        }
+        file
+    }
 }
 
 private suspend fun analyzeOsdFile(fileItem: FileItem, identifier: Set<String>) =
