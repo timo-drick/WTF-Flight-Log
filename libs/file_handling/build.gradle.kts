@@ -28,6 +28,8 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
+            implementation(project(":libs:log"))
+
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
 

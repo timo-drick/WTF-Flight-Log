@@ -20,8 +20,8 @@ kotlin {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
                         add(rootDirPath)
-                        add("$rootDirPath/shared/")
-                        add("$rootDirPath/webApp/")
+                        add("$rootDirPath/mainUi/")
+                        add("$rootDirPath/startpoints/webApp/")
                     }
                 }
             }
