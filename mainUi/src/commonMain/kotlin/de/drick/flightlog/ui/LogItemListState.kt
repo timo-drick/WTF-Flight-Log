@@ -30,7 +30,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 fun FileItem.fromPlatformFile(file: PlatformFile) = BaseFile(file)
-fun PlatformFile.toFileItem() = BaseFile(this)
+fun PlatformFile.toBaseFile() = BaseFile(this)
 
 
 interface FlightLogState {
@@ -48,7 +48,7 @@ interface FlightLogState {
 fun PlatformFile.id(): String {
     val size = size()
     val lastModified = lastModifiedTime()?.toEpochMilliseconds() ?: 0
-    return "$name:${(lastModified + size).hashCode()}"
+    return "$name:${(lastModified + size).hashCode().toHexString()}"
 }
 
 inline fun <K, V> MutableMap<K, V>.getOrPutIfNotNull(key: K, defaultValue: () -> V?): V? {
@@ -68,7 +68,7 @@ class FlightLogStateImpl(
     private val scope: CoroutineScope
 ): FlightLogState {
     private val aircraftDB = AircraftIdentifierDB()
-    private val platformFileMap = mutableMapOf<String, PlatformFile>()
+    private val baseFileMap = mutableMapOf<String, BaseFile>()
     private val fileItemMap = mutableMapOf<String, FileItem>()
     private val fileScanningLock = Mutex()
 
@@ -105,9 +105,7 @@ class FlightLogStateImpl(
         runningScanJob = scope.launch(Dispatchers.Default) {
             fileScanningLock.withLock {
                 isWorking = true
-                val fileItemList = platformFileMap.values
-                    .map { it.toFileItem() }
-                    .sortedByDescending { it.lastModified }
+                val fileItemList = baseFileMap.values.sortedByDescending { it.lastModified }
                 val identifier = aircraftIdentifierList.map { it.name }.toSet()
                 logList.clear()
                 if (force) {
@@ -119,13 +117,14 @@ class FlightLogStateImpl(
                         fileItemMap.remove(it)
                     }
                 }
-                fileItemList.groupBy { it.name }.forEach { (name, fileList) ->
+                fileItemList.groupBy { it.path + it.name }.forEach { (_, fileList) ->
                     val items = fileList.mapNotNull { fileItem ->
                         fileItemMap.getOrPutIfNotNull(fileItem.file.id()) {
                             fileItem.toTypedItem(identifier)
                         }
                     }
                     if (items.isNotEmpty()) {
+                        val name = fileList.first().name
                         val logItem = LogItem(name, items.distinct().toImmutableList())
                         logList.add(logItem)
                         list = logList.toPersistentList()
@@ -158,7 +157,7 @@ class FlightLogStateImpl(
 
     override fun importFiles(files: List<PlatformFile>) {
         scope.launch {
-            platformFileMap.putAll(files.associateBy { it.id() })
+            baseFileMap.putAll(files.map { it.toBaseFile() }.associateBy { it.platformFile().id() })
             rescanLogItems()
         }
     }

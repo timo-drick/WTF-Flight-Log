@@ -27,6 +27,7 @@ data class LogItem(
 interface FileItem {
     val name: String
     val extension: String
+    val path: String
     val size: ByteSize
     val lastModified: Instant?
     suspend fun source(): Source
@@ -43,15 +44,11 @@ suspend fun PlatformFile.toSource() = Buffer().apply {
 data class BaseFile(
     val file: PlatformFile
 ) : FileItem {
-    override val name: String
-        get() = file.nameWithoutExtension
-    override val extension: String
-        get() = file.extension
-    override val size: ByteSize
-        get() = file.size().bytes
-    override val lastModified: Instant?
-        get() = file.lastModifiedTime()
-
+    override val name = file.nameWithoutExtension
+    override val extension = file.extension
+    override val size = file.size().bytes
+    override val lastModified = file.lastModifiedTime()
+    override val path = file.path().substringBeforeLast('/')
     override suspend fun source() = file.toSource()
     override fun platformFile() = file
 }

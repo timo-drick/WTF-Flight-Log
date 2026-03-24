@@ -87,6 +87,7 @@ fun mockBaseFile(
 ) = object : FileItem {
     override val name = fileName
     override val extension = extension
+    override val path = "/test"
     override val size = size
     override val lastModified: Instant = Instant.fromEpochMilliseconds(MOCK_TIME_STAMP)
     override suspend fun source(): Source = TODO("Not yet implemented for mock files")

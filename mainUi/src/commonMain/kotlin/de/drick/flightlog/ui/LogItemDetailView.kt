@@ -247,6 +247,7 @@ fun LogItemDetailPane(
                     }
                 }
             }
+            Text("Folder: ${logItem.files.first().path}")
             osdData?.let { osdData ->
                 val aircraftName = remember(osdData) {
                     osdData.file.aircraftIdentifier ?: "Unknown"
@@ -292,7 +293,7 @@ fun LogItemDetailPane(
                             }
                         }
                         Box(
-                            modifier = modifier
+                            modifier = Modifier
                                 .aspectRatio(playerState.aspectRatio)
                                 .weight(1f, fill = false)
                             ,

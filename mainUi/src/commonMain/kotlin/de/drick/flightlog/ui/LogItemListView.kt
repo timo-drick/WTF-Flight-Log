@@ -32,12 +32,11 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.drick.filehandling.rememberFilePicker
 import de.drick.flightlog.cornerRadius
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.ui.components.SuspendButton
 import de.drick.wtf_osd.FontVariant
-import io.github.vinceglb.filekit.dialogs.FileKitMode
-import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 
 @Preview(heightDp = 600, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_YES)
 @Preview(heightDp = 600, widthDp = 400, uiMode = AndroidUiModes.UI_MODE_NIGHT_NO)
@@ -70,18 +69,25 @@ fun LogItemListPane(
     onEditAircraftListClick: () -> Unit
 ) {
     val cornerRadius = MaterialTheme.cornerRadius()
-    val filePicker = rememberFilePickerLauncher(mode = FileKitMode.Multiple()) { files ->
-        files?.let { state.importFiles(it) }
-    }
+    val filePicker = rememberFilePicker()
     Column(modifier) {
         FlowRow(
             modifier = Modifier,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             SuspendButton(onClick = {
-                filePicker.launch()
+                filePicker.pickFiles()?.let {
+                    state.importFiles(it)
+                }
             }) {
                 Text("Import files")
+            }
+            SuspendButton(onClick = {
+                filePicker.pickDirectory()?.let {
+                    state.importFiles(it)
+                }
+            }) {
+                Text("Import directory")
             }
             TextButton(
                 onClick = onEditAircraftListClick

@@ -2,6 +2,7 @@ package de.drick.flightlog.file
 
 import de.drick.compose.tilemap.GeoPointMath.maxDistanceTo
 import de.drick.compose.tilemap.calculateDistance
+import de.drick.core.log
 import de.drick.flightlog.localStorage.OsdSummeryDataCache
 import de.drick.flightlog.localStorage.SrtSummeryDataCache
 import de.drick.flightlog.ui.components.toGeoPoint
@@ -35,7 +36,6 @@ fun List<LogItem>.mergeItems(): List<LogItem> {
     val logItemsToRemove = mutableListOf<LogItem>()
     val mergedLogItems = mutableMapOf<String, LogItem>()
     itemsWithOsdFile.forEach { logItem ->
-        println("Osd item: ${logItem.name}")
         //Check if there are more files belonging to this log:
         val osdFileDuration = logItem.files.filterIsInstance<OSDFile>().firstOrNull()?.duration
         val srtFileDuration = logItem.files.filterIsInstance<SRTFile>().firstOrNull()?.duration
@@ -43,14 +43,12 @@ fun List<LogItem>.mergeItems(): List<LogItem> {
             var srtDuration: Duration = srtFileDuration
             var previousLogItem = logItem
             val collectedFiles = logItem.files.toMutableList()
-            while (osdFileDuration - srtDuration > 1.seconds) {
-                println("OSD duration is longer than srt search for next files!")
+            while (osdFileDuration - srtDuration > 2.seconds) {
                 val nextItem = getNextName(previousLogItem.name)?.let { nextName ->
-                    println("Next: $nextName")
+                    log("Next: $nextName")
                     originalList.find { it.name == nextName }
                 }
-                println(nextItem)
-                if (nextItem != null) {
+                if (nextItem != null && nextItem.files.none { it is OSDFile }) {
                     logItemsToRemove.add(nextItem)
                     collectedFiles.addAll(nextItem.files)
                     srtDuration = collectedFiles.filterIsInstance<SRTFile>()
@@ -67,10 +65,6 @@ fun List<LogItem>.mergeItems(): List<LogItem> {
             }
         }
     }
-    println("Merged items:")
-    mergedLogItems.forEach { println(it) }
-    println("Items to remove:")
-    logItemsToRemove.forEach { println(it) }
     return originalList.mapNotNull { originalItem ->
         val mergedItem = mergedLogItems[originalItem.name]
         when {
