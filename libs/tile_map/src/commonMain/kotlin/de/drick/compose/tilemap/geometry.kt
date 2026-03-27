@@ -16,7 +16,7 @@ import kotlin.math.sqrt
 const val EARTH_RADIUS = 6373000.0 // Used in Mapbox for meter calculation
 
 @Serializable
-data class GeoPoint(val latitude: Double, val longitude: Double, val alt: Double? = null)
+data class GeoPoint(val latitude: Double, val longitude: Double, val altitude: Double? = null)
 
 object GeoPointMath {
     fun GeoPoint.distanceTo(p: GeoPoint) = calculateGeoDistance(this, p)

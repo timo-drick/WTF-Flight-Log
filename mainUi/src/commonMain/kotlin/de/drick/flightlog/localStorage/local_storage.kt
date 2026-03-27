@@ -2,8 +2,8 @@ package de.drick.flightlog.localStorage
 
 import com.russhwolf.settings.Settings
 import de.drick.core.log
-import de.drick.flightlog.file.OSDSummeryData
 import de.drick.flightlog.file.SrtSummeryData
+import de.drick.wtf_osd.OSDSummeryData
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.KSerializer

@@ -14,6 +14,7 @@ import de.drick.flightlog.file.VideoFile
 import de.drick.flightlog.file.megabytes
 import de.drick.wtf_osd.FontVariant
 import de.drick.compose.tilemap.GeoPoint
+import de.drick.flightlog.file.TestFileItem
 import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.wtf_osd.Height
 import de.drick.wtf_osd.Speed
@@ -84,15 +85,13 @@ fun mockBaseFile(
     fileName: String,
     extension: String,
     size: ByteSize = 5.megabytes,
-) = object : FileItem {
-    override val name = fileName
-    override val extension = extension
-    override val path = "/test"
-    override val size = size
-    override val lastModified: Instant = Instant.fromEpochMilliseconds(MOCK_TIME_STAMP)
-    override suspend fun source(): Source = TODO("Not yet implemented for mock files")
-    override fun platformFile(): PlatformFile = TODO("Not yet implemented")
-}
+) = TestFileItem(
+    name = fileName,
+    extension = extension,
+    path = "/test",
+    size = size,
+    lastModified = Instant.fromEpochMilliseconds(MOCK_TIME_STAMP)
+)
 
 fun mockVideoFile(previewFileName: String) = VideoFile(
     file = mockBaseFile(previewFileName, "mov")

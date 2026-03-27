@@ -36,7 +36,7 @@ suspend fun exportKmlTrack(
         lastCoordinate = last,
         tessellate = tessellate,
         extrude = extrude,
-        isAbsoluteAltitude = points.any { it.alt != null },
+        isAbsoluteAltitude = points.any { it.altitude != null },
         coordinates = coordinates
     )
 }
@@ -128,7 +128,7 @@ private fun generateKml(
 
 private fun Boolean.kmlBoolean() = if (this) "1" else "0"
 private fun GeoPoint.kmlCoordinate(elevationOffset: Double = 0.0): String {
-    val absAlt = alt?.let { it + elevationOffset }
+    val absAlt = altitude?.let { it + elevationOffset }
     return "${longitude.formatDecimals(8)},${latitude.formatDecimals(8)},${absAlt?.roundToInt() ?: 0}"
 }
 fun Double.formatDecimals(decimals: Int): String {
@@ -192,6 +192,6 @@ fun <T>List<T>.interpolateBy(value: (T) -> Double?, replace: (T, Double) -> T): 
 
 fun List<GeoPoint>.interpolateAltitudes(): List<GeoPoint> =
     interpolateBy(
-        value = { it.alt },
-        replace = { i, v -> i.copy(alt = v)}
+        value = { it.altitude },
+        replace = { i, v -> i.copy(altitude = v)}
     )

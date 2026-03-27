@@ -1,7 +1,9 @@
 package de.drick.wtf_osd
 
 import de.drick.core.log
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class GpsPoint(val latitude: Double, val longitude: Double, val altitude: Double? = null)
 
 data class GpsData(

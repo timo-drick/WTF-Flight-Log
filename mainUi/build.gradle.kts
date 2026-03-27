@@ -34,6 +34,7 @@ kotlin {
             implementation(project(":libs:wtf_osd"))
             implementation(project(":libs:tile_map"))
             implementation(project(":libs:file_handling"))
+            implementation(project(":libs:concurrency"))
 
             implementation(libs.kdroidfilter.compose.mediaplayer)
             implementation(libs.kdroidfilter.platformtools.darkmodedetector)

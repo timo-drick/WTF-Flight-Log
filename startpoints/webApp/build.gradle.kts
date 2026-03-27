@@ -11,18 +11,21 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        val rootDirPath = project.rootDir.path
         outputModuleName = "composeApp"
         browser {
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(rootDirPath)
-                        add("$rootDirPath/mainUi/")
-                        add("$rootDirPath/startpoints/webApp/")
-                    }
+                    static(
+                        project(":libs:worker_file_parser")
+                            .layout.buildDirectory
+                            .dir("dist/wasmJs/developmentExecutable")
+                            .get().asFile.absolutePath
+                    )
+                    static(
+                        project(":libs:worker_file_parser")
+                            .layout.projectDirectory.asFile.absolutePath
+                    )
                 }
             }
         }
@@ -36,9 +39,32 @@ kotlin {
     sourceSets {
         wasmJsMain.dependencies {
             implementation(project(":mainUi"))
+            implementation(project(":libs:worker-example"))
             implementation(libs.compose.runtime)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
         }
     }
+}
+
+val copyWorkerFiles = tasks.register<Copy>("copyWorkerFiles") {
+    group = "kotlin browser"
+    // Reference the worker project's distribution directory
+    val workerProject = project(":libs:worker-example")
+    from(workerProject.layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
+
+    // Target the webApp's distribution directory
+    into(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
+
+    // Ensure the worker is built before copying
+    dependsOn(workerProject.tasks.named("wasmJsBrowserDistribution"))
+}
+
+// 2. Hook it into the webApp's distribution task
+tasks.named("wasmJsBrowserDistribution") {
+    dependsOn(copyWorkerFiles)
+}
+
+tasks.named("wasmJsBrowserDevelopmentExecutableDistribution") {
+    dependsOn(":libs:worker-example:wasmJsBrowserDevelopmentExecutableDistribution")
 }
