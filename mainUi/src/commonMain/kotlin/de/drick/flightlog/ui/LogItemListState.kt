@@ -8,13 +8,13 @@ import de.drick.flightlog.file.BaseFile
 import de.drick.flightlog.file.FileItem
 import de.drick.flightlog.file.LogItem
 import de.drick.flightlog.file.OSDFile
-import de.drick.flightlog.file.lastModifiedTime
 import de.drick.flightlog.file.mergeItems
 import de.drick.flightlog.file.toTypedItem
 import de.drick.flightlog.localStorage.AircraftIdentifier
 import de.drick.flightlog.localStorage.AircraftIdentifierDB
 import de.drick.flightlog.localStorage.OsdSummeryDataCache
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.lastModified
 import io.github.vinceglb.filekit.name
 import io.github.vinceglb.filekit.size
 import kotlinx.collections.immutable.toImmutableList
@@ -47,7 +47,7 @@ interface FlightLogState {
 
 fun PlatformFile.id(): String {
     val size = size()
-    val lastModified = lastModifiedTime()?.toEpochMilliseconds() ?: 0
+    val lastModified = lastModified().toEpochMilliseconds()
     return "$name:${(lastModified + size).hashCode().toHexString()}"
 }
 
