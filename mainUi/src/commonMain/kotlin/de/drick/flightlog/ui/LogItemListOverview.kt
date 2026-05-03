@@ -174,7 +174,7 @@ fun LogItemListOverview(
         )
     }
     LaunchedEffect(middlePosition) {
-        middlePosition?.let { viewPortState.center(it) }
+        middlePosition?.let { viewPortState.smoothCenter(it) }
     }
     Surface(
         modifier = modifier,

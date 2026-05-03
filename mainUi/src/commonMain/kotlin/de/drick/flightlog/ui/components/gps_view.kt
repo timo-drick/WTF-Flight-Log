@@ -41,6 +41,7 @@ fun GpsView(
     gpsData: GpsData,
     zoomLevel: Double,
     positionProvider: () -> Long,
+    changeZoomLevel: (Double) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
@@ -110,7 +111,7 @@ fun GpsView(
                     /*viewPortState.easeTo(
                     cameraOptions { center(currentPoint) }
                 )*/
-                    viewPortState.center(currentPoint) //TODO smooth transition
+                    viewPortState.smoothCenter(currentPoint)
                 }
             }
         }
@@ -133,13 +134,8 @@ fun GpsView(
                         val event = awaitPointerEvent()
                         if (event.type == PointerEventType.Scroll) {
                             val inputChange = event.changes.first()
-                            val scrollDelta = inputChange.scrollDelta.y.coerceIn(-1f, 1f)
-                            val zoom = (viewPortState.zoom - scrollDelta).coerceIn(1f, 19f)
-                            viewPortState.zoom(
-                                newZoom = zoom,
-                                x = inputChange.position.x,
-                                y =inputChange.position.y
-                            )
+                            val scrollDelta = inputChange.scrollDelta.y.coerceIn(-1f, 1f).toDouble()
+                            changeZoomLevel(viewPortState.zoom - scrollDelta)
                         }
                     }
                 }
