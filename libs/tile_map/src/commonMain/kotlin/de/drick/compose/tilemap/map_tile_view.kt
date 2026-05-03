@@ -1,5 +1,9 @@
 package de.drick.compose.tilemap
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
@@ -171,12 +175,37 @@ class ViewPortState(
         centerPos = point.toTilePos(tileZoom)
         update()
     }
+
+    private var smoothMoveJob: Job? = null
+    fun smoothCenter(
+        point: GeoPoint,
+        animationSpec: AnimationSpec<Float> = tween(durationMillis = 500, easing = LinearEasing)
+    ) {
+        smoothMoveJob?.cancel()
+        val startPos = centerPos
+        val targetPos = point.toTilePos(tileZoom)
+
+        val dx = targetPos.x - startPos.x
+        val dy = targetPos.y - startPos.y
+
+        smoothMoveJob = scope.launch(Dispatchers.Main.immediate) {
+            val anim = Animatable(0f)
+            anim.animateTo(1f, animationSpec) {
+                centerPos = startPos.copy(
+                    x = startPos.x + dx * value.toDouble(),
+                    y = startPos.y + dy * value.toDouble()
+                ).wrap()
+                update()
+            }
+        }
+    }
     fun zoom(newZoom: Float, x: Float? = null, y: Float? = null) {
         val xMove = x?.let { (it - (sizePx.width / 2f)) * 0.5f } ?: 0f
         val yMove = y?.let { (it - (sizePx.height / 2f)) * 0.5f } ?: 0f
         movePx(-xMove, -yMove)
 
         val pos = centerPos.toGeoPoint() // After zoom level changed we need to recalculate the center position
+        smoothMoveJob?.cancel()
         zoom = newZoom
         centerPos = pos.toTilePos(tileZoom)
         update()
@@ -199,7 +228,7 @@ class ViewPortState(
         ((pos.x - centerPos.x) * tileSize).roundToInt(),
         ((pos.y - centerPos.y) * tileSize).roundToInt()
     )
-    var updateJob: Job? = null
+    private var updateJob: Job? = null
 
     private fun update() {
         if (sizePx != Size.Zero) {
