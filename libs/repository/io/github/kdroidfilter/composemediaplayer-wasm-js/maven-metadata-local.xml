@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>io.github.kdroidfilter</groupId>
+  <artifactId>composemediaplayer-wasm-js</artifactId>
+  <versioning>
+    <latest>dev</latest>
+    <release>dev</release>
+    <versions>
+      <version>dev</version>
+    </versions>
+    <lastUpdated>20260509122922</lastUpdated>
+  </versioning>
+</metadata>
