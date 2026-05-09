@@ -18,7 +18,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -95,8 +94,6 @@ fun FullScreenPlayerPanel(
             }
         )
     }
-
-    var zoomLevel by remember { mutableDoubleStateOf(14.0) }
 
     LaunchedEffect(state) {
         if (videoFile != null) {
@@ -187,7 +184,8 @@ fun FullScreenPlayerPanel(
                 GpsView(
                     modifier = Modifier.fillMaxSize().clipToBounds().alpha(0.8f),
                     gpsData = gpsData,
-                    zoomLevel = zoomLevel,
+                    zoomLevel = state.zoomLevel,
+                    changeZoomLevel = { state.setZoom(it) },
                     positionProvider = {
                         (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                     }
@@ -228,14 +226,10 @@ fun FullScreenPlayerPanel(
                                 OverlayButtonState.ACTIVE
                         }
                         OverlayAction.GPS_ZOOM_IN -> {
-                            if (zoomLevel < 20) {
-                                zoomLevel += 1
-                            }
+                            state.setZoom(state.zoomLevel + 1)
                         }
                         OverlayAction.GPS_ZOOM_OUT -> {
-                            if (zoomLevel > 0) {
-                                zoomLevel -= 1
-                            }
+                            state.setZoom(state.zoomLevel - 1)
                         }
                         OverlayAction.GPS_INFO -> {
                             //TODO

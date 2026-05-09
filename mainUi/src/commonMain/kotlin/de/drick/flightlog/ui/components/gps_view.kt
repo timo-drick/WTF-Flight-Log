@@ -36,11 +36,31 @@ val Ble7 = Color(0xff1976d2)
 
 fun GpsPoint.toGeoPoint() = GeoPoint(latitude, longitude, altitude)
 
+private fun GpsRecord.interpolatePosition(nextFrame: GpsRecord?, videoPositionMillis: Long): GeoPoint {
+    if (nextFrame == null || nextFrame.osdMillis == osdMillis) return position.toGeoPoint()
+
+    val progress = ((videoPositionMillis - osdMillis).toDouble() / (nextFrame.osdMillis - osdMillis).toDouble())
+        .coerceIn(0.0, 1.0)
+    return GeoPoint(
+        latitude = position.latitude.interpolateTo(nextFrame.position.latitude, progress),
+        longitude = position.longitude.interpolateTo(nextFrame.position.longitude, progress),
+        alt = position.altitude.interpolateTo(nextFrame.position.altitude, progress)
+    )
+}
+
+private fun Double.interpolateTo(end: Double, progress: Double): Double = this + (end - this) * progress
+
+private fun Double?.interpolateTo(end: Double?, progress: Double): Double? = when {
+    this != null && end != null -> interpolateTo(end, progress)
+    else -> this ?: end
+}
+
 @Composable
 fun GpsView(
     gpsData: GpsData,
     zoomLevel: Double,
     positionProvider: () -> Long,
+    changeZoomLevel: (Double) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
@@ -72,45 +92,26 @@ fun GpsView(
 
     LaunchedEffect(gpsData) {
         log("launched effect start")
-        val frameIterator = gpsData.wayPoints.listIterator()
-        var currentFrame = frameIterator.next()
+        var currentIndex = 0
         while (isActive) {
             withFrameMillis {
                 val videoPositionMillis = positionProvider()
-                val currentOsdMillis = currentFrame.osdMillis
-                val deltaMillis = currentOsdMillis - videoPositionMillis
-                when {
-                    deltaMillis < 0 -> {
-                        //Seek forward in osd frames
-                        while (currentFrame.osdMillis < videoPositionMillis && frameIterator.hasNext()) {
-                            val newFrame = frameIterator.next()
-                            if (newFrame.osdMillis > videoPositionMillis) {
-                                frameIterator.previous()
-                                break
-                            }
-                            currentFrame = newFrame
-                        }
-                    }
-
-                    deltaMillis > 100 -> {
-                        //Seek backward in osd frames
-                        while (currentFrame.osdMillis > videoPositionMillis && frameIterator.hasPrevious()) {
-                            val newFrame = frameIterator.previous()
-                            if (newFrame.osdMillis < videoPositionMillis) {
-                                frameIterator.next()
-                                break
-                            }
-                            currentFrame = newFrame
-                        }
-                    }
+                while (currentIndex < gpsData.wayPoints.lastIndex &&
+                    gpsData.wayPoints[currentIndex + 1].osdMillis <= videoPositionMillis
+                ) {
+                    currentIndex++
                 }
+                while (currentIndex > 0 && gpsData.wayPoints[currentIndex].osdMillis > videoPositionMillis) {
+                    currentIndex--
+                }
+
+                val currentFrame = gpsData.wayPoints[currentIndex]
+                val nextFrame = gpsData.wayPoints.getOrNull(currentIndex + 1)
+                currentPoint = currentFrame.interpolatePosition(nextFrame, videoPositionMillis)
+
                 if (currentFrame != frame) {
                     frame = currentFrame
-                    currentPoint = currentFrame.position.toGeoPoint()
-                    /*viewPortState.easeTo(
-                    cameraOptions { center(currentPoint) }
-                )*/
-                    viewPortState.center(currentPoint) //TODO smooth transition
+                    viewPortState.smoothCenter(currentPoint)
                 }
             }
         }
@@ -133,13 +134,8 @@ fun GpsView(
                         val event = awaitPointerEvent()
                         if (event.type == PointerEventType.Scroll) {
                             val inputChange = event.changes.first()
-                            val scrollDelta = inputChange.scrollDelta.y.coerceIn(-1f, 1f)
-                            val zoom = (viewPortState.zoom - scrollDelta).coerceIn(1f, 19f)
-                            viewPortState.zoom(
-                                newZoom = zoom,
-                                x = inputChange.position.x,
-                                y =inputChange.position.y
-                            )
+                            val scrollDelta = inputChange.scrollDelta.y.coerceIn(-1f, 1f).toDouble()
+                            changeZoomLevel(viewPortState.zoom - scrollDelta)
                         }
                     }
                 }
