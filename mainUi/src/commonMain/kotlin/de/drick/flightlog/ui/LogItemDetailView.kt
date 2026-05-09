@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -132,7 +133,7 @@ class LogItemState(
 
     var currentSliderPosition: Float by mutableStateOf(0f)
 
-    var zoomLevel : Double by mutableStateOf(17.0)
+    var zoomLevel : Double by mutableDoubleStateOf(17.0)
         private set
 
     private var initialized = false
