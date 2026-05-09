@@ -25,7 +25,9 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-        mavenLocal()
+        maven {
+            url = uri(rootDir.resolve("libs/repository"))
+        }
     }
 }
 
