@@ -1,0 +1,274 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../composemediaplayer/dev/composemediaplayer-dev.module",
+    "group": "io.github.kdroidfilter",
+    "module": "composemediaplayer",
+    "version": "dev",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-dom-api-compat",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "io.github.vinceglb",
+          "module": "filekit-core",
+          "version": {
+            "requires": "0.14.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "mediaplayer-js.klib",
+          "url": "composemediaplayer-js-dev.klib",
+          "size": 3633771,
+          "sha512": "1d58fa25fa9c0b485cb80a74f01919a348ccc0914a5e6dfa39850cde512f2b002f4abc8f94b738af68c09f032d87354fb1d75fbca8d51ad500fdcf4bdb9c3a4d",
+          "sha256": "b597d4baa0fef702b851a26147a84deaef9d3e6bb6d065d4a2d0ba69ff6f2f49",
+          "sha1": "c7a467709c5b910530057261edcd1b3e94d5f6a3",
+          "md5": "f5ecceef21f4e3efe513b973f26e5324"
+        }
+      ]
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-dom-api-compat",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "io.github.vinceglb",
+          "module": "filekit-core",
+          "version": {
+            "requires": "0.14.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-browser",
+          "version": {
+            "requires": "0.5.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui",
+          "version": {
+            "requires": "1.10.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.10.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.foundation",
+          "module": "foundation",
+          "version": {
+            "requires": "1.10.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-test",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.7.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "mediaplayer-js.klib",
+          "url": "composemediaplayer-js-dev.klib",
+          "size": 3633771,
+          "sha512": "1d58fa25fa9c0b485cb80a74f01919a348ccc0914a5e6dfa39850cde512f2b002f4abc8f94b738af68c09f032d87354fb1d75fbca8d51ad500fdcf4bdb9c3a4d",
+          "sha256": "b597d4baa0fef702b851a26147a84deaef9d3e6bb6d065d4a2d0ba69ff6f2f49",
+          "sha1": "c7a467709c5b910530057261edcd1b3e94d5f6a3",
+          "md5": "f5ecceef21f4e3efe513b973f26e5324"
+        }
+      ]
+    },
+    {
+      "name": "jsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "files": [
+        {
+          "name": "mediaplayer-js-sources.jar",
+          "url": "composemediaplayer-js-dev-sources.jar",
+          "size": 38795,
+          "sha512": "15a5700f6c51d4894a3ee10e3a7dcd80965e6ac9b23a47016ad657a748190fd23d5ec2f1d47930e743cb8e23824dc12594917abcc7b7c151ed4c4fae75b1e364",
+          "sha256": "183c80f15257ea9b5f081801e46dcf01002de737b23bc19aacc7dc23210e44bf",
+          "sha1": "6a310a6b2b730ff354144c54877e5ab17c30c59e",
+          "md5": "00026f166102215dd9a21a7ab203c3f6"
+        }
+      ]
+    },
+    {
+      "name": "jsResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresourcesjs",
+        "org.gradle.usage": "kotlin-multiplatformresourcesjs",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-dom-api-compat",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "io.github.vinceglb",
+          "module": "filekit-core",
+          "version": {
+            "requires": "0.14.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-browser",
+          "version": {
+            "requires": "0.5.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui",
+          "version": {
+            "requires": "1.10.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.10.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.foundation",
+          "module": "foundation",
+          "version": {
+            "requires": "1.10.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-test",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.7.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "mediaplayer.kotlin_resources.zip",
+          "url": "composemediaplayer-js-dev-kotlin_resources.kotlin_resources.zip",
+          "size": 394,
+          "sha512": "f9068dbefe9c11e3051287e15c2cf34fb0854208f68c3b8561e7d5c13b6eede991324f0a2e8d00b862e7175b360216c92dcbb529ca915522be360edd2e6b42cd",
+          "sha256": "a38ba5bdc469950e4eed738b7eaed378291571a00d39f78dd8b7c78488aa5014",
+          "sha1": "13e5b7499336de3bd210ddb32e141252883e1f65",
+          "md5": "aeaf7a8c0316a48b8c3e8abf542ff880"
+        }
+      ]
+    }
+  ]
+}

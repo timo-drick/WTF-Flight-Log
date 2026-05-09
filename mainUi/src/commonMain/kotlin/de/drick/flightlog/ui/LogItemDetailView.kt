@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -132,9 +133,16 @@ class LogItemState(
 
     var currentSliderPosition: Float by mutableStateOf(0f)
 
+    var zoomLevel : Double by mutableDoubleStateOf(17.0)
+        private set
+
     private var initialized = false
     private val srtDataList = mutableListOf<SrtData>()
 
+    fun setZoom(level: Double) {
+        zoomLevel = level.coerceIn(1.0, 20.0)
+    }
+    
     fun selectVideo(index: Int) {
         selectedVideoIndex = index
         videoTimeOffset = srtFileList
@@ -336,7 +344,8 @@ fun LogItemDetailPane(
                             .weight(.3333f)
                             .aspectRatio(1f),
                         gpsData = gps,
-                        zoomLevel = 17.0,
+                        zoomLevel = state.zoomLevel,
+                        changeZoomLevel = { state.setZoom(it) },
                         positionProvider = {
                             (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                         }

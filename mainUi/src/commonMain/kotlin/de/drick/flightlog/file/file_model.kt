@@ -6,7 +6,9 @@ import de.drick.wtf_osd.Height
 import de.drick.wtf_osd.Speed
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.extension
+import io.github.vinceglb.filekit.lastModified
 import io.github.vinceglb.filekit.nameWithoutExtension
+import io.github.vinceglb.filekit.path
 import io.github.vinceglb.filekit.readBytes
 import io.github.vinceglb.filekit.size
 import kotlinx.collections.immutable.ImmutableList
@@ -47,8 +49,8 @@ data class BaseFile(
     override val name = file.nameWithoutExtension
     override val extension = file.extension
     override val size = file.size().bytes
-    override val lastModified = file.lastModifiedTime()
-    override val path = file.path().substringBeforeLast('/')
+    override val lastModified = file.lastModified()
+    override val path = file.path.substringBeforeLast('/')
     override suspend fun source() = file.toSource()
     override fun platformFile() = file
 }

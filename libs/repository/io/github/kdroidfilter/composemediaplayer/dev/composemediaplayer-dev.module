@@ -1,0 +1,481 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.kdroidfilter",
+    "module": "composemediaplayer",
+    "version": "dev",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.vinceglb",
+          "module": "filekit-core",
+          "version": {
+            "requires": "0.14.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.10.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.foundation",
+          "module": "foundation",
+          "version": {
+            "requires": "1.10.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-test",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.7.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "mediaplayer-metadata.jar",
+          "url": "composemediaplayer-dev.jar",
+          "size": 26189,
+          "sha512": "9da15731481ec8fce72ceaa706e7963c604547e3752c0ec5458a69693e7e9781d1300f201f1acce5174d9a1a1636990c8273fdf127574238979fb069a2418d02",
+          "sha256": "c8e5c9f6f6a140d95201172cbe6f13284e45d9122b2b4debe960718569e8ec4c",
+          "sha1": "859376b05155c012cd1240addb3bef4ef3af177b",
+          "md5": "b0c6f1ef98917077b18ab19472817989"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "mediaplayer-kotlin-sources.jar",
+          "url": "composemediaplayer-dev-sources.jar",
+          "size": 51078,
+          "sha512": "c85e48128c85046266eeb573d72bf074d1cac9c9e8e696c5b5fab25b33dd3e100330a4f5c0d11b99cc977cd1c9fbf1ad09858f8a3734316758c0be2d24056087",
+          "sha256": "fcf4d068dd9c96054ab06226350613bf06e11a31807fc54f1e54faf83369e868",
+          "sha1": "f43de1b5f8d451078b2586b1c94ebbb2924b93ae",
+          "md5": "4b6962372d6312e8e5406af353d891a1"
+        }
+      ]
+    },
+    {
+      "name": "releaseApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-android/dev/composemediaplayer-android-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-android",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "releaseRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-android/dev/composemediaplayer-android-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-android",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "releaseSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-android/dev/composemediaplayer-android-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-android",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../mediaplayer-iosarm64/unspecified/mediaplayer-iosarm64-unspecified.module",
+        "group": "io.github.kdroidfilter.composemediaplayer",
+        "module": "mediaplayer-iosarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../mediaplayer-iosarm64/unspecified/mediaplayer-iosarm64-unspecified.module",
+        "group": "io.github.kdroidfilter.composemediaplayer",
+        "module": "mediaplayer-iosarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../mediaplayer-iosarm64/unspecified/mediaplayer-iosarm64-unspecified.module",
+        "group": "io.github.kdroidfilter.composemediaplayer",
+        "module": "mediaplayer-iosarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../mediaplayer-iosarm64/unspecified/mediaplayer-iosarm64-unspecified.module",
+        "group": "io.github.kdroidfilter.composemediaplayer",
+        "module": "mediaplayer-iosarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../mediaplayer-iossimulatorarm64/unspecified/mediaplayer-iossimulatorarm64-unspecified.module",
+        "group": "io.github.kdroidfilter.composemediaplayer",
+        "module": "mediaplayer-iossimulatorarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../mediaplayer-iossimulatorarm64/unspecified/mediaplayer-iossimulatorarm64-unspecified.module",
+        "group": "io.github.kdroidfilter.composemediaplayer",
+        "module": "mediaplayer-iossimulatorarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../mediaplayer-iossimulatorarm64/unspecified/mediaplayer-iossimulatorarm64-unspecified.module",
+        "group": "io.github.kdroidfilter.composemediaplayer",
+        "module": "mediaplayer-iossimulatorarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../mediaplayer-iossimulatorarm64/unspecified/mediaplayer-iossimulatorarm64-unspecified.module",
+        "group": "io.github.kdroidfilter.composemediaplayer",
+        "module": "mediaplayer-iossimulatorarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-js/dev/composemediaplayer-js-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-js",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-js/dev/composemediaplayer-js-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-js",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "jsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-js/dev/composemediaplayer-js-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-js",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "jsResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresourcesjs",
+        "org.gradle.usage": "kotlin-multiplatformresourcesjs",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-js/dev/composemediaplayer-js-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-js",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-jvm/dev/composemediaplayer-jvm-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-jvm",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-jvm/dev/composemediaplayer-jvm-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-jvm",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-jvm/dev/composemediaplayer-jvm-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-jvm",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "wasmJsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-wasm-js/dev/composemediaplayer-wasm-js-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-wasm-js",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "wasmJsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-wasm-js/dev/composemediaplayer-wasm-js-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-wasm-js",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "wasmJsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-wasm-js/dev/composemediaplayer-wasm-js-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-wasm-js",
+        "version": "dev"
+      }
+    },
+    {
+      "name": "wasmJsResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresourcesjs",
+        "org.gradle.usage": "kotlin-multiplatformresourcesjs",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../composemediaplayer-wasm-js/dev/composemediaplayer-wasm-js-dev.module",
+        "group": "io.github.kdroidfilter",
+        "module": "composemediaplayer-wasm-js",
+        "version": "dev"
+      }
+    }
+  ]
+}
