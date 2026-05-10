@@ -62,7 +62,8 @@ private fun PreviewFullScreenPlayerPanel() {
         FullScreenPlayerPanel(
             modifier = Modifier.fillMaxSize(),
             state = testState,
-            onClose = {}
+            onClose = {},
+            showOverlayForPreview = true
         )
     }
 }
@@ -71,7 +72,8 @@ private fun PreviewFullScreenPlayerPanel() {
 fun FullScreenPlayerPanel(
     state: LogItemState,
     onClose: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showOverlayForPreview: Boolean = false
 ) {
     val previewMode = LocalInspectionMode.current
     val osdData = state.osdData
@@ -82,7 +84,7 @@ fun FullScreenPlayerPanel(
     val playerState = rememberVideoPlayerState()
 
 
-    var showControlOverlay by remember { mutableStateOf(false) }
+    var showControlOverlay by remember { mutableStateOf(showOverlayForPreview) }
     var showOsd by remember { mutableStateOf(true) }
     var lastTouchTs by remember { mutableLongStateOf(0L) }
     var gpsButtonState by remember(gpsData) {
@@ -185,10 +187,11 @@ fun FullScreenPlayerPanel(
                     modifier = Modifier.fillMaxSize().clipToBounds().alpha(0.8f),
                     gpsData = gpsData,
                     zoomLevel = state.zoomLevel,
-                    changeZoomLevel = { state.setZoom(it) },
                     positionProvider = {
                         (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
-                    }
+                    },
+                    showControlButtons = showControlOverlay,
+                    changeZoomLevel = { state.setZoom(it) }
                 )
             }
             if (previewMode) {
@@ -225,16 +228,6 @@ fun FullScreenPlayerPanel(
                             else
                                 OverlayButtonState.ACTIVE
                         }
-                        OverlayAction.GPS_ZOOM_IN -> {
-                            state.setZoom(state.zoomLevel + 1)
-                        }
-                        OverlayAction.GPS_ZOOM_OUT -> {
-                            state.setZoom(state.zoomLevel - 1)
-                        }
-                        OverlayAction.GPS_INFO -> {
-                            //TODO
-                        }
-
                         OverlayAction.CLOSE -> {
                             onClose()
                         }
