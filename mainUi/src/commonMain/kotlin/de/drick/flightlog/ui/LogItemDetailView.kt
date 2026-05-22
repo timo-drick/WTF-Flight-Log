@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
@@ -136,6 +137,9 @@ class LogItemState(
     var zoomLevel : Double by mutableDoubleStateOf(17.0)
         private set
 
+    var gpsMapSize by mutableStateOf(0.25f)
+    var gpsMapOffset by mutableStateOf(Offset.Zero)
+
     private var initialized = false
     private val srtDataList = mutableListOf<SrtData>()
 
@@ -224,6 +228,8 @@ fun LogItemDetailPane(
             state.currentSliderPosition = playerState.sliderPos
         }
     }
+
+    var followDrone by remember { mutableStateOf(true) }
 
     Surface(
         modifier = modifier,
@@ -346,6 +352,8 @@ fun LogItemDetailPane(
                         gpsData = gps,
                         zoomLevel = state.zoomLevel,
                         changeZoomLevel = { state.setZoom(it) },
+                        followDrone = followDrone,
+                        onFollowDroneChange = { followDrone = it },
                         positionProvider = {
                             (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                         }
