@@ -146,9 +146,6 @@ fun OsdPlayerOverlay(
                         contentDescription = stringResource(Res.string.screen_osd_player_gps)
                     )
                 }
-                if (gpsState == OverlayButtonState.ACTIVE) {
-
-                }
             }
             Slider(
                 value = progress,

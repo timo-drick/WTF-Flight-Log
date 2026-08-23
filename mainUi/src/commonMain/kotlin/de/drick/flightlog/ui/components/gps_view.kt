@@ -60,7 +60,6 @@ fun GpsView(
     viewPortState: ViewPortState,
     positionProvider: () -> Long,
     followDrone: Boolean,
-    onFollowDroneChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()

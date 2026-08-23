@@ -182,10 +182,16 @@ fun MainScreen(
                                     scaleIn(
                                         initialScale = 0.8f,
                                         animationSpec = tween(500)
-                                    ) + fadeIn(animationSpec = tween(500)) togetherWith fadeOut(animationSpec = tween(500))
+                                    ) + fadeIn(
+                                        animationSpec = tween(500)
+                                    ) togetherWith fadeOut(
+                                        animationSpec = tween(500)
+                                    )
                                 }
                                 put(NavDisplay.PopTransitionKey) {
-                                    fadeIn(animationSpec = tween(500)) togetherWith scaleOut(
+                                    fadeIn(
+                                        animationSpec = tween(500)
+                                    ) togetherWith scaleOut(
                                         targetScale = 0.8f,
                                         animationSpec = tween(500)
                                     ) + fadeOut(animationSpec = tween(500))

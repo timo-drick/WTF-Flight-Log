@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -148,7 +149,7 @@ class LogItemState(
 
     var currentSliderPosition: Float by mutableStateOf(0f)
 
-    var gpsMapSize by mutableStateOf(0.15f)
+    var gpsMapSize by mutableFloatStateOf(0.15f)
     var gpsMapOffset by mutableStateOf(Offset(0.8f, 0.04f))
 
     private var initialized = false
@@ -359,7 +360,6 @@ fun LogItemDetailPane(
                         viewPortState = state.viewPortState,
                         gpsData = gps,
                         followDrone = followDrone,
-                        onFollowDroneChange = { followDrone = it },
                         positionProvider = {
                             (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                         }

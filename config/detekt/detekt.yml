@@ -435,7 +435,6 @@ potential-bugs:
   Deprecation:
     active: false
     aliases: ['DEPRECATION']
-    excludeImportStatements: false
   DontDowncastCollectionTypes:
     active: false
   DoubleMutabilityForCollection:
@@ -696,7 +695,6 @@ style:
     active: true
     maxLineLength: 120
     excludePackageStatements: true
-    excludeImportStatements: true
     excludeCommentStatements: false
     excludeRawStrings: true
   MayBeConstant:

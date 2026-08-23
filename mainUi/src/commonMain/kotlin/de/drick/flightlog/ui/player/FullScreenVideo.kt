@@ -210,7 +210,6 @@ fun FullScreenPlayerPanel(
                         (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                     },
                     followDrone = followDrone,
-                    onFollowDroneChange = { followDrone = it },
                 )
             }
             if (previewMode) {
@@ -409,7 +408,10 @@ fun OsdPlayerScaffold(
                                         }
                                 )
                                 val yOffset = if (gpsMapOffset.y > 0.5f) -(80.dp) else 80.dp
-                                val vAlignment = if (gpsMapOffset.y > 0.5f) Alignment.TopCenter else Alignment.BottomCenter
+                                val vAlignment = if (gpsMapOffset.y > 0.5f)
+                                    Alignment.TopCenter
+                                else
+                                    Alignment.BottomCenter
                                 Box(Modifier.align(vAlignment).offset(y = yOffset)) {
                                     controlsContent()
                                 }
