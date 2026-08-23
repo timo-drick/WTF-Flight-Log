@@ -1,19 +1,12 @@
 package de.drick.flightlog.ui
 
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.gestures.draggable2D
-import androidx.compose.foundation.gestures.rememberDraggable2DState
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,15 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.drick.compose.tilemap.BuildConfig
 import de.drick.compose.tilemap.GeoPoint
 import de.drick.compose.tilemap.TileMapView
 import de.drick.compose.tilemap.rememberViewPortState
+import de.drick.compose.tilemap.tileMapPointerInput
 import de.drick.compose.tilemap.tileProviderMapBoxDark
 import de.drick.compose.tilemap.tileProviderMapBoxLight
 import de.drick.flightlog.ui.components.Table
@@ -163,8 +156,8 @@ fun LogItemListOverview(
         isDarkMode = isSystemInDarkMode(),
         initialZoom = 2f,
         tileSize = 1024,
-        darkTileProvider = tileProviderMapBoxDark,
-        lightTileProvider = tileProviderMapBoxLight
+        darkTileProvider = tileProviderMapBoxDark(BuildConfig.MAPBOX_TOKEN),
+        lightTileProvider = tileProviderMapBoxLight(BuildConfig.MAPBOX_TOKEN)
     )
     val middlePosition = remember(positions) {
         if (positions.isEmpty()) null
@@ -181,42 +174,24 @@ fun LogItemListOverview(
         shape = RoundedCornerShape(MaterialTheme.cornerRadius()),
         color = MaterialTheme.colorScheme.surfaceContainer
     ) {
-        Column(Modifier.padding(8.dp).verticalScroll(rememberScrollState())) {
+        Column(Modifier.padding(8.dp)) {
             Text(
                 text = "Flight Log Overview",
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
-            FlightDataSummaryTable(flightData)
+            FlightDataSummaryTable(
+                overview = flightData,
+                modifier = Modifier.fillMaxWidth()
+            )
 
             Spacer(Modifier.height(16.dp))
 
-            val dragState = rememberDraggable2DState { offset ->
-                viewPortState.movePx(offset.x, offset.y)
-            }
             TileMapView(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(400.dp)
-                    .focusable()
-                    .draggable2D(dragState)
-                    .pointerInput(Unit) {
-                        awaitPointerEventScope {
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                if (event.type == PointerEventType.Scroll) {
-                                    val inputChange = event.changes.first()
-                                    val scrollDelta = inputChange.scrollDelta.y.coerceIn(-1f, 1f)
-                                    val zoom = (viewPortState.zoom - scrollDelta).coerceIn(1f, 19f)
-                                    viewPortState.zoom(
-                                        newZoom = zoom,
-                                        x = inputChange.position.x,
-                                        y =inputChange.position.y
-                                    )
-                                }
-                            }
-                        }
-                    },
+                    .weight(1f)
+                    .tileMapPointerInput(viewPortState),
                 state = viewPortState,
             ) {
                 positions.forEach { pos ->
@@ -229,7 +204,10 @@ fun LogItemListOverview(
 }
 
 @Composable
-fun FlightDataSummaryTable(overview: FlightDataOverview) {
+fun FlightDataSummaryTable(
+    overview: FlightDataOverview,
+    modifier: Modifier = Modifier
+) {
     val columns = remember {
         listOf<TableColumn<Pair<String, UiFlightData>>>(
             TableColumn(
@@ -322,7 +300,7 @@ fun FlightDataSummaryTable(overview: FlightDataOverview) {
     }
 
     Table(
-        modifier = Modifier.fillMaxWidth().width(IntrinsicSize.Max),
+        modifier = modifier,
         items = aircraftItems,
         columns = columns
     )

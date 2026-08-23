@@ -1,5 +1,14 @@
 package de.drick.flightlog
 
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -7,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
@@ -21,6 +30,10 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import de.drick.compose.tilemap.BuildConfig
+import de.drick.compose.tilemap.GeoPoint
+import de.drick.compose.tilemap.ViewPortState
+import de.drick.compose.tilemap.tileProviderMapBoxSat
 import de.drick.flightlog.ui.AircraftIdentifierPane
 import de.drick.flightlog.ui.FlightLogState
 import de.drick.flightlog.ui.FlightLogStateImpl
@@ -73,7 +86,8 @@ fun MainScreen(
     backStack: SnapshotStateList<Any>,
     modifier: Modifier = Modifier
 ) {
-    val windowAdaptiveInfo = currentWindowAdaptiveInfo()
+    val scope = rememberCoroutineScope()
+    val windowAdaptiveInfo = currentWindowAdaptiveInfoV2()
     val directive = remember(windowAdaptiveInfo) {
         calculatePaneScaffoldDirective(windowAdaptiveInfo).copy(
             horizontalPartitionSpacerSize = MaterialTheme.panePadding()
@@ -86,76 +100,125 @@ fun MainScreen(
             modifier = modifier,
             contentWindowInsets = WindowInsets.safeDrawing
         ) { paddingValues ->
-            NavDisplay(
-                backStack = backStack,
-                modifier = Modifier.padding(paddingValues).padding(padding),
-                onBack = { backStack.removeLastOrNull() },
-                sceneStrategies = listOf(listDetailStrategy),
-                entryProvider = entryProvider {
-                    entry<ListPaneData>(
-                        metadata = ListDetailSceneStrategy.listPane(
-                            detailPlaceholder = {
-                                LogItemListOverview(
-                                    modifier = Modifier.padding(0.dp),
-                                    state = flightLogState
-                                )
+            SharedTransitionLayout {
+                NavDisplay(
+                    modifier = Modifier.padding(paddingValues).padding(padding),
+                    backStack = backStack,
+                    onBack = { backStack.removeLastOrNull() },
+                    sceneStrategies = listOf(listDetailStrategy),
+                    sharedTransitionScope = this,
+                    transitionSpec = {
+                        slideInHorizontally(
+                            initialOffsetX = { it },
+                            animationSpec = tween(500)
+                        ) + fadeIn(animationSpec = tween(500)) togetherWith slideOutHorizontally(
+                            targetOffsetX = { -it },
+                            animationSpec = tween(500)
+                        ) + fadeOut(animationSpec = tween(500))
+                    },
+                    popTransitionSpec = {
+                        slideInHorizontally(
+                            initialOffsetX = { -it },
+                            animationSpec = tween(500)
+                        ) + fadeIn(animationSpec = tween(500)) togetherWith slideOutHorizontally(
+                            targetOffsetX = { it },
+                            animationSpec = tween(500)
+                        ) + fadeOut(animationSpec = tween(500))
+                    },
+                    entryProvider = entryProvider {
+                        entry<ListPaneData>(
+                            metadata = ListDetailSceneStrategy.listPane(
+                                detailPlaceholder = {
+                                    LogItemListOverview(
+                                        modifier = Modifier.padding(0.dp),
+                                        state = flightLogState
+                                    )
+                                }
+                            )
+                        ) { key ->
+                            LogItemListPane(
+                                state = key.state,
+                                onLogItemClick = { logItem ->
+                                    val viewPortState = ViewPortState(
+                                        scope = scope,
+                                        initialZoom = 17f,
+                                        initialPos = GeoPoint(0.0, 0.0),
+                                        tileSize = 256,
+                                        tileProviderMapBoxSat(BuildConfig.MAPBOX_TOKEN)
+                                    )
+                                    val state = LogItemState(logItem, viewPortState)
+                                    if (backStack.last() is DetailPaneData) backStack.removeLast()
+                                    backStack.add(DetailPaneData(state))
+                                },
+                                onEditAircraftListClick = {
+                                    backStack.add(AircraftIdentifierPaneData(key.state))
+                                }
+                            )
+                        }
+                        entry<OverviewPaneData>(
+                            metadata = ListDetailSceneStrategy.detailPane()
+                        ) { key ->
+                            LogItemListOverview(
+                                modifier = Modifier.padding(0.dp),
+                                state = key.state
+                            )
+                        }
+                        entry<DetailPaneData>(
+                            metadata = ListDetailSceneStrategy.detailPane()
+                        ) { key ->
+                            LogItemDetailPane(
+                                state = key.itemState,
+                                onBackClick = {
+                                    backStack.removeLastOrNull()
+                                },
+                                onFullScreenClick = {
+                                    backStack.add(FullScreenPane(key.itemState))
+                                }
+                            )
+                        }
+                        entry<FullScreenPane>(
+                            metadata = androidx.navigation3.runtime.metadata {
+                                put(NavDisplay.TransitionKey) {
+                                    scaleIn(
+                                        initialScale = 0.8f,
+                                        animationSpec = tween(500)
+                                    ) + fadeIn(
+                                        animationSpec = tween(500)
+                                    ) togetherWith fadeOut(
+                                        animationSpec = tween(500)
+                                    )
+                                }
+                                put(NavDisplay.PopTransitionKey) {
+                                    fadeIn(
+                                        animationSpec = tween(500)
+                                    ) togetherWith scaleOut(
+                                        targetScale = 0.8f,
+                                        animationSpec = tween(500)
+                                    ) + fadeOut(animationSpec = tween(500))
+                                }
                             }
-                        )
-                    ) { key ->
-                        LogItemListPane(
-                            state = key.state,
-                            onLogItemClick = { logItem ->
-                                val state = LogItemState(logItem)
-                                if (backStack.last() is DetailPaneData) backStack.removeLast()
-                                backStack.add(DetailPaneData(state))
-                            },
-                            onEditAircraftListClick = {
-                                backStack.add(AircraftIdentifierPaneData(key.state))
-                            }
-                        )
+                        ) { key ->
+                            FullScreenPlayerPanel(
+                                state = key.itemState,
+                                onClose = {
+                                    backStack.removeLast()
+                                }
+                            )
+                        }
+                        entry<AircraftIdentifierPaneData>(
+                            metadata = ListDetailSceneStrategy.detailPane()
+                        ) { key ->
+                            AircraftIdentifierPane(
+                                state = key.state,
+                                onBack = {
+                                    flightLogState.rescanLogItems(true)
+                                    backStack.removeLast()
+                                }
+                            )
+                        }
                     }
-                    entry<OverviewPaneData>(
-                        metadata = ListDetailSceneStrategy.detailPane()
-                    ) { key ->
-                        LogItemListOverview(
-                            modifier = Modifier.padding(0.dp),
-                            state = key.state
-                        )
-                    }
-                    entry<DetailPaneData>(
-                        metadata = ListDetailSceneStrategy.detailPane()
-                    ) { key ->
-                        LogItemDetailPane(
-                            state = key.itemState,
-                            onBackClick = {
-                                backStack.removeLastOrNull()
-                            },
-                            onFullScreenClick = {
-                                backStack.add(FullScreenPane(key.itemState))
-                            }
-                        )
-                    }
-                    entry<FullScreenPane> { key ->
-                        FullScreenPlayerPanel(
-                            state = key.itemState,
-                            onClose = {
-                                backStack.removeLast()
-                            }
-                        )
-                    }
-                    entry<AircraftIdentifierPaneData>(
-                        metadata = ListDetailSceneStrategy.detailPane()
-                    ) { key ->
-                        AircraftIdentifierPane(
-                            state = key.state,
-                            onBack = {
-                                flightLogState.rescanLogItems(true)
-                                backStack.removeLast()
-                            }
-                        )
-                    }
-                }
-            )
+                )
+            }
         }
     }
 }

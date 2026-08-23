@@ -24,10 +24,15 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        mavenCentral()
         maven {
-            url = uri(rootDir.resolve("libs/repository"))
+            name = "Central Portal Snapshots"
+            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+            content {
+                includeModuleByRegex("de.drick.compose", ".*")
+            }
         }
+        mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -37,7 +42,7 @@ plugins {
 
 include(":libs:log")
 include(":libs:wtf_osd")
-include(":libs:tile_map")
+//include(":libs:tile_map")
 include(":libs:file_handling")
 
 include(":mainUi")

@@ -85,9 +85,6 @@ enum class OverlayAction {
     PLAY_PAUSE_TOGGLE,
     OSD_TOGGLE,
     GPS_TOGGLE,
-    GPS_INFO,
-    GPS_ZOOM_IN,
-    GPS_ZOOM_OUT,
     CLOSE
 }
 
@@ -147,23 +144,6 @@ fun OsdPlayerOverlay(
                     Icon(
                         imageVector = MaterialIconsMap,
                         contentDescription = stringResource(Res.string.screen_osd_player_gps)
-                    )
-                }
-                if (gpsState == OverlayButtonState.ACTIVE) {
-                    OverlayActionButton(
-                        icon = MaterialIconsInfo,
-                        contentDescription = stringResource(Res.string.screen_osd_player_gps_info),
-                        onClick = { onAction(OverlayAction.GPS_INFO) }
-                    )
-                    OverlayActionButton(
-                        icon = MaterialIconsZoom_out,
-                        contentDescription = stringResource(Res.string.screen_osd_player_gps_zoom_out),
-                        onClick = { onAction(OverlayAction.GPS_ZOOM_OUT) }
-                    )
-                    OverlayActionButton(
-                        icon = MaterialIconsZoom_in,
-                        contentDescription = stringResource(Res.string.screen_osd_player_gps_zoom_in),
-                        onClick = { onAction(OverlayAction.GPS_ZOOM_IN) }
                     )
                 }
             }
