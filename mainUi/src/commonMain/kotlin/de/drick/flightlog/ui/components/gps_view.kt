@@ -20,13 +20,11 @@ import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.pointerInput
 import de.drick.compose.tilemap.TileMapView
 import de.drick.compose.tilemap.ViewPortState
-import de.drick.compose.tilemap.tileProviderMapBoxSat
 import de.drick.core.log
 import de.drick.compose.tilemap.GeoPoint
+import de.drick.compose.tilemap.tileMapPointerInput
 import de.drick.wtf_osd.GpsData
 import de.drick.wtf_osd.GpsPoint
 import de.drick.wtf_osd.GpsRecord
@@ -59,25 +57,15 @@ private fun Double?.interpolateTo(end: Double?, progress: Double): Double? = whe
 @Composable
 fun GpsView(
     gpsData: GpsData,
-    zoomLevel: Double,
+    viewPortState: ViewPortState,
     positionProvider: () -> Long,
-    changeZoomLevel: (Double) -> Unit,
     followDrone: Boolean,
     onFollowDroneChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
     var frame: GpsRecord by remember(gpsData) { mutableStateOf(gpsData.wayPoints.first()) }
-    val viewPortState = remember {
-        ViewPortState(
-            scope = scope,
-            initialZoom = zoomLevel.toFloat(),
-            initialPos = gpsData.wayPoints.first().position.toGeoPoint(),
-            tileSize = 256,
-            tileProviderMapBoxSat,
-            //tileProviderDipulZones
-        )
-    }
+
     val overviewPoints = remember(gpsData) {
         gpsData.wayPoints.map { it.position.toGeoPoint() }
     }
@@ -89,10 +77,6 @@ fun GpsView(
     }
     var currentPoint by remember { mutableStateOf(startPoint) }
     val currentFollowDrone by rememberUpdatedState(followDrone)
-
-    LaunchedEffect(zoomLevel) {
-        viewPortState.zoom(zoomLevel.toFloat())
-    }
 
     LaunchedEffect(gpsData) {
         log("launched effect start")
@@ -122,47 +106,27 @@ fun GpsView(
         log("launched effect end")
     }
 
-    Box(modifier = modifier) {
-        TileMapView(
-            modifier = Modifier
-                .matchParentSize()
-                .focusable()
-                .draggable2D(
-                    state = rememberDraggable2DState { offset ->
-                        onFollowDroneChange(false)
-                        viewPortState.movePx(offset.x, offset.y)
-                    }
-                )
-                .pointerInput(Unit) {
-                    awaitPointerEventScope {
-                        while (true) {
-                            val event = awaitPointerEvent()
-                            if (event.type == PointerEventType.Scroll) {
-                                val inputChange = event.changes.first()
-                                val scrollDelta = inputChange.scrollDelta.y.coerceIn(-1f, 1f).toDouble()
-                                changeZoomLevel(viewPortState.zoom - scrollDelta)
-                            }
-                        }
-                    }
-                },
-            state = viewPortState,
-        ) {
-            val start = startPoint.toOffset()
-            val path = Path().apply {
-                moveTo(start.x, start.y)
-                overviewPoints.forEach {
-                    it.toOffset().let { p ->
-                        lineTo(p.x, p.y)
-                    }
+    TileMapView(
+        modifier = modifier
+            .focusable()
+            .tileMapPointerInput(viewPortState),
+        state = viewPortState,
+    ) {
+        val start = startPoint.toOffset()
+        val path = Path().apply {
+            moveTo(start.x, start.y)
+            overviewPoints.forEach {
+                it.toOffset().let { p ->
+                    lineTo(p.x, p.y)
                 }
             }
-            drawPath(path, Ble2, style = Stroke(width = 4.0f))
-            // Start
-            drawCircle(Black, radius = 10f, center = start)
-            // End
-            drawCircle(White, radius = 10f, center = endPoint.toOffset())
-            // Current point
-            drawCircle(Green, radius = 10f, center = currentPoint.toOffset())
         }
+        drawPath(path, Ble2, style = Stroke(width = 4.0f))
+        // Start
+        drawCircle(Black, radius = 10f, center = start)
+        // End
+        drawCircle(White, radius = 10f, center = endPoint.toOffset())
+        // Current point
+        drawCircle(Green, radius = 10f, center = currentPoint.toOffset())
     }
 }

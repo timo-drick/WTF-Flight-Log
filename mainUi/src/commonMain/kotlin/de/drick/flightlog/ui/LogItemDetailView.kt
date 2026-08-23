@@ -21,9 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +33,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.drick.compose.tilemap.BuildConfig
+import de.drick.compose.tilemap.GeoPoint
+import de.drick.compose.tilemap.ViewPortState
 import de.drick.compose.tilemap.exportKmlTrack
+import de.drick.compose.tilemap.tileProviderMapBoxSat
 import de.drick.filehandling.rememberFileSaver
 import de.drick.flightlog.cornerRadius
 import de.drick.flightlog.file.LogItem
@@ -87,6 +91,7 @@ data class OsdData(
 )
 @Composable
 private fun PreviewLogItemDetail() {
+    val scope = rememberCoroutineScope()
     val testState = remember {
         val item = mockLogItem(
             name = "Test entry 2",
@@ -100,7 +105,15 @@ private fun PreviewLogItemDetail() {
             mockVideoFile("VF1"),
             mockVideoFile("VF2"),
             )
-        LogItemState(item)
+        val viewPortState = ViewPortState(
+            scope = scope,
+            initialZoom = 17f,
+            initialPos = GeoPoint(0.0, 0.0),
+            tileSize = 256,
+            tileProviderMapBoxSat(BuildConfig.MAPBOX_TOKEN)
+        )
+
+        LogItemState(item, viewPortState)
     }
     BasePreview {
         LogItemDetailPane(
@@ -113,7 +126,8 @@ private fun PreviewLogItemDetail() {
 }
 
 class LogItemState(
-    val logItem: LogItem
+    val logItem: LogItem,
+    val viewPortState : ViewPortState
 ) {
     val videoFileList = logItem.files.filterIsInstance<VideoFile>()
     private val srtFileList = logItem.files.filterIsInstance<SRTFile>()
@@ -134,19 +148,12 @@ class LogItemState(
 
     var currentSliderPosition: Float by mutableStateOf(0f)
 
-    var zoomLevel : Double by mutableDoubleStateOf(17.0)
-        private set
-
-    var gpsMapSize by mutableStateOf(0.25f)
-    var gpsMapOffset by mutableStateOf(Offset.Zero)
+    var gpsMapSize by mutableStateOf(0.15f)
+    var gpsMapOffset by mutableStateOf(Offset(0.8f, 0.04f))
 
     private var initialized = false
     private val srtDataList = mutableListOf<SrtData>()
 
-    fun setZoom(level: Double) {
-        zoomLevel = level.coerceIn(1.0, 20.0)
-    }
-    
     fun selectVideo(index: Int) {
         selectedVideoIndex = index
         videoTimeOffset = srtFileList
@@ -349,9 +356,8 @@ fun LogItemDetailPane(
                             .clipToBounds()
                             .weight(.3333f)
                             .aspectRatio(1f),
+                        viewPortState = state.viewPortState,
                         gpsData = gps,
-                        zoomLevel = state.zoomLevel,
-                        changeZoomLevel = { state.setZoom(it) },
                         followDrone = followDrone,
                         onFollowDroneChange = { followDrone = it },
                         positionProvider = {

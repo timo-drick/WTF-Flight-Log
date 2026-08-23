@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -28,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,10 +41,16 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
+import de.drick.compose.tilemap.BuildConfig
+import de.drick.compose.tilemap.GeoPoint
+import de.drick.compose.tilemap.ViewPortState
+import de.drick.compose.tilemap.tileProviderMapBoxSat
 import de.drick.core.log
 import kotlin.math.roundToInt
 import de.drick.flightlog.ui.BasePreview
@@ -69,23 +78,6 @@ import org.jetbrains.compose.resources.painterResource
 import kotlin.math.roundToLong
 import kotlin.time.TimeSource
 
-@Preview(widthDp = 1280, heightDp = 720)
-@Composable
-private fun PreviewFullScreenPlayerPanel() {
-    val testState = remember {
-        val font = FontVariant.BETAFLIGHT
-        val item = mockLogItem("Test entry 2", font)
-        LogItemState(item)
-    }
-    BasePreview {
-        FullScreenPlayerPanel(
-            modifier = Modifier.fillMaxSize(),
-            state = testState,
-            onClose = {},
-            showOverlayForPreview = true
-        )
-    }
-}
 
 @Composable
 fun FullScreenPlayerPanel(
@@ -213,13 +205,12 @@ fun FullScreenPlayerPanel(
                 GpsView(
                     modifier = Modifier.fillMaxSize().clipToBounds().alpha(0.8f),
                     gpsData = gpsData,
-                    zoomLevel = state.zoomLevel,
+                    viewPortState = state.viewPortState,
                     positionProvider = {
                         (playerState.currentTime * 1000.0).roundToLong() + state.videoTimeOffset
                     },
                     followDrone = followDrone,
                     onFollowDroneChange = { followDrone = it },
-                    changeZoomLevel = { state.setZoom(it) }
                 )
             }
             if (previewMode) {
@@ -232,7 +223,10 @@ fun FullScreenPlayerPanel(
         },
         gpsControls = {
             if (showControlOverlay && (gpsData != null || previewMode)) {
-                Row(modifier = Modifier.padding(4.dp)) {
+                Row(
+                    modifier = Modifier.padding(4.dp).wrapContentWidth(unbounded = true),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
                     OverlayActionButton(
                         icon = MaterialIconsMyLocation,
                         contentDescription = stringResource(Res.string.screen_osd_player_gps_follow),
@@ -247,12 +241,12 @@ fun FullScreenPlayerPanel(
                     OverlayActionButton(
                         icon = MaterialIconsZoom_in,
                         contentDescription = "Zoom in",
-                        onClick = { state.setZoom(state.zoomLevel + 1) }
+                        onClick = { state.viewPortState.smoothZoom(state.viewPortState.zoom + 1f, null) }
                     )
                     OverlayActionButton(
                         icon = MaterialIconsZoom_out,
                         contentDescription = "Zoom out",
-                        onClick = { state.setZoom(state.zoomLevel - 1) }
+                        onClick = { state.viewPortState.smoothZoom(state.viewPortState.zoom - 1f, null)}
                     )
                 }
             }
@@ -314,14 +308,25 @@ fun OsdPlayerScaffold(
     val videoContent = remember(videoPlayer as Any) { movableContentOf(videoPlayer) }
     val controlsContent = remember(gpsControls as Any) { movableContentOf(gpsControls) }
 
+    val canvasSize = remember { mutableStateOf(IntSize.Zero) }
+
+    fun Offset.relativeOffset(): Offset {
+        return Offset(
+            x / canvasSize.value.width,
+            y / canvasSize.value.height
+        )
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(Color.Black)
+            .onSizeChanged {
+                canvasSize.value = it
+            },
         contentAlignment = Alignment.Center
     ) {
         videoContent()
-        // Landscape mode
         if (showGps) {
             Box(
                 Modifier
@@ -334,20 +339,16 @@ fun OsdPlayerScaffold(
                         .align(Alignment.TopStart)
                         .offset {
                             IntOffset(
-                                gpsMapOffset.x.roundToInt(),
-                                gpsMapOffset.y.roundToInt()
+                                (gpsMapOffset.x * canvasSize.value.width).roundToInt(),
+                                (gpsMapOffset.y * canvasSize.value.height).roundToInt()
                             )
                         }
                 ) {
                     Column(horizontalAlignment = Alignment.End) {
-                        if (gpsMapOffset.y > -200f) {
-                            controlsContent()
-                        }
                         Box(
                             Modifier
                                 .fillMaxWidth(gpsMapSize)
                                 .aspectRatio(1f)
-                                .clip(RoundedCornerShape(16.dp))
                                 .then(
                                     if (showControlOverlay) {
                                         Modifier
@@ -355,7 +356,7 @@ fun OsdPlayerScaffold(
                                             .pointerInput(Unit) {
                                                 detectDragGestures { change, dragAmount ->
                                                     change.consume()
-                                                    onGpsMapTransform(dragAmount, 0f)
+                                                    onGpsMapTransform(dragAmount.relativeOffset(), 0f)
                                                 }
                                                 detectTapGestures {
                                                     // Consume taps to prevent them from toggling the overlay
@@ -365,7 +366,7 @@ fun OsdPlayerScaffold(
                                     } else Modifier
                                 )
                         ) {
-                            Box(Modifier.fillMaxSize()) {
+                            Box(Modifier.fillMaxSize().clip(RoundedCornerShape(16.dp))) {
                                 mapContent()
                             }
 
@@ -378,7 +379,7 @@ fun OsdPlayerScaffold(
                                         .pointerInput(Unit) {
                                             detectDragGestures { change, dragAmount ->
                                                 change.consume()
-                                                onGpsMapTransform(dragAmount, 0f)
+                                                onGpsMapTransform(dragAmount.relativeOffset(), 0f)
                                             }
                                         }
                                 )
@@ -403,10 +404,15 @@ fun OsdPlayerScaffold(
                                                 // dragAmount.x > 0 means moving right (shrinking if at bottom-left)
                                                 // We use the change in x to determine size change
                                                 val sizeChange = -dragAmount.x / 1000f // heuristic scaling
-                                                onGpsMapTransform(dragAmount, sizeChange)
+                                                onGpsMapTransform(dragAmount.relativeOffset(), sizeChange)
                                             }
                                         }
                                 )
+                                val yOffset = if (gpsMapOffset.y > 0.5f) -(80.dp) else 80.dp
+                                val vAlignment = if (gpsMapOffset.y > 0.5f) Alignment.TopCenter else Alignment.BottomCenter
+                                Box(Modifier.align(vAlignment).offset(y = yOffset)) {
+                                    controlsContent()
+                                }
                             }
                         }
                         if (gpsMapOffset.y <= -200f) {
@@ -423,5 +429,58 @@ fun OsdPlayerScaffold(
         ) {
             controlOverlay()
         }
+    }
+}
+
+
+@Preview(widthDp = 1280, heightDp = 720)
+@Composable
+private fun PreviewFullScreenPlayerPanel() {
+    val scope = rememberCoroutineScope()
+    val testState = remember {
+        val font = FontVariant.BETAFLIGHT
+        val item = mockLogItem("Test entry 2", font)
+        val viewPortState = ViewPortState(
+            scope = scope,
+            initialZoom = 17f,
+            initialPos = GeoPoint(0.0, 0.0),
+            tileSize = 256,
+            tileProviderMapBoxSat(BuildConfig.MAPBOX_TOKEN)
+        )
+        LogItemState(item, viewPortState)
+    }
+    BasePreview {
+        FullScreenPlayerPanel(
+            modifier = Modifier.fillMaxSize(),
+            state = testState,
+            onClose = {},
+            showOverlayForPreview = false
+        )
+    }
+}
+
+@Preview(widthDp = 1280, heightDp = 720)
+@Composable
+private fun PreviewFullScreenPlayerPanelControls() {
+    val scope = rememberCoroutineScope()
+    val testState = remember {
+        val font = FontVariant.BETAFLIGHT
+        val item = mockLogItem("Test entry 2", font)
+        val viewPortState = ViewPortState(
+            scope = scope,
+            initialZoom = 17f,
+            initialPos = GeoPoint(0.0, 0.0),
+            tileSize = 256,
+            tileProviderMapBoxSat(BuildConfig.MAPBOX_TOKEN)
+        )
+        LogItemState(item, viewPortState)
+    }
+    BasePreview {
+        FullScreenPlayerPanel(
+            modifier = Modifier.fillMaxSize(),
+            state = testState,
+            onClose = {},
+            showOverlayForPreview = true
+        )
     }
 }
