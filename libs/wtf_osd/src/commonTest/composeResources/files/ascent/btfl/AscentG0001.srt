@@ -1,0 +1,1796 @@
+1
+00:00:00,000 --> 00:00:00,080
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:5.0V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+2
+00:00:00,080 --> 00:00:00,170
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:5.0V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+3
+00:00:00,170 --> 00:00:00,260
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+4
+00:00:00,260 --> 00:00:00,350
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+5
+00:00:00,350 --> 00:00:00,440
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+6
+00:00:00,440 --> 00:00:00,530
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:4.9V GBat:16.2V Delay:46ms Bitrate:25.0Mbps Distance:0m
+
+7
+00:00:00,530 --> 00:00:00,619
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:4.9V GBat:16.2V Delay:45ms Bitrate:25.0Mbps Distance:0m
+
+8
+00:00:00,619 --> 00:00:00,709
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:4.9V GBat:16.2V Delay:45ms Bitrate:25.0Mbps Distance:0m
+
+9
+00:00:00,709 --> 00:00:00,799
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=26 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+10
+00:00:00,799 --> 00:00:00,889
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=26 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+11
+00:00:00,889 --> 00:00:00,979
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+12
+00:00:00,979 --> 00:00:01,069
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+13
+00:00:01,069 --> 00:00:01,159
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+14
+00:00:01,159 --> 00:00:01,249
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+15
+00:00:01,249 --> 00:00:01,339
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+16
+00:00:01,339 --> 00:00:01,428
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+17
+00:00:01,428 --> 00:00:01,518
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+18
+00:00:01,518 --> 00:00:01,608
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+19
+00:00:01,608 --> 00:00:01,698
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+20
+00:00:01,698 --> 00:00:01,788
+Signal:4 CH:3 Hz:5805000 FlightTime:1 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+21
+00:00:01,788 --> 00:00:01,878
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+22
+00:00:01,878 --> 00:00:01,968
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+23
+00:00:01,968 --> 00:00:02,058
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+24
+00:00:02,058 --> 00:00:02,148
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+25
+00:00:02,148 --> 00:00:02,237
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+26
+00:00:02,237 --> 00:00:02,327
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+27
+00:00:02,327 --> 00:00:02,417
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+28
+00:00:02,417 --> 00:00:02,507
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+29
+00:00:02,507 --> 00:00:02,597
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:45ms Bitrate:25.0Mbps Distance:0m
+
+30
+00:00:02,597 --> 00:00:02,687
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+31
+00:00:02,687 --> 00:00:02,777
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+32
+00:00:02,777 --> 00:00:02,867
+Signal:4 CH:3 Hz:5805000 FlightTime:2 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+33
+00:00:02,867 --> 00:00:02,957
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+34
+00:00:02,957 --> 00:00:03,046
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=25 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+35
+00:00:03,046 --> 00:00:03,136
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+36
+00:00:03,136 --> 00:00:03,226
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+37
+00:00:03,226 --> 00:00:03,316
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+38
+00:00:03,316 --> 00:00:03,406
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+39
+00:00:03,406 --> 00:00:03,496
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+40
+00:00:03,496 --> 00:00:03,586
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+41
+00:00:03,586 --> 00:00:03,676
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+42
+00:00:03,676 --> 00:00:03,765
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+43
+00:00:03,765 --> 00:00:03,855
+Signal:4 CH:3 Hz:5805000 FlightTime:3 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+44
+00:00:03,855 --> 00:00:03,945
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:1m
+
+45
+00:00:03,945 --> 00:00:04,035
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:1m
+
+46
+00:00:04,035 --> 00:00:04,125
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+47
+00:00:04,125 --> 00:00:04,215
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+48
+00:00:04,215 --> 00:00:04,305
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+49
+00:00:04,305 --> 00:00:04,395
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+50
+00:00:04,395 --> 00:00:04,485
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+51
+00:00:04,485 --> 00:00:04,574
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+52
+00:00:04,574 --> 00:00:04,664
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+53
+00:00:04,664 --> 00:00:04,754
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+54
+00:00:04,754 --> 00:00:04,844
+Signal:4 CH:3 Hz:5805000 FlightTime:4 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+55
+00:00:04,844 --> 00:00:04,934
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+56
+00:00:04,934 --> 00:00:05,024
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=24 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+57
+00:00:05,024 --> 00:00:05,114
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+58
+00:00:05,114 --> 00:00:05,204
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+59
+00:00:05,204 --> 00:00:05,294
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:45ms Bitrate:25.0Mbps Distance:0m
+
+60
+00:00:05,294 --> 00:00:05,383
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+61
+00:00:05,383 --> 00:00:05,473
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+62
+00:00:05,473 --> 00:00:05,563
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+63
+00:00:05,563 --> 00:00:05,653
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+64
+00:00:05,653 --> 00:00:05,743
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+65
+00:00:05,743 --> 00:00:05,833
+Signal:4 CH:3 Hz:5805000 FlightTime:5 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+66
+00:00:05,833 --> 00:00:05,923
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.8V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+67
+00:00:05,923 --> 00:00:06,013
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.8V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:10m
+
+68
+00:00:06,013 --> 00:00:06,103
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.8V GBat:16.1V Delay:44ms Bitrate:25.0Mbps Distance:10m
+
+69
+00:00:06,103 --> 00:00:06,192
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.8V GBat:16.1V Delay:45ms Bitrate:25.0Mbps Distance:10m
+
+70
+00:00:06,192 --> 00:00:06,282
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.8V GBat:16.1V Delay:45ms Bitrate:25.0Mbps Distance:10m
+
+71
+00:00:06,282 --> 00:00:06,372
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.8V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:6m
+
+72
+00:00:06,372 --> 00:00:06,462
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.8V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+73
+00:00:06,462 --> 00:00:06,552
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:44ms Bitrate:25.0Mbps Distance:6m
+
+74
+00:00:06,552 --> 00:00:06,642
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+75
+00:00:06,642 --> 00:00:06,732
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:6m
+
+76
+00:00:06,732 --> 00:00:06,822
+Signal:4 CH:3 Hz:5805000 FlightTime:6 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+77
+00:00:06,822 --> 00:00:06,912
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+78
+00:00:06,912 --> 00:00:07,001
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=23 Gp=27 SBat:4.9V GBat:16.1V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+79
+00:00:07,001 --> 00:00:07,091
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+80
+00:00:07,091 --> 00:00:07,181
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+81
+00:00:07,181 --> 00:00:07,271
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+82
+00:00:07,271 --> 00:00:07,361
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+83
+00:00:07,361 --> 00:00:07,451
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+84
+00:00:07,451 --> 00:00:07,541
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+85
+00:00:07,541 --> 00:00:07,631
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+86
+00:00:07,631 --> 00:00:07,720
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+87
+00:00:07,720 --> 00:00:07,810
+Signal:4 CH:3 Hz:5805000 FlightTime:7 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+88
+00:00:07,810 --> 00:00:07,900
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+89
+00:00:07,900 --> 00:00:07,990
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+90
+00:00:07,990 --> 00:00:08,080
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+91
+00:00:08,080 --> 00:00:08,170
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+92
+00:00:08,170 --> 00:00:08,260
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+93
+00:00:08,260 --> 00:00:08,350
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+94
+00:00:08,350 --> 00:00:08,440
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+95
+00:00:08,440 --> 00:00:08,529
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+96
+00:00:08,529 --> 00:00:08,619
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+97
+00:00:08,619 --> 00:00:08,709
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+98
+00:00:08,709 --> 00:00:08,799
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+99
+00:00:08,799 --> 00:00:08,889
+Signal:4 CH:3 Hz:5805000 FlightTime:8 Sp=22 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+100
+00:00:08,889 --> 00:00:08,979
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=22 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:0m
+
+101
+00:00:08,979 --> 00:00:09,069
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=22 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+102
+00:00:09,069 --> 00:00:09,159
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:0m
+
+103
+00:00:09,159 --> 00:00:09,249
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+104
+00:00:09,249 --> 00:00:09,338
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.9V GBat:16.1V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+105
+00:00:09,338 --> 00:00:09,428
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.9V GBat:16.1V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+106
+00:00:09,428 --> 00:00:09,518
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.9V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+107
+00:00:09,518 --> 00:00:09,608
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.8V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+108
+00:00:09,608 --> 00:00:09,698
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.8V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+109
+00:00:09,698 --> 00:00:09,788
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.8V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+110
+00:00:09,788 --> 00:00:09,878
+Signal:4 CH:3 Hz:5805000 FlightTime:9 Sp=21 Gp=27 SBat:4.8V GBat:16.1V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+111
+00:00:09,878 --> 00:00:09,968
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.8V GBat:16.1V Delay:46ms Bitrate:25.0Mbps Distance:0m
+
+112
+00:00:09,968 --> 00:00:10,058
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.8V GBat:16.1V Delay:40ms Bitrate:25.0Mbps Distance:0m
+
+113
+00:00:10,058 --> 00:00:10,147
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.8V GBat:16.1V Delay:40ms Bitrate:25.0Mbps Distance:0m
+
+114
+00:00:10,147 --> 00:00:10,237
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+115
+00:00:10,237 --> 00:00:10,327
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.9V GBat:16.1V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+116
+00:00:10,327 --> 00:00:10,417
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+117
+00:00:10,417 --> 00:00:10,507
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+118
+00:00:10,507 --> 00:00:10,597
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+119
+00:00:10,597 --> 00:00:10,687
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+120
+00:00:10,687 --> 00:00:10,777
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.8V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+121
+00:00:10,777 --> 00:00:10,867
+Signal:4 CH:3 Hz:5805000 FlightTime:10 Sp=21 Gp=27 SBat:4.8V GBat:16.2V Delay:46ms Bitrate:25.0Mbps Distance:4m
+
+122
+00:00:10,867 --> 00:00:10,956
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=21 Gp=27 SBat:4.8V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:4m
+
+123
+00:00:10,956 --> 00:00:11,046
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=21 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+124
+00:00:11,046 --> 00:00:11,136
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+125
+00:00:11,136 --> 00:00:11,226
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:0m
+
+126
+00:00:11,226 --> 00:00:11,316
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:0m
+
+127
+00:00:11,316 --> 00:00:11,406
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+128
+00:00:11,406 --> 00:00:11,496
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+129
+00:00:11,496 --> 00:00:11,586
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:0m
+
+130
+00:00:11,586 --> 00:00:11,675
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:0m
+
+131
+00:00:11,675 --> 00:00:11,765
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+132
+00:00:11,765 --> 00:00:11,855
+Signal:4 CH:3 Hz:5805000 FlightTime:11 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+133
+00:00:11,855 --> 00:00:11,945
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+134
+00:00:11,945 --> 00:00:12,035
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:1m
+
+135
+00:00:12,035 --> 00:00:12,125
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:1m
+
+136
+00:00:12,125 --> 00:00:12,215
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+137
+00:00:12,215 --> 00:00:12,305
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+138
+00:00:12,305 --> 00:00:12,395
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:1m
+
+139
+00:00:12,395 --> 00:00:12,484
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+140
+00:00:12,484 --> 00:00:12,574
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+141
+00:00:12,574 --> 00:00:12,664
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:1m
+
+142
+00:00:12,664 --> 00:00:12,754
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:1m
+
+143
+00:00:12,754 --> 00:00:12,844
+Signal:4 CH:3 Hz:5805000 FlightTime:12 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+144
+00:00:12,844 --> 00:00:12,934
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=20 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+145
+00:00:12,934 --> 00:00:13,024
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+146
+00:00:13,024 --> 00:00:13,114
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=20 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+147
+00:00:13,114 --> 00:00:13,204
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=19 Gp=27 SBat:4.8V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+148
+00:00:13,204 --> 00:00:13,293
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=19 Gp=27 SBat:4.8V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:3m
+
+149
+00:00:13,293 --> 00:00:13,383
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=19 Gp=27 SBat:4.8V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:3m
+
+150
+00:00:13,383 --> 00:00:13,473
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=19 Gp=27 SBat:4.8V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+151
+00:00:13,473 --> 00:00:13,563
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=19 Gp=27 SBat:4.8V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+152
+00:00:13,563 --> 00:00:13,653
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+153
+00:00:13,653 --> 00:00:13,743
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+154
+00:00:13,743 --> 00:00:13,833
+Signal:4 CH:3 Hz:5805000 FlightTime:13 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+155
+00:00:13,833 --> 00:00:13,923
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:6m
+
+156
+00:00:13,923 --> 00:00:14,013
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:6m
+
+157
+00:00:14,013 --> 00:00:14,102
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:6m
+
+158
+00:00:14,102 --> 00:00:14,192
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:6m
+
+159
+00:00:14,192 --> 00:00:14,282
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+160
+00:00:14,282 --> 00:00:14,372
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+161
+00:00:14,372 --> 00:00:14,462
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+162
+00:00:14,462 --> 00:00:14,552
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+163
+00:00:14,552 --> 00:00:14,642
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:1m
+
+164
+00:00:14,642 --> 00:00:14,732
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:1m
+
+165
+00:00:14,732 --> 00:00:14,822
+Signal:4 CH:3 Hz:5805000 FlightTime:14 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+166
+00:00:14,822 --> 00:00:14,911
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+167
+00:00:14,911 --> 00:00:15,001
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+168
+00:00:15,001 --> 00:00:15,091
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=19 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+169
+00:00:15,091 --> 00:00:15,181
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+170
+00:00:15,181 --> 00:00:15,271
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+171
+00:00:15,271 --> 00:00:15,361
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:1m
+
+172
+00:00:15,361 --> 00:00:15,451
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+173
+00:00:15,451 --> 00:00:15,541
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+174
+00:00:15,541 --> 00:00:15,611
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+175
+00:00:15,611 --> 00:00:15,700
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+176
+00:00:15,700 --> 00:00:15,790
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+177
+00:00:15,790 --> 00:00:15,880
+Signal:4 CH:3 Hz:5805000 FlightTime:15 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+178
+00:00:15,880 --> 00:00:15,970
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+179
+00:00:15,970 --> 00:00:16,060
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:1m
+
+180
+00:00:16,060 --> 00:00:16,150
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+181
+00:00:16,150 --> 00:00:16,240
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+182
+00:00:16,240 --> 00:00:16,330
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:1m
+
+183
+00:00:16,330 --> 00:00:16,420
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:1m
+
+184
+00:00:16,420 --> 00:00:16,509
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+185
+00:00:16,509 --> 00:00:16,599
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+186
+00:00:16,599 --> 00:00:16,689
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+187
+00:00:16,689 --> 00:00:16,779
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+188
+00:00:16,779 --> 00:00:16,869
+Signal:4 CH:3 Hz:5805000 FlightTime:16 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+189
+00:00:16,869 --> 00:00:16,959
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+190
+00:00:16,959 --> 00:00:17,049
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+191
+00:00:17,049 --> 00:00:17,139
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=18 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+192
+00:00:17,139 --> 00:00:17,228
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+193
+00:00:17,228 --> 00:00:17,318
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+194
+00:00:17,318 --> 00:00:17,408
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+195
+00:00:17,408 --> 00:00:17,498
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:4m
+
+196
+00:00:17,498 --> 00:00:17,588
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+197
+00:00:17,588 --> 00:00:17,678
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+198
+00:00:17,678 --> 00:00:17,768
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+199
+00:00:17,768 --> 00:00:17,858
+Signal:4 CH:3 Hz:5805000 FlightTime:17 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:45ms Bitrate:25.0Mbps Distance:4m
+
+200
+00:00:17,858 --> 00:00:17,948
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+201
+00:00:17,948 --> 00:00:18,037
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+202
+00:00:18,037 --> 00:00:18,127
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:48ms Bitrate:25.0Mbps Distance:1m
+
+203
+00:00:18,127 --> 00:00:18,217
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:1m
+
+204
+00:00:18,217 --> 00:00:18,307
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+205
+00:00:18,307 --> 00:00:18,397
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:1m
+
+206
+00:00:18,397 --> 00:00:18,487
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:7m
+
+207
+00:00:18,487 --> 00:00:18,577
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:7m
+
+208
+00:00:18,577 --> 00:00:18,667
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:7m
+
+209
+00:00:18,667 --> 00:00:18,757
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:7m
+
+210
+00:00:18,757 --> 00:00:18,846
+Signal:4 CH:3 Hz:5805000 FlightTime:18 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:7m
+
+211
+00:00:18,846 --> 00:00:18,936
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=17 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+212
+00:00:18,936 --> 00:00:19,026
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=17 Gp=27 SBat:4.9V GBat:16.3V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+213
+00:00:19,026 --> 00:00:19,116
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=17 Gp=27 SBat:4.9V GBat:16.3V Delay:45ms Bitrate:25.0Mbps Distance:0m
+
+214
+00:00:19,116 --> 00:00:19,206
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:0m
+
+215
+00:00:19,206 --> 00:00:19,296
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:44ms Bitrate:25.0Mbps Distance:1m
+
+216
+00:00:19,296 --> 00:00:19,386
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:25.0Mbps Distance:1m
+
+217
+00:00:19,386 --> 00:00:19,476
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:25.0Mbps Distance:1m
+
+218
+00:00:19,476 --> 00:00:19,566
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:25.0Mbps Distance:1m
+
+219
+00:00:19,566 --> 00:00:19,655
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+220
+00:00:19,655 --> 00:00:19,745
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+221
+00:00:19,745 --> 00:00:19,835
+Signal:4 CH:3 Hz:5805000 FlightTime:19 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+222
+00:00:19,835 --> 00:00:19,925
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+223
+00:00:19,925 --> 00:00:20,015
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+224
+00:00:20,015 --> 00:00:20,105
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+225
+00:00:20,105 --> 00:00:20,195
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+226
+00:00:20,195 --> 00:00:20,285
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+227
+00:00:20,285 --> 00:00:20,375
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+228
+00:00:20,375 --> 00:00:20,464
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+229
+00:00:20,464 --> 00:00:20,554
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+230
+00:00:20,554 --> 00:00:20,644
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+231
+00:00:20,644 --> 00:00:20,734
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+232
+00:00:20,734 --> 00:00:20,824
+Signal:4 CH:3 Hz:5805000 FlightTime:20 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+233
+00:00:20,824 --> 00:00:20,914
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+234
+00:00:20,914 --> 00:00:21,004
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+235
+00:00:21,004 --> 00:00:21,094
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+236
+00:00:21,094 --> 00:00:21,183
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+237
+00:00:21,183 --> 00:00:21,273
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+238
+00:00:21,273 --> 00:00:21,363
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+239
+00:00:21,363 --> 00:00:21,453
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:1m
+
+240
+00:00:21,453 --> 00:00:21,543
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:1m
+
+241
+00:00:21,543 --> 00:00:21,633
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+242
+00:00:21,633 --> 00:00:21,723
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+243
+00:00:21,723 --> 00:00:21,813
+Signal:4 CH:3 Hz:5805000 FlightTime:21 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+244
+00:00:21,813 --> 00:00:21,903
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+245
+00:00:21,903 --> 00:00:21,992
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+246
+00:00:21,992 --> 00:00:22,082
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:4m
+
+247
+00:00:22,082 --> 00:00:22,172
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:49ms Bitrate:25.0Mbps Distance:0m
+
+248
+00:00:22,172 --> 00:00:22,262
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:45ms Bitrate:25.0Mbps Distance:0m
+
+249
+00:00:22,262 --> 00:00:22,352
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:43ms Bitrate:25.0Mbps Distance:0m
+
+250
+00:00:22,352 --> 00:00:22,442
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+251
+00:00:22,442 --> 00:00:22,532
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:44ms Bitrate:25.0Mbps Distance:0m
+
+252
+00:00:22,532 --> 00:00:22,622
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+253
+00:00:22,622 --> 00:00:22,712
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:1m
+
+254
+00:00:22,712 --> 00:00:22,801
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:1m
+
+255
+00:00:22,801 --> 00:00:22,891
+Signal:4 CH:3 Hz:5805000 FlightTime:22 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:1m
+
+256
+00:00:22,891 --> 00:00:22,981
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:12m
+
+257
+00:00:22,981 --> 00:00:23,071
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:12m
+
+258
+00:00:23,071 --> 00:00:23,161
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:25.0Mbps Distance:12m
+
+259
+00:00:23,161 --> 00:00:23,251
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=14 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:12m
+
+260
+00:00:23,251 --> 00:00:23,341
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:43ms Bitrate:25.0Mbps Distance:3m
+
+261
+00:00:23,341 --> 00:00:23,431
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:3m
+
+262
+00:00:23,431 --> 00:00:23,521
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+263
+00:00:23,521 --> 00:00:23,610
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:25.0Mbps Distance:3m
+
+264
+00:00:23,610 --> 00:00:23,700
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:25.0Mbps Distance:3m
+
+265
+00:00:23,700 --> 00:00:23,790
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:25.0Mbps Distance:1m
+
+266
+00:00:23,790 --> 00:00:23,880
+Signal:4 CH:3 Hz:5805000 FlightTime:23 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:1m
+
+267
+00:00:23,880 --> 00:00:23,970
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:1m
+
+268
+00:00:23,970 --> 00:00:24,060
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:25.0Mbps Distance:1m
+
+269
+00:00:24,060 --> 00:00:24,150
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:1m
+
+270
+00:00:24,150 --> 00:00:24,240
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:1m
+
+271
+00:00:24,240 --> 00:00:24,330
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:1m
+
+272
+00:00:24,330 --> 00:00:24,419
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:1m
+
+273
+00:00:24,419 --> 00:00:24,509
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:1m
+
+274
+00:00:24,509 --> 00:00:24,599
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:6m
+
+275
+00:00:24,599 --> 00:00:24,689
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:6m
+
+276
+00:00:24,689 --> 00:00:24,779
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+277
+00:00:24,779 --> 00:00:24,869
+Signal:4 CH:3 Hz:5805000 FlightTime:24 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+278
+00:00:24,869 --> 00:00:24,959
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:6m
+
+279
+00:00:24,959 --> 00:00:25,049
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:3m
+
+280
+00:00:25,049 --> 00:00:25,138
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:3m
+
+281
+00:00:25,138 --> 00:00:25,228
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+282
+00:00:25,228 --> 00:00:25,318
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+283
+00:00:25,318 --> 00:00:25,408
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:4m
+
+284
+00:00:25,408 --> 00:00:25,498
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:4m
+
+285
+00:00:25,498 --> 00:00:25,588
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:4m
+
+286
+00:00:25,588 --> 00:00:25,678
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:4m
+
+287
+00:00:25,678 --> 00:00:25,768
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:3m
+
+288
+00:00:25,768 --> 00:00:25,858
+Signal:4 CH:3 Hz:5805000 FlightTime:25 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:3m
+
+289
+00:00:25,858 --> 00:00:25,947
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+290
+00:00:25,947 --> 00:00:26,037
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+291
+00:00:26,037 --> 00:00:26,127
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+292
+00:00:26,127 --> 00:00:26,217
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+293
+00:00:26,217 --> 00:00:26,307
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:6m
+
+294
+00:00:26,307 --> 00:00:26,397
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:6m
+
+295
+00:00:26,397 --> 00:00:26,487
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:25.0Mbps Distance:6m
+
+296
+00:00:26,487 --> 00:00:26,577
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:4m
+
+297
+00:00:26,577 --> 00:00:26,667
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:4m
+
+298
+00:00:26,667 --> 00:00:26,756
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:4m
+
+299
+00:00:26,756 --> 00:00:26,846
+Signal:4 CH:3 Hz:5805000 FlightTime:26 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:4m
+
+300
+00:00:26,846 --> 00:00:26,936
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:4m
+
+301
+00:00:26,936 --> 00:00:27,026
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+302
+00:00:27,026 --> 00:00:27,116
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:25.0Mbps Distance:3m
+
+303
+00:00:27,116 --> 00:00:27,206
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:3m
+
+304
+00:00:27,206 --> 00:00:27,296
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+305
+00:00:27,296 --> 00:00:27,386
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+306
+00:00:27,386 --> 00:00:27,476
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:7m
+
+307
+00:00:27,476 --> 00:00:27,565
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:7m
+
+308
+00:00:27,565 --> 00:00:27,655
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:7m
+
+309
+00:00:27,655 --> 00:00:27,745
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:7m
+
+310
+00:00:27,745 --> 00:00:27,835
+Signal:4 CH:3 Hz:5805000 FlightTime:27 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:3m
+
+311
+00:00:27,835 --> 00:00:27,925
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+312
+00:00:27,925 --> 00:00:28,015
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:3m
+
+313
+00:00:28,015 --> 00:00:28,105
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+314
+00:00:28,105 --> 00:00:28,195
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:3m
+
+315
+00:00:28,195 --> 00:00:28,285
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:1m
+
+316
+00:00:28,285 --> 00:00:28,374
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:1m
+
+317
+00:00:28,374 --> 00:00:28,464
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=14 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:1m
+
+318
+00:00:28,464 --> 00:00:28,554
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:1m
+
+319
+00:00:28,554 --> 00:00:28,644
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:25.0Mbps Distance:4m
+
+320
+00:00:28,644 --> 00:00:28,734
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:4m
+
+321
+00:00:28,734 --> 00:00:28,824
+Signal:4 CH:3 Hz:5805000 FlightTime:28 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:4m
+
+322
+00:00:28,824 --> 00:00:28,914
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:4m
+
+323
+00:00:28,914 --> 00:00:29,004
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:38ms Bitrate:25.0Mbps Distance:0m
+
+324
+00:00:29,004 --> 00:00:29,093
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:0m
+
+325
+00:00:29,093 --> 00:00:29,183
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:37ms Bitrate:25.0Mbps Distance:0m
+
+326
+00:00:29,183 --> 00:00:29,273
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:0m
+
+327
+00:00:29,273 --> 00:00:29,363
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:0m
+
+328
+00:00:29,363 --> 00:00:29,453
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+329
+00:00:29,453 --> 00:00:29,543
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+330
+00:00:29,543 --> 00:00:29,633
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:3m
+
+331
+00:00:29,633 --> 00:00:29,723
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:34ms Bitrate:25.0Mbps Distance:3m
+
+332
+00:00:29,723 --> 00:00:29,813
+Signal:4 CH:3 Hz:5805000 FlightTime:29 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:34ms Bitrate:25.0Mbps Distance:3m
+
+333
+00:00:29,813 --> 00:00:29,902
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.8V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:10m
+
+334
+00:00:29,902 --> 00:00:29,992
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.8V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:10m
+
+335
+00:00:29,992 --> 00:00:30,082
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.8V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:10m
+
+336
+00:00:30,082 --> 00:00:30,172
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.8V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:10m
+
+337
+00:00:30,172 --> 00:00:30,262
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.8V GBat:16.3V Delay:34ms Bitrate:25.0Mbps Distance:4m
+
+338
+00:00:30,262 --> 00:00:30,352
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.8V GBat:16.3V Delay:44ms Bitrate:25.0Mbps Distance:4m
+
+339
+00:00:30,352 --> 00:00:30,442
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.8V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:4m
+
+340
+00:00:30,442 --> 00:00:30,532
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:4m
+
+341
+00:00:30,532 --> 00:00:30,622
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:35ms Bitrate:25.0Mbps Distance:4m
+
+342
+00:00:30,622 --> 00:00:30,711
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:37ms Bitrate:25.0Mbps Distance:4m
+
+343
+00:00:30,711 --> 00:00:30,801
+Signal:4 CH:3 Hz:5805000 FlightTime:30 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:35ms Bitrate:25.0Mbps Distance:4m
+
+344
+00:00:30,801 --> 00:00:30,891
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:39ms Bitrate:25.0Mbps Distance:4m
+
+345
+00:00:30,891 --> 00:00:30,981
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=15 Gp=27 SBat:4.9V GBat:16.2V Delay:35ms Bitrate:25.0Mbps Distance:4m
+
+346
+00:00:30,981 --> 00:00:31,071
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=15 Gp=27 SBat:4.8V GBat:16.2V Delay:35ms Bitrate:25.0Mbps Distance:4m
+
+347
+00:00:31,071 --> 00:00:31,161
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=15 Gp=27 SBat:4.8V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:4m
+
+348
+00:00:31,161 --> 00:00:31,251
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=16 Gp=27 SBat:4.8V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:4m
+
+349
+00:00:31,251 --> 00:00:31,341
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=16 Gp=27 SBat:4.8V GBat:16.2V Delay:44ms Bitrate:25.0Mbps Distance:4m
+
+350
+00:00:31,341 --> 00:00:31,431
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+351
+00:00:31,431 --> 00:00:31,520
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+352
+00:00:31,520 --> 00:00:31,610
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:6m
+
+353
+00:00:31,610 --> 00:00:31,700
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+354
+00:00:31,700 --> 00:00:31,790
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:25.0Mbps Distance:6m
+
+355
+00:00:31,790 --> 00:00:31,880
+Signal:4 CH:3 Hz:5805000 FlightTime:31 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+356
+00:00:31,880 --> 00:00:31,970
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:6m
+
+357
+00:00:31,970 --> 00:00:32,060
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:25.0Mbps Distance:6m
+
+358
+00:00:32,060 --> 00:00:32,150
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:34ms Bitrate:25.0Mbps Distance:6m
+
+359
+00:00:32,150 --> 00:00:32,240
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:34ms Bitrate:25.0Mbps Distance:6m
+
+360
+00:00:32,240 --> 00:00:32,329
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:25.0Mbps Distance:15m
+
+361
+00:00:32,329 --> 00:00:32,419
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:25.0Mbps Distance:15m
+
+362
+00:00:32,419 --> 00:00:32,509
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:15m
+
+363
+00:00:32,509 --> 00:00:32,599
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:15m
+
+364
+00:00:32,599 --> 00:00:32,689
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:44ms Bitrate:25.0Mbps Distance:9m
+
+365
+00:00:32,689 --> 00:00:32,779
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:9m
+
+366
+00:00:32,779 --> 00:00:32,869
+Signal:4 CH:3 Hz:5805000 FlightTime:32 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:34ms Bitrate:25.0Mbps Distance:9m
+
+367
+00:00:32,869 --> 00:00:32,959
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:9m
+
+368
+00:00:32,959 --> 00:00:33,049
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:25.0Mbps Distance:9m
+
+369
+00:00:33,049 --> 00:00:33,138
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:10m
+
+370
+00:00:33,138 --> 00:00:33,228
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:10m
+
+371
+00:00:33,228 --> 00:00:33,318
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:10m
+
+372
+00:00:33,318 --> 00:00:33,408
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:10m
+
+373
+00:00:33,408 --> 00:00:33,498
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:46ms Bitrate:25.0Mbps Distance:7m
+
+374
+00:00:33,498 --> 00:00:33,588
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:7m
+
+375
+00:00:33,588 --> 00:00:33,678
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:7m
+
+376
+00:00:33,678 --> 00:00:33,768
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:7m
+
+377
+00:00:33,768 --> 00:00:33,857
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:7m
+
+378
+00:00:33,857 --> 00:00:33,947
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+379
+00:00:33,947 --> 00:00:34,037
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+380
+00:00:34,037 --> 00:00:34,127
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+381
+00:00:34,127 --> 00:00:34,217
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:25.0Mbps Distance:6m
+
+382
+00:00:34,217 --> 00:00:34,307
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:42ms Bitrate:25.0Mbps Distance:6m
+
+383
+00:00:34,307 --> 00:00:34,397
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:44ms Bitrate:25.0Mbps Distance:6m
+
+384
+00:00:34,397 --> 00:00:34,487
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:9m
+
+385
+00:00:34,487 --> 00:00:34,577
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:25.0Mbps Distance:9m
+
+386
+00:00:34,577 --> 00:00:34,666
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:9m
+
+387
+00:00:34,666 --> 00:00:34,756
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:9m
+
+388
+00:00:34,756 --> 00:00:34,846
+Signal:4 CH:3 Hz:5805000 FlightTime:34 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:25.0Mbps Distance:9m
+
+389
+00:00:34,846 --> 00:00:34,936
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:20.0Mbps Distance:7m
+
+390
+00:00:34,936 --> 00:00:35,026
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:34ms Bitrate:20.0Mbps Distance:7m
+
+391
+00:00:35,026 --> 00:00:35,116
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:35ms Bitrate:20.0Mbps Distance:7m
+
+392
+00:00:35,116 --> 00:00:35,206
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:35ms Bitrate:21.0Mbps Distance:7m
+
+393
+00:00:35,206 --> 00:00:35,296
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:39ms Bitrate:21.0Mbps Distance:10m
+
+394
+00:00:35,296 --> 00:00:35,386
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:40ms Bitrate:21.0Mbps Distance:10m
+
+395
+00:00:35,386 --> 00:00:35,475
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:37ms Bitrate:21.0Mbps Distance:10m
+
+396
+00:00:35,475 --> 00:00:35,565
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:36ms Bitrate:23.0Mbps Distance:10m
+
+397
+00:00:35,565 --> 00:00:35,655
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:35ms Bitrate:23.0Mbps Distance:10m
+
+398
+00:00:35,655 --> 00:00:35,745
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:36ms Bitrate:23.0Mbps Distance:4m
+
+399
+00:00:35,745 --> 00:00:35,835
+Signal:4 CH:3 Hz:5805000 FlightTime:35 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:20.0Mbps Distance:4m
+
+400
+00:00:35,835 --> 00:00:35,925
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:37ms Bitrate:20.0Mbps Distance:4m
+
+401
+00:00:35,925 --> 00:00:36,015
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:20.0Mbps Distance:4m
+
+402
+00:00:36,015 --> 00:00:36,105
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:20.0Mbps Distance:4m
+
+403
+00:00:36,105 --> 00:00:36,195
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:37ms Bitrate:20.0Mbps Distance:6m
+
+404
+00:00:36,195 --> 00:00:36,284
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:39ms Bitrate:20.0Mbps Distance:6m
+
+405
+00:00:36,284 --> 00:00:36,374
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:43ms Bitrate:20.0Mbps Distance:6m
+
+406
+00:00:36,374 --> 00:00:36,464
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:39ms Bitrate:18.0Mbps Distance:6m
+
+407
+00:00:36,464 --> 00:00:36,554
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:18.0Mbps Distance:7m
+
+408
+00:00:36,554 --> 00:00:36,644
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:18.0Mbps Distance:7m
+
+409
+00:00:36,644 --> 00:00:36,734
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:40ms Bitrate:19.0Mbps Distance:7m
+
+410
+00:00:36,734 --> 00:00:36,824
+Signal:4 CH:3 Hz:5805000 FlightTime:36 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:39ms Bitrate:19.0Mbps Distance:7m
+
+411
+00:00:36,824 --> 00:00:36,914
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:39ms Bitrate:19.0Mbps Distance:7m
+
+412
+00:00:36,914 --> 00:00:37,004
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:39ms Bitrate:19.0Mbps Distance:12m
+
+413
+00:00:37,004 --> 00:00:37,093
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:40ms Bitrate:21.0Mbps Distance:12m
+
+414
+00:00:37,093 --> 00:00:37,183
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:21.0Mbps Distance:12m
+
+415
+00:00:37,183 --> 00:00:37,273
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:21.0Mbps Distance:12m
+
+416
+00:00:37,273 --> 00:00:37,363
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:40ms Bitrate:21.0Mbps Distance:31m
+
+417
+00:00:37,363 --> 00:00:37,453
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:39ms Bitrate:21.0Mbps Distance:31m
+
+418
+00:00:37,453 --> 00:00:37,543
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=16 Gp=27 SBat:4.9V GBat:16.2V Delay:48ms Bitrate:21.0Mbps Distance:31m
+
+419
+00:00:37,543 --> 00:00:37,633
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:42ms Bitrate:21.0Mbps Distance:31m
+
+420
+00:00:37,633 --> 00:00:37,723
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:21.0Mbps Distance:9m
+
+421
+00:00:37,723 --> 00:00:37,812
+Signal:4 CH:3 Hz:5805000 FlightTime:37 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:40ms Bitrate:21.0Mbps Distance:9m
+
+422
+00:00:37,812 --> 00:00:37,902
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:41ms Bitrate:21.0Mbps Distance:9m
+
+423
+00:00:37,902 --> 00:00:37,992
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=17 Gp=27 SBat:4.9V GBat:16.2V Delay:40ms Bitrate:17.0Mbps Distance:9m
+
+424
+00:00:37,992 --> 00:00:38,082
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=17 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:17.0Mbps Distance:6m
+
+425
+00:00:38,082 --> 00:00:38,172
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:17.0Mbps Distance:6m
+
+426
+00:00:38,172 --> 00:00:38,262
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:18.0Mbps Distance:6m
+
+427
+00:00:38,262 --> 00:00:38,352
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:18.0Mbps Distance:6m
+
+428
+00:00:38,352 --> 00:00:38,442
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:18.0Mbps Distance:6m
+
+429
+00:00:38,442 --> 00:00:38,532
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:18.0Mbps Distance:12m
+
+430
+00:00:38,532 --> 00:00:38,621
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:20.0Mbps Distance:12m
+
+431
+00:00:38,621 --> 00:00:38,711
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:20.0Mbps Distance:12m
+
+432
+00:00:38,711 --> 00:00:38,801
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:20.0Mbps Distance:12m
+
+433
+00:00:38,801 --> 00:00:38,891
+Signal:4 CH:3 Hz:5805000 FlightTime:38 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:38ms Bitrate:22.0Mbps Distance:6m
+
+434
+00:00:38,891 --> 00:00:38,981
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:22.0Mbps Distance:6m
+
+435
+00:00:38,981 --> 00:00:39,071
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:22.0Mbps Distance:6m
+
+436
+00:00:39,071 --> 00:00:39,161
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:22.0Mbps Distance:6m
+
+437
+00:00:39,161 --> 00:00:39,251
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:22.0Mbps Distance:6m
+
+438
+00:00:39,251 --> 00:00:39,341
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:22.0Mbps Distance:6m
+
+439
+00:00:39,341 --> 00:00:39,430
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:39ms Bitrate:22.0Mbps Distance:6m
+
+440
+00:00:39,430 --> 00:00:39,520
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:22.0Mbps Distance:6m
+
+441
+00:00:39,520 --> 00:00:39,610
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:22.0Mbps Distance:6m
+
+442
+00:00:39,610 --> 00:00:39,700
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:22.0Mbps Distance:7m
+
+443
+00:00:39,700 --> 00:00:39,790
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:41ms Bitrate:24.0Mbps Distance:7m
+
+444
+00:00:39,790 --> 00:00:39,880
+Signal:4 CH:3 Hz:5805000 FlightTime:39 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:24.0Mbps Distance:7m
+
+445
+00:00:39,880 --> 00:00:39,970
+Signal:4 CH:3 Hz:5805000 FlightTime:40 Sp=10 Gp=27 SBat:4.9V GBat:16.3V Delay:40ms Bitrate:24.0Mbps Distance:7m
+
+446
+00:00:39,970 --> 00:00:40,060
+Signal:4 CH:3 Hz:5805000 FlightTime:40 Sp=10 Gp=27 SBat:5.0V GBat:16.3V Delay:40ms Bitrate:24.0Mbps Distance:7m
+
+447
+00:00:40,060 --> 00:00:40,150
+Signal:4 CH:3 Hz:5805000 FlightTime:40 Sp=10 Gp=27 SBat:5.0V GBat:16.3V Delay:39ms Bitrate:23.0Mbps Distance:3m
+
+448
+00:00:40,150 --> 00:00:40,239
+Signal:4 CH:3 Hz:5805000 FlightTime:40 Sp=10 Gp=27 SBat:5.0V GBat:16.3V Delay:41ms Bitrate:23.0Mbps Distance:3m
+
+448
+00:00:40,239 --> 00:00:40,279
+Signal:4 CH:3 Hz:5805000 FlightTime:0 Sp=0 Gp=27 SBat:5.0V GBat:16.3V Delay:42ms Bitrate:23.0Mbps Distance:3m
+
