@@ -19,7 +19,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.time.Duration.Companion.milliseconds
 
-private val aircraftIdentifier = setOf("SPC5", "LR4")
+private val aircraftIdentifier = setOf("SPC5", "LR4", "CURVE MICRO 16")
 
 class BetaflightParserTest {
 
@@ -78,6 +78,28 @@ class BetaflightParserTest {
                 gpsPoint = GpsPoint(latitude=38.4997991, longitude=-9.1808245, altitude=15.5)
             ),
             actual = data[578]
+        )
+    }
+
+    @Test
+    fun ascentBtflTest() = runTest {
+        val osdRecord = parseOsdTestFile("ascent/btfl/AscentG0001.osd")
+        println("Parsed frames: ${osdRecord.frames.size}")
+        val duration = osdRecord.frames.last().millis.milliseconds
+        println("Duration: $duration")
+        val symbols = Symbols(osdRecord)
+        val data = extractFlightData(symbols, aircraftIdentifier)
+        println("Extracted flight data: ${data.size} entries")
+        assertEquals(
+            expected = FlightData(
+                millis=4544,
+                gpsPoint=null,
+                aircraftIdentifier="CURVE MICRO 16",
+                speed=null,
+                height=null,
+                amp=4.46f
+            ),
+            actual = data[51]
         )
     }
 }

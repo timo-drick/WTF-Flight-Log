@@ -22,17 +22,14 @@ fun parseSrtFile(src: Source): ParseResult<SrtData> {
 private val srtBlockRegex =
     """^(\d+${'$'})\n(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})\n(.+)\n"""
         .toRegex(RegexOption.MULTILINE)
-/*private val srtBlockRegex =
-    """^(\d+${'$'})\n(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})\n.+glsBat:(\S+)\s+delay:(\d+)ms.+bitrate:(\d+.\d)Mbps"""
-        .toRegex(RegexOption.MULTILINE)
-*/
+
 fun parseSrtData(file: CharSequence): Sequence<SrtFrame> = srtBlockRegex.findAll(file).map { matchResult ->
     val (index, startTime, endTime, secondLine) = matchResult.destructured
     val start = LocalTime.parse(startTime.replace(",", "."))
     val end = LocalTime.parse(endTime.replace(",", "."))
-    val delay = """\s+delay:(\d+)ms""".toRegex().find(secondLine)?.groups[1]?.value
-    val bitrate = """\s+bitrate:(\d+.\d)Mbps""".toRegex().find(secondLine)?.groups[1]?.value
-    val glsBat = """\s+glsBat:(\S+)\s""".toRegex().find(secondLine)?.groups[1]?.value
+    val delay = """\s+[Dd]elay:(\d+)ms""".toRegex().find(secondLine)?.groups[1]?.value
+    val bitrate = """\s+[Bb]itrate:(\d+.\d)Mbps""".toRegex().find(secondLine)?.groups[1]?.value
+    val glsBat = """\s+(?:glsBat:|GBat:)(\S+)\s""".toRegex().find(secondLine)?.groups[1]?.value
     SrtFrame(
         index = index.toInt(),
         startTimeMs = start.toMillisecondOfDay(),

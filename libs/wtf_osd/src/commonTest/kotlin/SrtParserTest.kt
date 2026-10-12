@@ -1,10 +1,7 @@
-import de.drick.wtf_osd.ParseResult
 import de.drick.wtf_osd.SrtFrame
 import de.drick.wtf_osd.parseSrtData
-import de.drick.wtf_osd.parseSrtFile
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class SrtParserTest {
 
@@ -22,10 +19,14 @@ some other data glsBat:80% delay:200ms bitrate:40.1Mbps more data
 260
 00:00:38,866 --> 00:00:39,016
 signal:4 ch:65535 flightTime:40 uavBat:24.7V glsBat:95% uavBatCells:6 glsBatCells:0 delay:33ms bitrate:25.4Mbps rcSignal:0
+
+372
+00:00:33,318 --> 00:00:33,408
+Signal:4 CH:3 Hz:5805000 FlightTime:33 Sp=16 Gp=27 SBat:4.9V GBat:16.3V Delay:35ms Bitrate:25.0Mbps Distance:10m
 """
 
         val frames = parseSrtData(srtContent).toList()
-        assertEquals(3, frames.size)
+        assertEquals(4, frames.size)
 
         val expectedFrame1 = SrtFrame(
             index = 1,
@@ -56,5 +57,15 @@ signal:4 ch:65535 flightTime:40 uavBat:24.7V glsBat:95% uavBatCells:6 glsBatCell
             glsBat = "95%"
         )
         assertEquals(expectedFrame3, frames[2])
+
+        val expectedFrame4 = SrtFrame(
+            index = 372,
+            startTimeMs = 33318,
+            endTimeMs = 33408,
+            delayMs = 35,
+            bitrateMbps = 25.0f,
+            glsBat = "16.3V"
+        )
+        assertEquals(expectedFrame4, frames[3])
     }
 }
