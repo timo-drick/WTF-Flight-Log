@@ -91,7 +91,14 @@ class BetaflightParserTest {
         val data = extractFlightData(symbols, aircraftIdentifier)
         println("Extracted flight data: ${data.size} entries")
         assertEquals(
-            expected = FlightData(millis=4544, gpsPoint=null, aircraftIdentifier="CURVE MICRO 16", speed=null, height=null, amp=4.46f),
+            expected = FlightData(
+                millis=4544,
+                gpsPoint=null,
+                aircraftIdentifier="CURVE MICRO 16",
+                speed=null,
+                height=null,
+                amp=4.46f
+            ),
             actual = data[51]
         )
     }
